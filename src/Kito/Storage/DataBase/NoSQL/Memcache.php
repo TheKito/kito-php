@@ -22,7 +22,7 @@ namespace Kito\DataBase\NoSQL;
  *
  * @author TheKito
  */
-class Memcache implements \Kito\DataBase\NoSQL\KeyValueInterface {
+class Memcache implements KeyValueInterface {
 
     private $proxy = null;
     private $keyPrefix = null;
