@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\RDB\SQL\Exception;
+namespace Kito\Storage\DataBase\SQL;
 
 /**
  *

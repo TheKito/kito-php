@@ -15,6 +15,7 @@
  */
 
 namespace Kito\Storage\DataBase\SQL;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >

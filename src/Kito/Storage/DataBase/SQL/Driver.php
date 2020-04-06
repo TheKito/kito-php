@@ -15,6 +15,7 @@
  */
 
 namespace Kito\Storage\DataBase\SQL;
+
 use Kito\DataBase\SQL\Exception\InsertException;
 use Kito\DataBase\SQL\Exception\TooManyRowsException;
 
