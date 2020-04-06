@@ -15,7 +15,7 @@
  */
 declare(strict_types=1);
 
-namespace Kito\DataBase\NoSQL\KeyValue;
+namespace Kito\DataBase\NoSQL;
 
 /**
  * Proxy class for access Memcache or Memcached common functions 

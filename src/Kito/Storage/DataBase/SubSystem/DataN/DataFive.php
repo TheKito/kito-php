@@ -14,27 +14,29 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Driver\MySQL\DataN;
-
-use Kito\DataBase\SQL\Driver\MySQL\DataN;
+namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
  *
  * @author The Blankis < blankitoracing@gmail.com >
  */
-class DataThree extends DataN {
+class DataFive extends DataN {
 
     private $tableCol0;
     private $tableCol1;
+    private $tableCol2;
+    private $tableCol3;
 
-    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1) {
+    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1, $tableCol2, $tableCol3) {
         parent::__construct($driver, $tableName, $tablePK);
         $this->tableCol0 = $tableCol0;
         $this->tableCol1 = $tableCol1;
+        $this->tableCol2 = $tableCol2;
+        $this->tableCol3 = $tableCol3;
     }
 
-    public function getId($value0, $value1, $create = true) {
-        return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1), $create);
+    public function getId($value0, $value1, $value2, $value3, $create = true) {
+        return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1, $this->tableCol2 => $value2, $this->tableCol3 => $value3), $create);
     }
 
     public function getValue0($id) {
@@ -47,12 +49,14 @@ class DataThree extends DataN {
         return $rs[$this->tableCol1];
     }
 
-    public function getIdsByValue0($value) {
-        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol0 => $value), 100);
+    public function getValue2($id) {
+        $rs = parent::getValue($id);
+        return $rs[$this->tableCol2];
     }
 
-    public function getIdsByValue1($value) {
-        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol1 => $value), 100);
+    public function getValue3($id) {
+        $rs = parent::getValue($id);
+        return $rs[$this->tableCol3];
     }
 
 }

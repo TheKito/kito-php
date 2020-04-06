@@ -14,9 +14,7 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Driver\MySQL\DataN;
-
-use Kito\DataBase\SQL\Driver\MySQL\DataN;
+namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
  *

@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -14,12 +13,21 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Driver\MySQL;
-
 /**
  *
- * @author TheKito < blankitoracing@gmail.com >
+ * @author The Blankis < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\DataBase\SQL\Driver\Exception {
-    
+require_once dirname(__FILE__)."/../Common/class.link.php";
+class NodeLink extends Link
+{
+    private static $tableName="BLK_NODE_LINK";
+    private static $tablePk="NODE_LINK_ID";
+    private static $tableValue0="NODE_LINK_NAME_ID_A";
+    private static $tableValue1="NODE_LINK_NAME_ID_B";
+
+    public function __construct($cnn)
+    {
+        parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
+    }
 }
+?>
