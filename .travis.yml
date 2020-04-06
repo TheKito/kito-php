@@ -11,7 +11,12 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
+    # Speed up build time by disabling Xdebug when its not needed.
+    - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+    # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
+    - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then composer install; fi
+
+
 
   
 script: phpunit
@@ -25,9 +30,9 @@ jobs:
       php: 7.2
       env: CODE_STANDARD
       script:
-        - phpcs
+        - bin/phpcs
 
     - stage: Metrics and quality
       env: PHPSTAN
       script:
-        - phpstan analyse
+        - bin/phpstan analyse
