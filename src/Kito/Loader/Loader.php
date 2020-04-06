@@ -88,7 +88,7 @@ class Loader {
 
     public function __construct($cachePath = __DIR__) {
         $this->setCachePath($cachePath);
-        $this->addRepository('/Kito/Loader', 'https://raw.githubusercontent.com/TheKito/Loader/master/src/');
+        $this->addRepository('/Kito', 'https://raw.githubusercontent.com/TheKito/kito-php/master/src/');
         spl_autoload_register(array($this, 'loadClass'));
 
         Sources::attach($this);
