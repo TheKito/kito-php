@@ -17,7 +17,7 @@ before_install:
 install:
   - ./bin/ci/install_dependencies.sh
   
-script: vendor/bin/phpunit
+script: phpunit
 
 jobs:
   allow_failures:
