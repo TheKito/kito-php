@@ -13,7 +13,7 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *

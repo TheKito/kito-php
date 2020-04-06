@@ -14,12 +14,11 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Exception;
-
+namespace Kito\Storage\DataBase\SQL;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CountException extends Exception {
+class ConnectionClosedException extends Exception {
     //put your code here
 }

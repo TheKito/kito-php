@@ -13,13 +13,13 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class IOException extends Exception{
+class NotIsLinkException extends Exception {
     //put your code here
 }

@@ -13,13 +13,13 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class CreateDirectoryException extends Exception {
+class IOException extends Exception{
     //put your code here
 }

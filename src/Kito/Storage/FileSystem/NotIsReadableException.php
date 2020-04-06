@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -14,12 +13,13 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CommandException extends Exception {
+
+class NotIsReadableException extends Exception {
     //put your code here
 }

@@ -13,13 +13,13 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotIsReadableException extends Exception {
+class CopyFileException extends Exception {
     //put your code here
 }

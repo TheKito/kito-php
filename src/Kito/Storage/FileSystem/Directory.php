@@ -13,7 +13,7 @@
  *
  */
 
-namespace Kito\FileSystem;
+namespace Kito\Storage\FileSystem;
 use \Kito\Type\Path;
 use Kito\FileSystem\Exception\NotIsDirectoryException;
 use Kito\FileSystem\Exception\CreateDirectoryException;

@@ -13,13 +13,13 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
+namespace Kito\Storage\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotIsDirectoryException extends Exception {
+class NotIsWritableException extends Exception {
     //put your code here
 }

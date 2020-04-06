@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -13,13 +14,11 @@
  *
  */
 
-namespace Kito\FileSystem\Exception;
-
+namespace Kito\Storage\DataBase\SQL;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-
-class NotIsFileException extends Exception {
+class CountException extends Exception {
     //put your code here
 }

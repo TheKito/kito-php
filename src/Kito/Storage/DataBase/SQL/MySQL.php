@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\DataBase\SQL;
+namespace Kito\Storage\DataBase\SQL;
 
 use \mysqli;
 use Kito\DataBase\SQL\Exception\ConnectException;

@@ -42,11 +42,7 @@ class Sources {
         $loader->addRepository('/Slim/Http', 'https://raw.githubusercontent.com/slimphp/Slim-Http/master/src/');
 
 
-        $loader->addRepository('/Kito', 'https://raw.githubusercontent.com/TheKito/Proxy-Memcache/master/src/Kito');
-        $loader->addRepository('/Kito/DataBase/SQL', 'https://raw.githubusercontent.com/TheKito/Proxy-SQL/master/src/Kito/DataBase/SQL');
-
-        $loader->addRepository('/Kito/DataBase/NoSQL', 'https://raw.githubusercontent.com/TheKito/DataBase-NoSQL-KeyValue/master/src/Kito/DataBase/NoSQL');
-
+       
 
         $loader->addRepository('/Guzzle/Http', 'https://raw.githubusercontent.com/thekito/guzzle/master/src');
 
