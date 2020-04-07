@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class Zones extends Module {
+class Zones extends Module
+{
     //put your code here
     public function getIDEHtml($item)
     {
@@ -30,43 +31,47 @@ class Zones extends Module {
     {
         $a=array();
 
-        if(is_numeric($max_level))
+        if(is_numeric($max_level)) {
             $max_level--;
+        }
 
-        if(!is_numeric($max_level) || $max_level>0)
-        {
-            if($zone===false)
-                foreach (getRootZones() as $zone_)
-                    array_push ($a, $this->getIDEMenu($zone_,$max_level));
-            else
+        if(!is_numeric($max_level) || $max_level>0) {
+            if($zone===false) {
+                foreach (getRootZones() as $zone_) {
+                    array_push($a, $this->getIDEMenu($zone_, $max_level));
+                } 
+            } else
             {
 
-                if($zone->system)
+                if($zone->system) {
                     $a[$zone->id]="<i><b>".$zone->name."</b></i>";
-                else
+                } else {
                     $a[$zone->id]=$zone->name;
-                foreach ($zone->getChild() as $zone_)
-                    array_push ($a, $this->getIDEMenu($zone_,$max_level));
+                }
+                foreach ($zone->getChild() as $zone_) {
+                    array_push($a, $this->getIDEMenu($zone_, $max_level));
+                }
             }
         }
       
         return $a;
     }
 
-//        public static function getTree()
-//        {
-//            return "<iframe frameborder=0 style='width:100%;height:100%;' src='?Module=Zones&Tag=Tree'></iframe>";
-//        }
+    //        public static function getTree()
+    //        {
+    //            return "<iframe frameborder=0 style='width:100%;height:100%;' src='?Module=Zones&Tag=Tree'></iframe>";
+    //        }
 
-        public function __destruct() {
-        }
-        public function __construct() 
-        {
-            getModule("Form");
-//            $HTML=getModule("HTML5");
-//            if(getParam("Module")=="Zones")
-//            $this->zoneGui(getParam("Tag"));
-        }
+    public function __destruct()
+    {
+    }
+    public function __construct() 
+    {
+        getModule("Form");
+        //            $HTML=getModule("HTML5");
+        //            if(getParam("Module")=="Zones")
+        //            $this->zoneGui(getParam("Tag"));
+    }
     public function Form_Check($name,$value)
     {
         return true;
@@ -77,92 +82,94 @@ class Zones extends Module {
         $zone=Zone::getZone($params["id"], getDBDriver("System"));
 
         foreach ($params as $key => $value)
-            if($key=="attttr")
-            {
-                if($zone->set($value,"")===false);
-                    return false;
+        if($key=="attttr") {
+            if($zone->set($value, "")===false) {
             }
-            elseif($key=="parent_id")
-            {
-                if(!$zone->setParent(Zone::getZone($value,$zone->driver)))
-                    return false;
+                return false;
+        }
+        elseif($key=="parent_id") {
+            if(!$zone->setParent(Zone::getZone($value, $zone->driver))) {
+                return false;
             }
-            elseif($key=="zzzzz")
-            {
-                if(getZone($zone->driver, $value, $zone)===false)
-                    return false;
+        }
+        elseif($key=="zzzzz") {
+            if(getZone($zone->driver, $value, $zone)===false) {
+                return false;
             }
-            else if($key!="id")
-                if(!$zone->set ($key, $value))
-                        return false;
+        }
+        else if($key!="id") {
+            if(!$zone->set($key, $value)) {
+                return false;
+            }
+        }
         return true;
     }
-//function zoneGui($mode)
-//{
-//    if ($mode=="Tree")
-//    {
-//        foreach (getRootZones() as $zona)
-//            $this->rama($zona);
-//    }
-//    else if ($mode=="Parent")
-//    {
-//    echo parents();
-//    }
-//}
+    //function zoneGui($mode)
+    //{
+    //    if ($mode=="Tree")
+    //    {
+    //        foreach (getRootZones() as $zona)
+    //            $this->rama($zona);
+    //    }
+    //    else if ($mode=="Parent")
+    //    {
+    //    echo parents();
+    //    }
+    //}
 
-//function parents($select_zone=false)
-//{
-//    $html="<select>";
-//    $z=getViewZone();
-//    if($z!==false)
-//        foreach ($z->getParents() as $zone)
-//            if($select_zone!==false && $select_zone->id==$zone->id)
-//                $html.="<option selected value='$zone->id'>$zone->name</option>";
-//            else
-//                $html.="<option value='$zone->id'>$zone->name</option>";
-//    $html.="</select>";
-//    return $html;
-//}
-//
-//function rama($padre)
-//{
-//
-//        write ("<li>".  callFunction("HTML5", "A", array("?Zone=$padre->id&Module=".getParam("ToModule"),array($padre->name),array())));
-//
-//    //write ("<li><a target=info href=''>".$padre->name."</a>");
-//
-//$t=$padre->getAttributes();
-//
-////if ($t!==false)
-////    foreach ($t as $attr)
-////        write ("<ol>$attr=>".$padre->get($attr,"unknow")."</ol>");
-//
-//    foreach ($padre->getChild() as $zona)
-//    {
-//
-//          write ("<ul>");
-//          $this->rama($zona);
-//          write ("</ul>");
-//
-//    }
-//     write ("</li>");
-//
-//
-//
-//}
+    //function parents($select_zone=false)
+    //{
+    //    $html="<select>";
+    //    $z=getViewZone();
+    //    if($z!==false)
+    //        foreach ($z->getParents() as $zone)
+    //            if($select_zone!==false && $select_zone->id==$zone->id)
+    //                $html.="<option selected value='$zone->id'>$zone->name</option>";
+    //            else
+    //                $html.="<option value='$zone->id'>$zone->name</option>";
+    //    $html.="</select>";
+    //    return $html;
+    //}
+    //
+    //function rama($padre)
+    //{
+    //
+    //        write ("<li>".  callFunction("HTML5", "A", array("?Zone=$padre->id&Module=".getParam("ToModule"),array($padre->name),array())));
+    //
+    //    //write ("<li><a target=info href=''>".$padre->name."</a>");
+    //
+    //$t=$padre->getAttributes();
+    //
+    ////if ($t!==false)
+    ////    foreach ($t as $attr)
+    ////        write ("<ol>$attr=>".$padre->get($attr,"unknow")."</ol>");
+    //
+    //    foreach ($padre->getChild() as $zona)
+    //    {
+    //
+    //          write ("<ul>");
+    //          $this->rama($zona);
+    //          write ("</ul>");
+    //
+    //    }
+    //     write ("</li>");
+    //
+    //
+    //
+    //}
 
     public function __load() 
     {
         $zone=getViewZone();
 
         $html=getModule("HTML");
-        $html->setStructure($zone->get("Structure",getSessionValue("Structure", getValue("Structure", "Default"))));
+        $html->setStructure($zone->get("Structure", getSessionValue("Structure", getValue("Structure", "Default"))));
 
-//        $html->write("<br>");$html->write("<br>");
-//        $html->write($zone->getText());
-//        $html->write("<br>");$html->write("<br>");
+        //        $html->write("<br>");$html->write("<br>");
+        //        $html->write($zone->getText());
+        //        $html->write("<br>");$html->write("<br>");
 
-$this->getChild($html->container);
+        $this->getChild($html->container);
         
 
     }
@@ -173,12 +180,13 @@ $this->getChild($html->container);
         $a=array();
         $sub=new Repeater("Navigation");
         $this->doParents($a, $zone);
-        $sub->doRepeat($a,$container);
+        $sub->doRepeat($a, $container);
     }
     private function doParents(&$parents,$zone)
     {
-        if ($zone===false)
+        if ($zone===false) {
             return;
+        }
             
         $this->doParents($parents, $zone->getParent());
 
@@ -200,7 +208,8 @@ $this->getChild($html->container);
         }        
         $container->addChild($sub->doRepeat($a));
     }
-    public function __unload() {
+    public function __unload()
+    {
     }
 
     function setup()

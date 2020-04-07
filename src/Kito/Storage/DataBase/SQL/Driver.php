@@ -23,7 +23,8 @@ use Kito\DataBase\SQL\Exception\TooManyRowsException;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-abstract class Driver {
+abstract class Driver
+{
 
     public abstract function isConnected();
 
@@ -53,65 +54,79 @@ abstract class Driver {
 
     public abstract function copyTable($sourceTable, $destinationTable);
 
-    public final function getArray($table, $column, $where = array()) {
+    public final function getArray($table, $column, $where = array())
+    {
         $r = array();
 
-        foreach ($this->select($table, array($column), $where) as $ROW)
+        foreach ($this->select($table, array($column), $where) as $ROW) {
             array_push($r, $ROW[$column]);
+        }
 
         return $r;
     }
 
-    public final function getHashMap($table, $columnKey, $columnValue, $where = array()) {
+    public final function getHashMap($table, $columnKey, $columnValue, $where = array())
+    {
         $r = array();
 
-        foreach ($this->select($table, array($columnKey, $columnValue), $where) as $ROW)
+        foreach ($this->select($table, array($columnKey, $columnValue), $where) as $ROW) {
             $r[$ROW[$columnKey]] = $ROW[$columnValue];
+        }
 
         return $r;
     }
 
-    public final function getRow($table, $column = array(), $where = array()) {
+    public final function getRow($table, $column = array(), $where = array())
+    {
         $RS = $this->select($table, $column, $where, 2);
 
-        if (count($RS) > 1)
+        if (count($RS) > 1) {
             throw new TooManyRowsException();
+        }
 
-        if (count($RS) == 0)
+        if (count($RS) == 0) {
             return null;
+        }
 
         return $RS[0];
     }
 
-    public final function getText($table, $column, $where = array()) {
+    public final function getText($table, $column, $where = array())
+    {
         $ROW = $this->getRow($table, array($column), $where);
 
-        if ($ROW == NULL)
-            return NULL;
+        if ($ROW == null) {
+            return null;
+        }
 
         return $ROW[$column];
     }
 
-    public final function autoTable($table, $data, $column = array(), $create = true) {
+    public final function autoTable($table, $data, $column = array(), $create = true)
+    {
         $rs = $this->select($table, $column, $data, 1);
 
-        if (count($rs) > 0)
+        if (count($rs) > 0) {
             return $rs[0];
-        else if ($create) {
+        } else if ($create) {
             if ($this->insert($table, $data)) {
                 $rs = $this->select($table, $column, $data, 1);
 
-                if (count($rs) > 0)
+                if (count($rs) > 0) {
                     return $rs[0];
-                else
+                } else {
                     throw new InsertException(print_r(array($table, $data), true));
-            } else
+                }
+            } else {
                 throw new InsertException(print_r(array($table, $data), true));
-        } else
+            }
+        } else {
             return null;
+        }
     }
 
-    public final function autoUpdate($table, $data, $index) {
+    public final function autoUpdate($table, $data, $index)
+    {
         $UPDATES = 0;
 
         $ROW = $this->autoTable($table, $index);
@@ -126,35 +141,42 @@ abstract class Driver {
             $data[strtolower($KEY)] = $VALUE;
         }
 
-        foreach ($ROW as $KEY => $VALUE)
+        foreach ($ROW as $KEY => $VALUE) {
             if (array_key_exists($KEY, $data) && $VALUE != $data[$KEY]) {
                 $this->update($table, array($KEY => $data[$KEY]), $index, 1);
                 $UPDATES++;
             }
+        }
 
         return $UPDATES;
     }
 
-    public final function autoInsert($table, $data) {
+    public final function autoInsert($table, $data)
+    {
         $rs = $this->select($table, array(), $data, 1);
 
-        if (count($rs) > 0)
+        if (count($rs) > 0) {
             return true;
+        }
 
-        if ($this->insert($table, $data))
+        if ($this->insert($table, $data)) {
             return true;
+        }
 
         return false;
     }
 
-    public function getTablesWithPrefix($prefix) {
+    public function getTablesWithPrefix($prefix)
+    {
         $prefixLen = strlen($prefix);
 
         $_ = array();
 
-        foreach ($this->getTables() as $table)
-            if (substr($table, 0, $prefixLen) == $prefix)
+        foreach ($this->getTables() as $table) {
+            if (substr($table, 0, $prefixLen) == $prefix) {
                 $_[] = $table;
+            }
+        }
 
         return $_;
     }

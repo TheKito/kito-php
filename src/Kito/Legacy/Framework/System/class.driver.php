@@ -21,14 +21,21 @@
 abstract class Driver
 {
     var $zone=false;
-    function getTablesZone(){return getZone(getDBDriver("System"), "Tables",  $this->zone,true);}
-    function getColZone($table,$col){return getZone(getDBDriver("System"), $col, getTableZone($table),true);}
+    function getTablesZone()
+    {
+        return getZone(getDBDriver("System"), "Tables",  $this->zone, true);
+    }
+    function getColZone($table,$col)
+    {
+        return getZone(getDBDriver("System"), $col, getTableZone($table), true);
+    }
     function getTableZone($table)
     {
-        if(!$this->existTable($table))
+        if(!$this->existTable($table)) {
             return false;
+        }
 
-        return getZone(getDBDriver("System"), $table, $this->getTablesZone(),true);
+        return getZone(getDBDriver("System"), $table, $this->getTablesZone(), true);
     }
 
 
@@ -41,18 +48,21 @@ abstract class Driver
         $insert2="";
         foreach ($cols as $name => $value)
         {
-            if ($insert!="")
+            if ($insert!="") {
                 $insert.=",";
+            }
             $insert.=$name;
 
-            if ($insert2!="")
+            if ($insert2!="") {
                 $insert2.=",";
+            }
             $insert2.="'".$value."'";
 
-            if ($query!="")
+            if ($query!="") {
                 $query.=" and ";
-            else
+            } else {
                 $query.=" ";
+            }
 
             $query.=$name."='".$value."'";
         }
@@ -60,64 +70,73 @@ abstract class Driver
         $insert="insert into $table (".$insert.") values (".$insert2.");";
 
         $rs=$this->query($query);
-        if ($rs===false)
+        if ($rs===false) {
             return false;
-
-        if ($rs->first())
-            return $rs->get();
-
-
-        if($create)
-        {
-            if ($this->command($insert))
-                return $this->autoTable($table, $cols);
-            else
-                return false;
         }
-        else
+
+        if ($rs->first()) {
+            return $rs->get();
+        }
+
+
+        if($create) {
+            if ($this->command($insert)) {
+                return $this->autoTable($table, $cols);
+            } else {
+                return false;
+            }
+        }
+        else {
             return false;
+        }
     }
     //Data
 
     /**
-    * execute query without any resultset
-    * @return boolean
-    */
+     * execute query without any resultset
+     *
+     * @return boolean
+     */
     abstract function command($query);
 
     /**
-    * execute quer
-    * @return IResultSet
-    */
+     * execute quer
+     *
+     * @return IResultSet
+     */
     abstract function query($query);
 
 
     //Structure
 
     /**
-    * List database tables
-    * @return Array<String> tables name
-    */
+     * List database tables
+     *
+     * @return Array<String> tables name
+     */
     abstract function getTables();
 
     /**
-    * List table cols
-    * @return Array<String,Array<String,String>> col name, {Attribute,Value}
-    */
+     * List table cols
+     *
+     * @return Array<String,Array<String,String>> col name, {Attribute,Value}
+     */
     abstract function getTableCols($table);
 
     /**
-    * Create/Update/Remove table
-    * @param tablename, array<String,array<Attribute,Value>> Cols
-    * @return boolean
-    */
+     * Create/Update/Remove table
+     *
+     * @param  tablename, array<String,array<Attribute,Value>> Cols
+     * @return boolean
+     */
     abstract function alterTable($table,$cols);
 
     /**
-    * check if exist table
-    * @param tablename
-    * @return boolean
-    */
+     * check if exist table
+     *
+     * @param  tablename
+     * @return boolean
+     */
     abstract function existTable($table);
 
     abstract function getStats();

@@ -22,7 +22,7 @@ class StateCity extends CountryState
 {
     private $zone3;
 
-    public function  __construct($root_zone,$contry_code,$state_code,$city_code)
+    public function __construct($root_zone,$contry_code,$state_code,$city_code)
     {
         parent::__construct($root_zone, $contry_code, $state_code);
         $this->zone3=parent::getParentZone()->get($city_code);
@@ -36,9 +36,11 @@ class StateCity extends CountryState
     {
         $list=array();
 
-        foreach (self::getCityZone()->getZones() as $zone)
-            if($zone->getAttribute("Type")->get()=="Street")
-                $list[$zone->getName()]=new CityStreet (parent::getRootZone (), parent::getCountryZone()->getName(), parent::getStateZone()->getName(), self::getCityZone()->getName(), $zone->getName());
+        foreach (self::getCityZone()->getZones() as $zone) {
+            if($zone->getAttribute("Type")->get()=="Street") {
+                $list[$zone->getName()]=new CityStreet(parent::getRootZone(), parent::getCountryZone()->getName(), parent::getStateZone()->getName(), self::getCityZone()->getName(), $zone->getName());
+            }
+        }
 
         return $list;
     }

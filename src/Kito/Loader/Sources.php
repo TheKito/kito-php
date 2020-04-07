@@ -20,9 +20,11 @@ namespace Kito\Loader;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Sources {
+class Sources
+{
 
-    public static function attach(Loader $loader) {
+    public static function attach(Loader $loader)
+    {
         $loader->addRepository('/Psr/Log', 'https://raw.githubusercontent.com/php-fig/log/master/Psr/Log');
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message/master/src');
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-factory/master/src');

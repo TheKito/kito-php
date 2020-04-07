@@ -19,31 +19,34 @@
  * @author The Blankis < blankitoracing@gmail.com >
  */
 
-class BLKMySql {
+class BLKMySql
+{
 
     public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
     {
-        static $CNNs = NULL;
+        static $CNNs = null;
 
-        if($CNNs === NULL)
+        if($CNNs === null) {
             $CNNs = array();
+        }
 
         $KEY = implode(',', array($server,$database,$user,$password));
 
-        if(!isset($CNNs[$KEY]))
-            $CNNs[$KEY] = new self($server, $database, $user, $password); 
+        if(!isset($CNNs[$KEY])) {
+            $CNNs[$KEY] = new self($server, $database, $user, $password);
+        } 
 
         return $CNNs[$KEY];   
     }
     
     public static function getSqlConnectionServerAccount($server,$database)
     {
-        return self::getMySqlConnection($server,$database, strtoupper(gethostname()), NULL);
+        return self::getMySqlConnection($server, $database, strtoupper(gethostname()), null);
     }
     
-    public static function getSqlConnectionLocalHost($database,$user,$password = NULL)
+    public static function getSqlConnectionLocalHost($database,$user,$password = null)
     {
-        return self::getMySqlConnection('127.0.0.1',$database,$user,$password);
+        return self::getMySqlConnection('127.0.0.1', $database, $user, $password);
     }    
     
     private $server = "127.0.0.1";
@@ -51,13 +54,15 @@ class BLKMySql {
     private $user = "test";
     private $password = null;
     private $cnn = null;
-    var $__DEBUG = FALSE;
+    var $__DEBUG = false;
 
-    public function getId() {
+    public function getId()
+    {
         return md5($this->server . $this->user . $this->password . $this->database);
     }
 
-    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null) {
+    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
+    {
         $this->server = $server;
         $this->database = $database;
         $this->user = $user;
@@ -66,23 +71,28 @@ class BLKMySql {
         $this->connect();
     }
 
-    public function isConnected() {
-        if ($this->cnn === NULL)
+    public function isConnected()
+    {
+        if ($this->cnn === null) {
             return false;
+        }
 
         return @$this->cnn->ping();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->disconnect();
     }
 
-    public function connect() {
+    public function connect()
+    {
         if (!$this->isConnected()) {
             $this->cnn = new mysqli($this->server, $this->user, $this->password, $this->database);
 
-            if ($this->cnn->connect_errno > 0)
+            if ($this->cnn->connect_errno > 0) {
                 throw new SqlException($this->cnn->connect_error, $this->cnn->connect_errno);
+            }
             
             $this->cnn->set_charset("utf8");
         }
@@ -90,30 +100,35 @@ class BLKMySql {
         return true;
     }
 
-    public function disconnect() {
-        if ($this->isConnected())
+    public function disconnect()
+    {
+        if ($this->isConnected()) {
             return @$this->cnn->close();
+        }
 
         return true;
     }
 
-    private function doCall($sql) {
+    private function doCall($sql)
+    {
         $this->connect();
 
         //echo "$sql\n";
 
         $rs = $this->cnn->query($sql);
 
-        if ($rs === false)
+        if ($rs === false) {
             throw new SqlException($this->cnn->error, $this->cnn->errno);
+        }
 
-        if ($rs === true)
+        if ($rs === true) {
             return true;
-        else {
+        } else {
             $data = array();
 
-            while ($row = $rs->fetch_assoc())
+            while ($row = $rs->fetch_assoc()) {
                 array_push($data, $row);
+            }
 
             $rs->free();
 
@@ -121,7 +136,8 @@ class BLKMySql {
         }
     }
 
-    public function query($query) {
+    public function query($query)
+    {
         try {
 
             $t = microtime(true);
@@ -130,8 +146,9 @@ class BLKMySql {
 
             $t = round(microtime(true) - $t, 3);
 
-            if ($this->__DEBUG && $t>1)
+            if ($this->__DEBUG && $t>1) {
                 echo "QUERY ($t): " . $query . PHP_EOL;
+            }
 
             return $rs;
         } catch (SqlException $e) {
@@ -139,7 +156,8 @@ class BLKMySql {
         }
     }
 
-    public function command($command) {
+    public function command($command)
+    {
         try {
 
             $t = microtime(true);
@@ -148,8 +166,9 @@ class BLKMySql {
 
             $t = round(microtime(true) - $t, 3);
 
-            if ($this->__DEBUG)
+            if ($this->__DEBUG) {
                 echo "COMMAND ($t): " . $command . PHP_EOL;
+            }
 
             return true;
         } catch (SqlException $e) {
@@ -157,7 +176,8 @@ class BLKMySql {
         }
     }
 
-    public function delete($table, $where = array(), $limit = 100) {
+    public function delete($table, $where = array(), $limit = 100)
+    {
         try {
             return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (SqlException $ex) {
@@ -165,7 +185,8 @@ class BLKMySql {
         }
     }
 
-    public function insert($table, $data = array()) {
+    public function insert($table, $data = array())
+    {
         try {
             return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
         } catch (SqlException $ex) {
@@ -173,7 +194,8 @@ class BLKMySql {
         }
     }
 
-    public function update($table, $data, $where = array(), $limit = 0) {
+    public function update($table, $data, $where = array(), $limit = 0)
+    {
         try {
             return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (SqlException $ex) {
@@ -181,18 +203,21 @@ class BLKMySql {
         }
     }
 
-    public function select($table, $col = array(), $where = array(), $limit = 100, $rand = false) {
+    public function select($table, $col = array(), $where = array(), $limit = 100, $rand = false)
+    {
         try {
-            if($rand)
+            if($rand) {
                 return $this->query("SELECT " . self::arrayToSelect($col) . " FROM " . $table . $this->arrayToWhere($where) . ' ORDER BY RAND() ' . self::getLimit($limit));
-            else
+            } else {
                 return $this->query("SELECT " . self::arrayToSelect($col) . " FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
+            }
         } catch (SqlException $ex) {
             SqlException::throwSelectException($ex);
         }
     }
 
-    public function count($table, $where = array()) {
+    public function count($table, $where = array())
+    {
         try {
             $rs = $this->query("SELECT COUNT(*) as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -202,14 +227,17 @@ class BLKMySql {
         }
     }
 
-    protected static function getLimit($limit) {
-        if (is_numeric($limit) && $limit > 0)
+    protected static function getLimit($limit)
+    {
+        if (is_numeric($limit) && $limit > 0) {
             return " LIMIT " . $limit . ";";
-        else
+        } else {
             return ";";
+        }
     }
 
-    public function getTables() {
+    public function getTables()
+    {
         $tables = array();
 
         foreach ($this->query("SHOW TABLES;") as $ROW) {
@@ -222,22 +250,26 @@ class BLKMySql {
         return $tables;
     }
 
-    public function getDatabase() {
+    public function getDatabase()
+    {
         return $this->database;
     }
 
-    public function getRows($table, $count) {
-        static $pos = NULL;
+    public function getRows($table, $count)
+    {
+        static $pos = null;
 
-        if ($pos === NULL)
+        if ($pos === null) {
             $pos = array();
+        }
 
         $hash = $table;
 
-        if (isset($pos[$hash]))
+        if (isset($pos[$hash])) {
             $start = $pos[$hash];
-        else
+        } else {
             $start = 0;
+        }
 
         $pos[$hash] = $start + $count;
 
@@ -247,156 +279,190 @@ class BLKMySql {
         if (count($rs) == 0) {
             $pos[$hash] = 0;
 
-            if ($start > 0)
+            if ($start > 0) {
                 return $this->getRows($table, $count);
+            }
         }
 
         return $rs;
     }
 
-    protected function arrayToWhere($data) {
+    protected function arrayToWhere($data)
+    {
         $t = $this->arrayToEqual($data);
-        if ($t != "")
+        if ($t != "") {
             return " where " . $t;
-        else
+        } else {
             return "";
+        }
     }
 
-    protected  function arrayToEqual($data, $and = "and", $null_case = "is null") {
+    protected  function arrayToEqual($data, $and = "and", $null_case = "is null")
+    {
         $t = "";
         foreach ($data as $key => $value) {
-            if ($t != "")
+            if ($t != "") {
                 $t.=" $and ";
+            }
 
-            if(strpos($key, '!')===0)
-            {
+            if(strpos($key, '!')===0) {
                 $key = substr($key, 1);
                 $t.='not ';
             }
             
-            if ($value === null)
+            if ($value === null) {
                 $t.="`".$key . "` " . $null_case;
-            else
-                $t.="`".$key . "`='" . mysqli_real_escape_string($this->cnn,$value) . "'";
+            } else {
+                $t.="`".$key . "`='" . mysqli_real_escape_string($this->cnn, $value) . "'";
+            }
         }
         return $t;
     }
 
-    protected static function arrayToSelect($data) {
+    protected static function arrayToSelect($data)
+    {
         $t = "";
         foreach ($data as $value) {
-            if ($t != "")
+            if ($t != "") {
                 $t.=",";
+            }
 
             $t.="`".$value."`";
         }
-        if ($t != "")
+        if ($t != "") {
             return $t;
-        else
+        } else {
             return "*";
+        }
     }
 
-    protected  function arrayToInsert($data) {
+    protected  function arrayToInsert($data)
+    {
         $t0 = "";
         $t1 = "";
         foreach ($data as $key => $value) {
-            if ($t0 != "")
+            if ($t0 != "") {
                 $t0.=",";
+            }
 
-            if ($t1 != "")
+            if ($t1 != "") {
                 $t1.=",";
+            }
 
             $t0.="`".$key."`";
 
-            if ($value === null)
+            if ($value === null) {
                 $t1.="null";
-            else
-                $t1.="'" . mysqli_real_escape_string($this->cnn,$value) . "'";
+            } else {
+                $t1.="'" . mysqli_real_escape_string($this->cnn, $value) . "'";
+            }
         }
 
         return "(" . $t0 . ") VALUES (" . $t1 . ")";
     }
 
-    public function selectRow($table, $col = array(), $where = array()) {
+    public function selectRow($table, $col = array(), $where = array())
+    {
         $RS = $this->select($table, $col, $where, 2);
 
-        if (count($RS) > 1)
+        if (count($RS) > 1) {
             SqlException::throwTooManyRows();
+        }
 
-        if (count($RS) == 0)
+        if (count($RS) == 0) {
             return null;
+        }
 
         return $RS[0];
     }
 
-    public function getText($table, $col, $where = array()) {
+    public function getText($table, $col, $where = array())
+    {
         $ROW = $this->selectRow($table, array($col), $where);
 
-        if ($ROW == NULL)
-            return NULL;
+        if ($ROW == null) {
+            return null;
+        }
 
         return $ROW[$col];
     }
 
-    public function getArray($table, $colKey, $colValue, $where = array()) {
+    public function getArray($table, $colKey, $colValue, $where = array())
+    {
         $r = array();
 
-        foreach ($this->select($table, array($colKey, $colValue), $where) as $ROW)
+        foreach ($this->select($table, array($colKey, $colValue), $where) as $ROW) {
             $r[$ROW[$colKey]] = $ROW[$colValue];
+        }
 
         return $r;
     }
     
-    public function getList($table, $col, $where = array()) {
+    public function getList($table, $col, $where = array())
+    {
         $r = array();
 
-        foreach ($this->select($table, array($col), $where) as $ROW)
-            array_push ($r, $ROW[$col]);
+        foreach ($this->select($table, array($col), $where) as $ROW) {
+            array_push($r, $ROW[$col]);
+        }
             
         return $r;
     }
     
-    function autoTable($table, $data, $col = array(), $create = true) {
+    function autoTable($table, $data, $col = array(), $create = true)
+    {
         $rs = $this->select($table, $col, $data, 1);
 
-        if (count($rs) > 0)
+        if (count($rs) > 0) {
             return $rs[0];
-        else if ($create) {
+        } else if ($create) {
             //$data["ID"] = getUID($table);
             if ($this->insert($table, $data)) {
                 $rs = $this->select($table, $col, $data, 1);
 
-                if (count($rs) > 0)
+                if (count($rs) > 0) {
                     return $rs[0];
-                else
+                } else {
                     SqlException::throwInsertException($table, $data);
-            } else
+                }
+            } else {
                 SqlException::throwInsertException($table, $data);
-        } else
+            }
+        } else {
             return null;
+        }
     }
     
-    function insertUnique($table, $data){return $this->autoInsert($table, $data);}
+    function insertUnique($table, $data)
+    {
+        return $this->autoInsert($table, $data);
+    }
     
-    function autoInsert($table, $data) {
+    function autoInsert($table, $data)
+    {
         $rs = $this->select($table, array(), $data, 1);
 
-        if (count($rs) > 0)
+        if (count($rs) > 0) {
             return true;
+        }
         
-        if ($this->insert($table, $data))
-            return true;        
+        if ($this->insert($table, $data)) {
+            return true;
+        }        
         
         return false;
     }
     
-    function upgradeTable($table, $data, $index){return $this->autoUpdate($table, $data, $index);}
+    function upgradeTable($table, $data, $index)
+    {
+        return $this->autoUpdate($table, $data, $index);
+    }
             
     function autoUpdate($table, $data, $index)
     {
         $UPDATES = 0;
         
-        $ROW = $this->autoTable($table,$index);
+        $ROW = $this->autoTable($table, $index);
         
         foreach($ROW as $KEY => $VALUE)
         {
@@ -410,12 +476,12 @@ class BLKMySql {
             $data[strtolower($KEY)] = $VALUE;
         }     
         
-        foreach($ROW as $KEY => $VALUE)
-            if(array_key_exists ($KEY, $data) && $VALUE!=$data[$KEY])            
-            {
-                $this->update($table,array($KEY=>$data[$KEY]),$index, 1);                            
+        foreach($ROW as $KEY => $VALUE) {
+            if(array_key_exists($KEY, $data) && $VALUE!=$data[$KEY]) {
+                $this->update($table, array($KEY=>$data[$KEY]), $index, 1);                            
                 $UPDATES++;
             }
+        }
             
         return $UPDATES;
     }
@@ -427,19 +493,22 @@ class BLKMySql {
 }
 
 class SqlException extends Exception
-{ 
+{
+
+ 
 
     public function __construct($message, $code, $previous = null)
     {
-        if(!$previous instanceof Exception)
+        if(!$previous instanceof Exception) {
             parent::__construct($message, $code);
-        else
-            parent::__construct($message." > ".$previous->getMessage(), $code);	
+        } else {
+            parent::__construct($message." > ".$previous->getMessage(), $code);
+        }    
     }    
     
     private static function getException($message,$error)
     {        
-        return new SqlException($message, $error, NULL);
+        return new SqlException($message, $error, null);
     }
     
     public static function throwSelectDBException($db,$message,$error)
@@ -454,12 +523,12 @@ class SqlException extends Exception
     
     public static function throwGetResultSetException($query,$message,$error)
     {        
-        throw new SqlException("Get ResultSet Exception", 20003, self::getQueryException($query,$message,$error));
+        throw new SqlException("Get ResultSet Exception", 20003, self::getQueryException($query, $message, $error));
     }
     
     public static function throwCommandException($command,$message,$error)
     {        
-        throw new SqlException("Command Exception", 20004, self::getQueryException($command,$message,$error));
+        throw new SqlException("Command Exception", 20004, self::getQueryException($command, $message, $error));
     }    
     
     public static function throwDeleteException($commandException)
@@ -494,6 +563,6 @@ class SqlException extends Exception
     
     public static function throwConnectException($server,$user,$message,$error)
     {        
-        throw new SqlException("Connect Exception $user@$server", 20010, self::getException($message,$error));
+        throw new SqlException("Connect Exception $user@$server", 20010, self::getException($message, $error));
     }            
 }

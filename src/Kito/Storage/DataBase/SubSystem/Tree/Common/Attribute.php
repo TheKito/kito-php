@@ -57,14 +57,17 @@ class Attribute extends DataThree
         $anid=parent::getValue0($id);
         $avid=parent::getValue1($id);
 
-        if(!parent::delete($id))
+        if(!parent::delete($id)) {
             return false;
+        }
         
-        if(!parent::inUse(self::$tableValue0, $anid))
-            $this->an->delete ($anid);
+        if(!parent::inUse(self::$tableValue0, $anid)) {
+            $this->an->delete($anid);
+        }
 
-        if(!parent::inUse(self::$tableValue1, $avid))
-            $this->av->delete ($avid);
+        if(!parent::inUse(self::$tableValue1, $avid)) {
+            $this->av->delete($avid);
+        }
 
         return true;
 

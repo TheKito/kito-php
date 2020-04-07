@@ -22,7 +22,7 @@ class CityStreet extends StateCity
 {
     private $zone4;
 
-    public function  __construct($root_zone,$contry_code,$state_code,$city_code,$street_code)
+    public function __construct($root_zone,$contry_code,$state_code,$city_code,$street_code)
     {
         parent::__construct($root_zone, $contry_code, $state_code, $city_code);
 
@@ -37,9 +37,11 @@ class CityStreet extends StateCity
     {
         $list=array();
 
-        foreach (self::getStreetZone()->getZones() as $zone)
-            if($zone->getAttribute("Type")->get()=="Number")
-                $list[$zone->getName()]=new StreetNumber (parent::getRootZone(), parent::getCountryZone ()->getName(), parent::getStateZone ()->getName(), parent::getCityZone ()->getName(), self::getStreetZone()->getName(), $zone->getName());
+        foreach (self::getStreetZone()->getZones() as $zone) {
+            if($zone->getAttribute("Type")->get()=="Number") {
+                $list[$zone->getName()]=new StreetNumber(parent::getRootZone(), parent::getCountryZone()->getName(), parent::getStateZone()->getName(), parent::getCityZone()->getName(), self::getStreetZone()->getName(), $zone->getName());
+            }
+        }
 
         return $list;
     }

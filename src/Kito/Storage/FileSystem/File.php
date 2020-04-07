@@ -39,28 +39,35 @@ class File extends FileSystem
     {
         parent::__construct($path);
         
-        if(parent::exists() && !parent::isFile())
+        if(parent::exists() && !parent::isFile()) {
             throw new NotIsFileException($path);
+        }
     }    
 
     
-    public final function getSize() {return self::pathFileSize($this);}    
+    public final function getSize()
+    {
+        return self::pathFileSize($this);
+    }    
 
     public final function delete()
     {
-        if(!parent::exists())
-            return;        
+        if(!parent::exists()) {
+            return;
+        }        
         
         parent::validateWritable();                
-        if(!unlink($this->__toString()))
-            throw new IOException ($this);
+        if(!unlink($this->__toString())) {
+            throw new IOException($this);
+        }
     }    
     
     
     public final function copyTo(File $destination)
     {
-        if(copy($this->__toString(), $destination->__toString())===FALSE)
-            throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());            
+        if(copy($this->__toString(), $destination->__toString())===false) {
+            throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());
+        }            
     }
     
     
@@ -85,15 +92,17 @@ class File extends FileSystem
     
     public final function create()
     {
-        if(parent::exists())
+        if(parent::exists()) {
             return;
+        }
                
         $this->getParent()->create();
         
         parent::validateWritable();
         
-        if(!touch ($this->__toString()))
-            throw new CreateFileException($this->__toString());  
+        if(!touch($this->__toString())) {
+            throw new CreateFileException($this->__toString());
+        }  
                          
     }    
 }

@@ -38,8 +38,9 @@ class AttributeZone extends DataThree
     {
         $lid=$this->getIdMagic($idz, $name);
 
-        if($this->getValue($lid)==$value)
+        if($this->getValue($lid)==$value) {
             return true;
+        }
 
         $this->getId($idz, $name, $value);
         $this->delete($lid);
@@ -48,12 +49,13 @@ class AttributeZone extends DataThree
     public function get($idz,$name,$default=null)
     {
         $lid=$this->getIdMagic($idz, $name);
-        if($lid!=null)
+        if($lid!=null) {
             return $this->getValue($lid);
-        else
+        } else
         {
-            if($default!=null)
+            if($default!=null) {
                 $this->getId($idz, $name, $value);
+            }
             return $default;
         }
     }
@@ -65,13 +67,14 @@ class AttributeZone extends DataThree
 
     private function getIdMagic($idz,$name)
     {
-        $rs=$this->getCnn()->select(self::$tableName,array(self::$tablePk,self::$tableValue1),array(self::$tableValue0=>$idz),0);
+        $rs=$this->getCnn()->select(self::$tableName, array(self::$tablePk,self::$tableValue1), array(self::$tableValue0=>$idz), 0);
       
         foreach ($rs as $row)
         {
 
-            if($this->a->getName($row[self::$tableValue1])==strtoupper($name))
+            if($this->a->getName($row[self::$tableValue1])==strtoupper($name)) {
                 return $row[self::$tablePk];
+            }
         }
         return null;
     }
@@ -79,16 +82,16 @@ class AttributeZone extends DataThree
     public function getAttributes($idz,$limit=null)
     {
         $a=array();
-        $rs=$this->getCnn()->select(self::$tableName,array(self::$tableValue1),array(self::$tableValue0=>$idz),0);
+        $rs=$this->getCnn()->select(self::$tableName, array(self::$tableValue1), array(self::$tableValue0=>$idz), 0);
         
         foreach ($rs as $row)
         {
-            if($limit!=null)
-            {
-                if($limit<=0)
+            if($limit!=null) {
+                if($limit<=0) {
                     break;
-                else
+                } else {
                     $limit--;
+                }
             }
 
             array_push($a, $this->a->getName($row[self::$tableValue1]));        
@@ -103,32 +106,37 @@ class AttributeZone extends DataThree
 
     private function getName($id)
     {
-        if($id==null)
+        if($id==null) {
             return null;
+        }
 
         return $this->a->getName(parent::getValue1($id));
     }
 
     protected function getValue($id)
     {
-        if($id==null)
+        if($id==null) {
             return null;
+        }
 
         return $this->a->getValue(parent::getValue1($id));
     }
 
     protected function delete($id)
     {
-        if($id==null)
+        if($id==null) {
             return false;
+        }
 
         $aid=parent::getValue1($id);
 
-        if(!parent::delete($id))
+        if(!parent::delete($id)) {
             return false;
+        }
 
-        if(!parent::inUse(self::$tableValue1, $aid))//check node
-            $this->a->delete ($aid);
+        if(!parent::inUse(self::$tableValue1, $aid)) { //check node
+            $this->a->delete($aid);
+        }
 
         return true;
     }

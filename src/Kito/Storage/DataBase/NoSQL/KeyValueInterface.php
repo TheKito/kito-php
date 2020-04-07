@@ -21,7 +21,8 @@ namespace Kito\DataBase\NoSQL;
  *
  * @author TheKito
  */
-interface KeyValueInterface {
+interface KeyValueInterface
+{
 
     public function get(string $key);
 

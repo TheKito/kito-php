@@ -20,34 +20,40 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The Blankis < blankitoracing@gmail.com >
  */
-class DataFour extends DataN {
+class DataFour extends DataN
+{
 
     private $tableCol0;
     private $tableCol1;
     private $tableCol2;
 
-    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1, $tableCol2) {
+    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1, $tableCol2)
+    {
         parent::__construct($driver, $tableName, $tablePK);
         $this->tableCol0 = $tableCol0;
         $this->tableCol1 = $tableCol1;
         $this->tableCol2 = $tableCol2;
     }
 
-    public function getId($value0, $value1, $value2, $create = true) {
+    public function getId($value0, $value1, $value2, $create = true)
+    {
         return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1, $this->tableCol2 => $value2), $create);
     }
 
-    public function getValue0($id) {
+    public function getValue0($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol0];
     }
 
-    public function getValue1($id) {
+    public function getValue1($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol1];
     }
 
-    public function getValue2($id) {
+    public function getValue2($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol2];
     }

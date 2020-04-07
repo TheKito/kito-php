@@ -20,22 +20,23 @@
 class Message
 {
     protected $base_zone;
-    private function  __construct($container_zone,$message_id=null)
+    private function __construct($container_zone,$message_id=null)
     {
         $z=$container_zone->get("Messages");
 
-        if($message_id==null)
-        {
+        if($message_id==null) {
             $count=$z->getAttribute("Count")->get(0);
             $count++;
 
-            if($z->getAttribute("Count")->set($count)===false)
-                throw new Exception ("Can not create new message id");
+            if($z->getAttribute("Count")->set($count)===false) {
+                throw new Exception("Can not create new message id");
+            }
 
             $this->base_zone=$z->get($count);
         }
-        else
+        else {
             $this->base_zone=$z->get($message_id);
+        }
 
         $this->base_zone->getAttribute("Type")->set("Message");
     }

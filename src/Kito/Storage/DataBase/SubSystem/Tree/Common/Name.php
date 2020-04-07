@@ -24,7 +24,7 @@ class Name extends DataPair64
     private static $tablePk="NAME_ID";
     private static $tableValue="NAME_VALUE";
 
-    public function  __construct($cnn)
+    public function __construct($cnn)
     {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue);
     }
@@ -34,7 +34,7 @@ class Name extends DataPair64
         return parent::getId(strtoupper($value));
     }
 
-    public function  getValue($id)
+    public function getValue($id)
     {
         return strtoupper(parent::getValue($id));
     }

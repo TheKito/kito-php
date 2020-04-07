@@ -18,88 +18,125 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class User {
+class User
+{
     private $zone=false;
     private $groups_name=array();
     var $id=false;
-    private static function calcHash($value,$mode){
-        if($mode===false || $mode=="")
+    private static function calcHash($value,$mode)
+    {
+        if($mode===false || $mode=="") {
             return $value;
-        else
+        } else {
             return eval("return ".$mode."('".$value."');");
+        }
     }
-    private static function getById($id){
+    private static function getById($id)
+    {
         $z=Zone::getZone($id);
 
-        if(!($z instanceof zone))
+        if(!($z instanceof zone)) {
             return false;
+        }
         
-        if(!$z->getParent()->equals(getUsersZone()))
+        if(!$z->getParent()->equals(getUsersZone())) {
             return false;
+        }
         
         return new User($z);
 
     }
-    private static function getByName($name,$domain,$create=true){
-        $z=User::getZone($name,$domain,$create);
-        if($z===false)
+    private static function getByName($name,$domain,$create=true)
+    {
+        $z=User::getZone($name, $domain, $create);
+        if($z===false) {
             return false;
-        else
+        } else {
             return new User($z);
+        }
     }
-    private static function getZone($name,$domain,$create=true){
-        if($name=="root" || $name=="admin" || $name=="webmaster")
+    private static function getZone($name,$domain,$create=true)
+    {
+        if($name=="root" || $name=="admin" || $name=="webmaster") {
             $system=true;
-        else
+        } else {
             $system=false;
+        }
 
-        return Zone::getZoneByName(md5($name)."@".crc32($domain), getUsersZone(), $system,false,$create);
+        return Zone::getZoneByName(md5($name)."@".crc32($domain), getUsersZone(), $system, false, $create);
     }
 
-    private function  __construct($zone){
+    private function __construct($zone)
+    {
         $this->zone=$zone;
         $this->id=$zone->id;
         $this->groups_name=$this->zone->getList("Groups");
     }
-    private function getLocalPassword(){return $this->zone->get("AuthPassword","Unknow");}
-    private function getLocalPasswordHash(){return $this->zone->get("AuthHash","sha1");}
-    private function changeLocalPassword($password){
-        return $this->zone->set("AuthPassword",User::calcHash($password,$this->getLocalPasswordHash()));
+    private function getLocalPassword()
+    {
+        return $this->zone->get("AuthPassword", "Unknow");
     }
-    private function setAuthMethod($module){return $this->zone->set("AuthMethod",$module);}
+    private function getLocalPasswordHash()
+    {
+        return $this->zone->get("AuthHash", "sha1");
+    }
+    private function changeLocalPassword($password)
+    {
+        return $this->zone->set("AuthPassword", User::calcHash($password, $this->getLocalPasswordHash()));
+    }
+    private function setAuthMethod($module)
+    {
+        return $this->zone->set("AuthMethod", $module);
+    }
     
-    public function validLocalPassword($pass){return $this->getLocalPassword()==User::calcHash($pass,$this->getLocalPasswordHash());}
-    public function getAuthMethod(){return ($this->zone->get("AuthMethod","")=="")?false:$this->zone->get("Module","");}
-    public function addGroup($group){return $this->groups_name->add($group->getName());}
-    public function removeGroup($group){return $this->groups_name->remove($group->getName());}
-    public function getGroups(){
+    public function validLocalPassword($pass)
+    {
+        return $this->getLocalPassword()==User::calcHash($pass, $this->getLocalPasswordHash());
+    }
+    public function getAuthMethod()
+    {
+        return ($this->zone->get("AuthMethod", "")=="")?false:$this->zone->get("Module", "");
+    }
+    public function addGroup($group)
+    {
+        return $this->groups_name->add($group->getName());
+    }
+    public function removeGroup($group)
+    {
+        return $this->groups_name->remove($group->getName());
+    }
+    public function getGroups()
+    {
         $t=array();
-        foreach ($this->groups_name as $name)
+        foreach ($this->groups_name as $name) {
             array_push($t, Group::getGroup($name));
+        }
     }
 
-    public static function auth($name,$domain,$password,$authModule=false){
-        if($authModule!==false)
-        {
-            if(getModule($authModule)->authUser($name,$domain,$password))
-                $u=User::getByName($name, $domain,true);
-            else
+    public static function auth($name,$domain,$password,$authModule=false)
+    {
+        if($authModule!==false) {
+            if(getModule($authModule)->authUser($name, $domain, $password)) {
+                $u=User::getByName($name, $domain, true);
+            } else {
                 return false;
+            }
 
             $u->setAuthMethod($authModule);
         }
         else
         {
             $u=User::getByName($name, $domain, false);
-            if ($u===false)
+            if ($u===false) {
                 return false;
+            }
 
-            if(!$u->validLocalPassword($password))
+            if(!$u->validLocalPassword($password)) {
                 return false;
+            }
         }
 
-        if(function_exists("setSessionValue"))
-        {
+        if(function_exists("setSessionValue")) {
             setSessionValue("AuthID", $u->id);
             setSessionValue("AuthName", $name);
             setSessionValue("AuthDomain", $domain);
@@ -108,28 +145,33 @@ class User {
 
         return $u;
     }
-    public static function exist($name,$domain){
+    public static function exist($name,$domain)
+    {
         return User::getByName($name, $domain, false)!==false;
     }
-    public static function get(){
-        if(!function_exists("getSessionValue"))
+    public static function get()
+    {
+        if(!function_exists("getSessionValue")) {
             return false;
+        }
 
         return User::getById(getSessionValue("AuthID", 0));
     }
     public static function changePassword($name,$domain,$password,$newpassword,$authModule=false)
     {
-        if ($authModule!==false)
-            return getModule($authModule)->changeUserPassword($name,$domain,$password,$newpassword);
-        else
+        if ($authModule!==false) {
+            return getModule($authModule)->changeUserPassword($name, $domain, $password, $newpassword);
+        } else
         {
-            $u=User::getByName($name,$domain,false);
+            $u=User::getByName($name, $domain, false);
             
-            if($u===false)
+            if($u===false) {
                 return false;
+            }
             
-            if(!$u->validLocalPassword($password))
+            if(!$u->validLocalPassword($password)) {
                 return false;
+            }
             
             return $u->changeLocalPassword($password);
             

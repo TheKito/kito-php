@@ -21,18 +21,22 @@ namespace Kito\DataBase\NoSQL\Queue\KeyValue;
  *
  * @author TheKito
  */
-class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
+class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
+{
 
-    public function dequeue() {
-        if ($this->isEmpty())
+    public function dequeue()
+    {
+        if ($this->isEmpty()) {
             return null;
+        }
 
         $id = $this->backend->decrement($this->getMainCounterName()) + 1;
 
         return $this->backend->get($this->getKeyItem($id));
     }
 
-    public function isEmpty(): bool {
+    public function isEmpty(): bool
+    {
         return parent::count() == 0;
     }
 

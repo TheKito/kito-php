@@ -1,5 +1,5 @@
 <?php
-include_once dirname(__FILE__).'/Zone/class.finalzone.php';
+require_once dirname(__FILE__).'/Zone/class.finalzone.php';
 $cnn=Sql::getConnection("mysql",  array("Server" => "127.0.0.1","User" => "root","Password" => "","Database" => "blk_tree"));
 $data= FinalZone::getRoot($cnn);
 

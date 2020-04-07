@@ -17,11 +17,11 @@
  *
  * @author The Blankis < blankitoracing@gmail.com >
  */
-class BLKTOR 
+class BLKTOR
 {
     public static function getNewTOR()
     {
-        while(true)
+        while(true) {
             try 
             {
                 $port = self::getFreePort();
@@ -30,8 +30,7 @@ class BLKTOR
                 
                 sleep(1);
                 
-                if($TOR->isConnectionReady())
-                {
+                if($TOR->isConnectionReady()) {
                     echo "TOR OK\n";
                     sleep(1);
                     $TOR->check();
@@ -43,7 +42,8 @@ class BLKTOR
             catch (Exception $ex) 
             {
                 echo "TOR ERROR ".$ex->getMessage()."\n";                
-            }  
+            }
+        }  
     }
     
     
@@ -62,11 +62,11 @@ class BLKTOR
    
     public function check()
     {
-        while(!$this->isConnectionReady())
+        while(!$this->isConnectionReady()) {
             try
             {
                 echo "ReStarting TOR on port #".$this->port."\n";
-                exec ('/bin/fuser -k '.$this->port.'/tcp');
+                exec('/bin/fuser -k '.$this->port.'/tcp');
 
                 sleep(5);
 
@@ -78,7 +78,8 @@ class BLKTOR
             catch (Exception $ex) 
             {
                 echo "TOR ERROR ".$ex->getMessage()."\n";                
-            } 
+            }
+        } 
     }
 
 
@@ -120,20 +121,21 @@ class BLKTOR
         
         file_put_contents($this->configPath, "SocksPort $this->port\nLog notice file $this->logPath\nRunAsDaemon 1\nDataDirectory $this->dataPath\nNickname relay$this->port\nExitPolicy reject *:*");
         
-//        foreach(scandir('/var/lib/tor/') as $fname)
-//            if($fname!='.' && $fname!='..' && is_file('/var/lib/tor/'.$fname))// && stristr($fname, 'cached-microdescs')!==false)
-//            {
-//                copy ('/var/lib/tor/'.$fname, $this->dataPath.$fname);    
-//                self::makeFile($this->dataPath.$fname);
-//            }
+        //        foreach(scandir('/var/lib/tor/') as $fname)
+        //            if($fname!='.' && $fname!='..' && is_file('/var/lib/tor/'.$fname))// && stristr($fname, 'cached-microdescs')!==false)
+        //            {
+        //                copy ('/var/lib/tor/'.$fname, $this->dataPath.$fname);    
+        //                self::makeFile($this->dataPath.$fname);
+        //            }
 
         passthru("cp -rv /var/lib/tor/cached-microdescs ".$this->dataPath);        
         passthru("cp -rv /var/lib/tor/cached-certs ".$this->dataPath);          
         $this->command = '/bin/su -c "/usr/sbin/tor -f '.$this->configPath.'" -s /bin/sh debian-tor';
                 
         $this->r_lock = fopen($this->lockPath, 'r+');      
-        if (!flock($this->r_lock, LOCK_EX|LOCK_NB))
-            throw new Exception ('can not lock tor kill signal');
+        if (!flock($this->r_lock, LOCK_EX|LOCK_NB)) {
+            throw new Exception('can not lock tor kill signal');
+        }
                         
         
         exec($this->command);
@@ -151,16 +153,16 @@ class BLKTOR
         {
             $port = rand(10000, 19999);
 
-            if(!self::isPortInUse($port))
-                return $port;            
+            if(!self::isPortInUse($port)) {
+                return $port;
+            }            
         }
     }
     private static function isPortInUse($port)
     {
         $connection = @fsockopen('127.0.0.1', $port);
 
-        if (is_resource($connection))
-        {
+        if (is_resource($connection)) {
             fclose($connection);
             return true;
         }
@@ -173,8 +175,9 @@ class BLKTOR
         $time = time();
         while(time()-$time<1*60)
         {                
-            if(self::isPortInUse($this->port))
+            if(self::isPortInUse($this->port)) {
                 return;
+            }
         }
         
         throw new Exception('Port not ready');
@@ -184,10 +187,10 @@ class BLKTOR
     {
         static $lt = 0;
         
-//        if(time()-$lt<10)
-//            return true;
-//        
-//        sleep(1);
+        //        if(time()-$lt<10)
+        //            return true;
+        //        
+        //        sleep(1);
         
         $curlHandler = curl_init();
         $this->attachTor($curlHandler);        
@@ -199,8 +202,7 @@ class BLKTOR
         
         $lt = time();
         
-        if(curl_errno($curlHandler)==0)
-        {
+        if(curl_errno($curlHandler)==0) {
             curl_close($curlHandler);
             return true;
         }
@@ -214,8 +216,9 @@ class BLKTOR
         $time = time();
         while(time()-$time<1*90)
         {                   
-            if($this->isConnectionReady())
+            if($this->isConnectionReady()) {
                 return;
+            }
             
             passthru('/usr/bin/tail '.$this->logPath);
             
@@ -227,13 +230,14 @@ class BLKTOR
     }
     
  
-    function getPort() {
+    function getPort()
+    {
         return $this->port;
     }
     function attachTor($curlHandler)
     {
-        curl_setopt ($curlHandler, CURLOPT_PROXY, '127.0.0.1:'.$this->port); 
-        curl_setopt ($curlHandler, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);         
+        curl_setopt($curlHandler, CURLOPT_PROXY, '127.0.0.1:'.$this->port); 
+        curl_setopt($curlHandler, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);         
     }
     
     
@@ -241,25 +245,28 @@ class BLKTOR
     {
         $output = array();
      
-        exec('/usr/bin/lslocks',$output);
+        exec('/usr/bin/lslocks', $output);
    
         $tmp = array();
         foreach($output as $line)
         {
             $line = explode($this->torPath, $line);
 
-            if(count($line)<2)
+            if(count($line)<2) {
                 continue;
+            }
 
             $line = $line[1];
 
             $line = explode('/lock', $line);
 
-            if(count($line)<2)
+            if(count($line)<2) {
                 continue;
+            }
 
-            if(!is_numeric($line[0]))
+            if(!is_numeric($line[0])) {
                 continue;
+            }
 
             $tmp[] = (int)$line[0];            
         }
@@ -273,11 +280,14 @@ class BLKTOR
     {
         $portsLocked = $this->gcGetPortsLocked();
         
-        foreach(scandir($this->torPath) as $port)
-            if (!in_array($port,array(".","..")) && is_numeric($port) && !in_array((int)$port, $portsLocked)) 
-                if(self::isPortInUse($port))
-                    exec ('/bin/fuser -k '.$port.'/tcp');
-                else
-                    exec ('/bin/rm -r '.$this->torPath.$port);                 
+        foreach(scandir($this->torPath) as $port) {
+            if (!in_array($port, array(".","..")) && is_numeric($port) && !in_array((int)$port, $portsLocked)) { 
+                if(self::isPortInUse($port)) {
+                    exec('/bin/fuser -k '.$port.'/tcp');
+                } else {
+                    exec('/bin/rm -r '.$this->torPath.$port);
+                }
+            }
+        }                 
     }
 }

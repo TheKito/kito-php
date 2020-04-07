@@ -21,13 +21,17 @@
 class Skeleton extends Module
 {
 
-    public function __load() {
+    public function __load()
+    {
     }
-    public function __construct() {
+    public function __construct()
+    {
     }
-    public function __destruct() {
+    public function __destruct()
+    {
     }
-    public function __unload() {
+    public function __unload()
+    {
     }
 }
 ?>

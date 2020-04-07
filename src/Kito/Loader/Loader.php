@@ -21,17 +21,21 @@ namespace Kito\Loader;
  *
  * @author TheKito
  */
-class Loader {
+class Loader
+{
 
-    private static function pathFromString(string $stringPath): array {
+    private static function pathFromString(string $stringPath): array
+    {
         $_ = array();
 
         foreach (explode('/', str_replace("\\", '/', $stringPath)) as $name) {
-            if (empty($name))
+            if (empty($name)) {
                 continue;
+            }
 
-            if ($name == '.')
+            if ($name == '.') {
                 continue;
+            }
 
             if ($name == '..' && count($_) > 0) {
                 array_pop($_);
@@ -44,18 +48,22 @@ class Loader {
         return $_;
     }
 
-    private static function pathToHash(array $path): string {
+    private static function pathToHash(array $path): string
+    {
         return sha1(implode(0x00, $path));
     }
 
-    private static function pathToString(array $path): string {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+    private static function pathToString(array $path): string
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             return implode('/', $path);
-        else
+        } else {
             return '/' . implode('/', $path);
+        }
     }
 
-    private static function createDirectories(array $path) {
+    private static function createDirectories(array $path)
+    {
         $_ = array();
 
         foreach ($path as $name) {
@@ -63,30 +71,35 @@ class Loader {
 
             $__ = self::pathToString($_);
 
-            if (!is_dir($__))
+            if (!is_dir($__)) {
                 mkdir($__);
+            }
         }
     }
 
     private $cachePath = array();
 
-    public function getCachePath(): string {
+    public function getCachePath(): string
+    {
         return self::arrayToPath($this->getCachePath);
     }
 
-    public function setCachePath($path): self {
+    public function setCachePath($path): self
+    {
         $this->cachePath = self::pathFromString($path);
         return $this;
     }
 
     private $repositories = array();
 
-    public function addRepository(string $nameSpace, string $url): self {
+    public function addRepository(string $nameSpace, string $url): self
+    {
         $this->repositories[self::pathToHash(self::pathFromString($nameSpace))] = $url;
         return $this;
     }
 
-    public function __construct($cachePath = __DIR__) {
+    public function __construct($cachePath = __DIR__)
+    {
         $this->setCachePath($cachePath);
         $this->addRepository('/Kito', 'https://raw.githubusercontent.com/TheKito/kito-php/master/src/');
         spl_autoload_register(array($this, 'loadClass'));
@@ -94,18 +107,22 @@ class Loader {
         Sources::attach($this);
     }
 
-    public function loadClass(string $classNameSpace) {
+    public function loadClass(string $classNameSpace)
+    {
         $classPath = self::pathFromString($classNameSpace);
         $classFile = self::pathToString(array_merge($this->cachePath, $classPath)) . '.php';
 
-        if (!file_exists($classFile))
+        if (!file_exists($classFile)) {
             $this->downloadClass($classPath, $classFile);
+        }
 
-        if (file_exists($classFile))
-            require_once $classFile;
+        if (file_exists($classFile)) {
+            include_once $classFile;
+        }
     }
 
-    private function downloadClass(array $classPath, string $classFile) {
+    private function downloadClass(array $classPath, string $classFile)
+    {
         $className = array_pop($classPath);
 
         $middlePath = array();
@@ -116,10 +133,11 @@ class Loader {
 
                 $data = file_get_contents($repositoryFile);
 
-                if ($data !== FALSE) {
+                if ($data !== false) {
                     self::createDirectories(self::pathFromString(dirname($classFile)));
-                    if (file_put_contents($classFile, $data) !== false)
+                    if (file_put_contents($classFile, $data) !== false) {
                         break;
+                    }
                 }
             }
 

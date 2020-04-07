@@ -20,34 +20,40 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The Blankis < blankitoracing@gmail.com >
  */
-class DataPair64 extends DataPair {
+class DataPair64 extends DataPair
+{
 
     private $tableSrchCol;
     private $maxId = 0;
 
-    public function __construct(&$driver, $tableName, $tablePK, $tableCol, $tableSrchCol = null) {
+    public function __construct(&$driver, $tableName, $tablePK, $tableCol, $tableSrchCol = null)
+    {
         parent::__construct($driver, $tableName, $tablePK, $tableCol);
         $this->tableSrchCol = $tableSrchCol;
     }
 
-    public function getId($value, $create = true) {
+    public function getId($value, $create = true)
+    {
         $id = parent::getId(base64_encode($value), $create);
 
-        if ($create && $this->tableSrchCol != null && $id > $this->maxId)
+        if ($create && $this->tableSrchCol != null && $id > $this->maxId) {
             try {
                 $srchstr = $value;
                 $srchstr = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $srchstr);
                 $srchstr = addslashes($srchstr);
-                if (parent::getDriver()->update(parent::getTableName(), array($this->tableSrchCol => $srchstr), array(parent::getTablePK() => $id, $this->tableSrchCol => null), 1))
+                if (parent::getDriver()->update(parent::getTableName(), array($this->tableSrchCol => $srchstr), array(parent::getTablePK() => $id, $this->tableSrchCol => null), 1)) {
                     $this->maxId = $id;
+                }
             } catch (SqlException $e) {
                 
             }
+        }
 
         return $id;
     }
 
-    public function getValue($id) {
+    public function getValue($id)
+    {
         return base64_decode(parent::getValue($id));
     }
 

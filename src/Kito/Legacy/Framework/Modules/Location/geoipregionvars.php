@@ -1,5 +1,5 @@
 <?php
-# Copyright 2003 Maxmind LLC All Rights Reserved
+// Copyright 2003 Maxmind LLC All Rights Reserved
 $GEOIP_REGION_NAME = array(
 "CA" => array(
 "AB" => "Alberta",

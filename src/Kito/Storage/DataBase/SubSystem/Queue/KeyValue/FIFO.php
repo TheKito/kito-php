@@ -20,17 +20,21 @@ namespace Kito\DataBase\NoSQL\Queue\KeyValue;
  *
  * @author TheKito
  */
-class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
+class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
+{
 
     protected const secondaryCounter = 'secondaryCount';
 
-    protected function getSecondaryCounterName(): string {
+    protected function getSecondaryCounterName(): string
+    {
         return $this->getKey(self::secondaryCounter);
     }
 
-    public function dequeue() {
-        if ($this->isEmpty())
+    public function dequeue()
+    {
+        if ($this->isEmpty()) {
             return null;
+        }
 
         $id = $this->backend->increment($this->getSecondaryCounterName());
         $key = $this->getKeyItem($id);
@@ -40,11 +44,13 @@ class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
         return $item;
     }
 
-    public function isEmpty(): bool {
+    public function isEmpty(): bool
+    {
         return $this->count() == 0;
     }
 
-    public function count(): int {
+    public function count(): int
+    {
         return $this->backend->get($this->getMainCounterName()) - $this->backend->get($this->getSecondaryCounterName());
     }
 

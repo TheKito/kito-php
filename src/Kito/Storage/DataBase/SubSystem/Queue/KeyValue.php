@@ -24,40 +24,48 @@ use \Kito\DataBase\NoSQL\KeyValueInterface;
  *
  * @author TheKito
  */
-abstract class KeyValue implements QueueInterface {
+abstract class KeyValue implements QueueInterface
+{
 
     protected const mainCounter = 'Count';
 
     protected $backend;
     private $queueName;
 
-    protected function getKey(string $suffix): string {
+    protected function getKey(string $suffix): string
+    {
         return 'Kito/DataBase/NoSQL/Queue/KeyValueQueue/' . $this->queueName . '/' . $suffix;
     }
 
-    protected function getKeyItem(int $itemPos): string {
+    protected function getKeyItem(int $itemPos): string
+    {
         return $this->getKey('Item/' . $itemPos);
     }
 
-    protected function getMainCounterName(): string {
+    protected function getMainCounterName(): string
+    {
         return $this->getKey(self::mainCounter);
     }
 
-    public function __construct(KeyValueInterface $backend, string $queueName) {
+    public function __construct(KeyValueInterface $backend, string $queueName)
+    {
         $this->backend = $backend;
         $this->queueName = $queueName;
     }
 
-    public function enqueue($var): bool {
-        if ($var === null)
+    public function enqueue($var): bool
+    {
+        if ($var === null) {
             return false;
+        }
 
         $count = $this->backend->increment($this->getMainCounterName());
 
         return $this->backend->set($this->getKeyItem($count), $var);
     }
 
-    public function count(): int {
+    public function count(): int
+    {
         return $this->backend->get($this->getMainCounterName());
     }
 

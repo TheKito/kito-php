@@ -14,7 +14,7 @@ class Address
 {
     private $zone0;
     private $root_zone;
-    public function  __construct($root_zone)
+    public function __construct($root_zone)
     {
         $this->root_zone=$root_zone;
         $z=$root_zone;
@@ -34,9 +34,11 @@ class Address
     {
         $list=array();
         
-        foreach (self::getParentZone()->getZones() as $zone)
-            if($zone->getAttribute("Type")->get()=="Country")
-                $list[$zone->getName()]=new AddressCountry ($this->getRootZone(), $zone->getName());
+        foreach (self::getParentZone()->getZones() as $zone) {
+            if($zone->getAttribute("Type")->get()=="Country") {
+                $list[$zone->getName()]=new AddressCountry($this->getRootZone(), $zone->getName());
+            }
+        }
         
         return $list;
     }

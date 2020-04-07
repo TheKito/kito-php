@@ -59,30 +59,37 @@ class Zone extends DataThree
     {
         $znid=parent::getValue1($id);
 
-        if($recursive)
-        {
-            foreach ($this->getZoneIds($id) as $subid)
-                if(!$this->delete($subid, $recursive))
+        if($recursive) {
+            foreach ($this->getZoneIds($id) as $subid) {
+                if(!$this->delete($subid, $recursive)) {
                     return false;
+                }
+            }
         }
         else
         {
             //UPDATE
         }
 
-        foreach($this->getAZ()->getAttributes($id) as $a_name)
-            if(!$this->getAZ()->remove ($id, $a_name))
+        foreach($this->getAZ()->getAttributes($id) as $a_name) {
+            if(!$this->getAZ()->remove($id, $a_name)) {
                 return false;
+            }
+        }
 
-        foreach($this->getZL()->getIds($id) as $id_linked_zone)
-            if(!$this->getZL()->delete($id, $id_linked_zone))
+        foreach($this->getZL()->getIds($id) as $id_linked_zone) {
+            if(!$this->getZL()->delete($id, $id_linked_zone)) {
                 return false;
+            }
+        }
 
-        if(!parent::delete($id))
+        if(!parent::delete($id)) {
             return false;
+        }
 
-        if(!parent::inUse(self::$tableValue1, $znid))//check name node
-            $this->zn->delete ($znid);
+        if(!parent::inUse(self::$tableValue1, $znid)) { //check name node
+            $this->zn->delete($znid);
+        }
 
         return true;
 
@@ -91,15 +98,22 @@ class Zone extends DataThree
     public function getZoneIds($id)
     {
         $t=array();
-        $rs=parent::getCnn()->select(self::$tableName,array(self::$tablePk),array(self::$tableValue0=>$id),0);
-        foreach($rs as $row)
-            array_push ($t, $row[self::$tablePk]);
+        $rs=parent::getCnn()->select(self::$tableName, array(self::$tablePk), array(self::$tableValue0=>$id), 0);
+        foreach($rs as $row) {
+            array_push($t, $row[self::$tablePk]);
+        }
 
         return $t;
     }
 
-    public function getAZ(){return $this->az;}
-    public function getZL(){return $this->zl;}
+    public function getAZ()
+    {
+        return $this->az;
+    }
+    public function getZL()
+    {
+        return $this->zl;
+    }
 
 }
 ?>

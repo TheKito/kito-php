@@ -20,87 +20,94 @@
  */
 class Logger extends Module
 {
-  //$TotalTTL=0;
+    //$TotalTTL=0;
     function Log($Name,$Value)
     {
         static $handle=false;
         static $handle2=false;
-        if(!$handle)
+        if(!$handle) {
             $handle = fopen("myfile.txt", 'a');
+        }
 
-        if(!$handle2)
-        {
+        if(!$handle2) {
             $handle2 = fopen("longlog.txt", 'a');
             fwrite($handle2, "=========================================================================\n");
         }
 
         static $LastTTL=0;
         $type=$Name;
-//        if ($Name=="ERROR")
-//            $Name="<font color=red>".$Name."</font>";
-//        elseif ($Name=="ALERT")
-//            $Name="<font color=yellow>".$Name."</font>";
-//        else
-//            $Name="<font color=green>".$Name."</font>";
+        //        if ($Name=="ERROR")
+        //            $Name="<font color=red>".$Name."</font>";
+        //        elseif ($Name=="ALERT")
+        //            $Name="<font color=yellow>".$Name."</font>";
+        //        else
+        //            $Name="<font color=green>".$Name."</font>";
 
-//        if ($this->DebugMode==true && $_GET["Frame"]!="Sitemap" && $_GET["Frame"]!="JavaScript")
-//        {
-            if ($LastTTL==0) $LastTTL=timeGetTime();
+        //        if ($this->DebugMode==true && $_GET["Frame"]!="Sitemap" && $_GET["Frame"]!="JavaScript")
+        //        {
+        if ($LastTTL==0) { $LastTTL=timeGetTime();
+        }
 
-            if((number_format((timeGetTime())-$LastTTL,5))>0.09)
-            {
-                if($handle2)
-                    if(!fwrite($handle2, "Logger(".(number_format((timeGetTime())-$LastTTL,5))."): ".$type.": ".$Value."\n"))
-                        die("couldn't write to file.");
+        if((number_format((timeGetTime())-$LastTTL, 5))>0.09) {
+            if($handle2) {
+                if(!fwrite($handle2, "Logger(".(number_format((timeGetTime())-$LastTTL, 5))."): ".$type.": ".$Value."\n")) {
+                    die("couldn't write to file.");
+                }
             }
-            else
+        }
+        else
             {
-                if($handle)
-                    if(!fwrite($handle, "Logger(".(number_format((timeGetTime())-$LastTTL,5))."): ".$type.": ".$Value."\n"))
-                        die("couldn't write to file.");
+            if($handle) {
+                if(!fwrite($handle, "Logger(".(number_format((timeGetTime())-$LastTTL, 5))."): ".$type.": ".$Value."\n")) {
+                    die("couldn't write to file.");
+                }
             }
+        }
 
 
            // if($type!="DEBUG")
         
             $LastTTL=timeGetTime();
-//        }
-//        else
-//            if ($Name=="ERROR")
-//                if ($this->SYSMailer->SendMail(GetValue("DebugMail","blksoft@gmail.com"),"BLK Debugger: ".$Name.": ".$Value)===false)
-//                    echo "<br>BLK Debugger: ".$Name.": ".$Value;
+        //        }
+        //        else
+        //            if ($Name=="ERROR")
+        //                if ($this->SYSMailer->SendMail(GetValue("DebugMail","blksoft@gmail.com"),"BLK Debugger: ".$Name.": ".$Value)===false)
+        //                    echo "<br>BLK Debugger: ".$Name.": ".$Value;
 
         return true;
     }
 
- function __destruct()
-{
-     $this->Log("DEBUG","SQL: ".getDBDriver("System")->getStats());
-    global $TotalTTL;
-    return $this->Log("DEBUG","Generation time: ".(timeGetTime()-$TotalTTL));
+    function __destruct()
+    {
+        $this->Log("DEBUG", "SQL: ".getDBDriver("System")->getStats());
+        global $TotalTTL;
+        return $this->Log("DEBUG", "Generation time: ".(timeGetTime()-$TotalTTL));
    
-}
+    }
     function Logger_ErrorHandler($errno, $errstr, $errfile, $errline)
     {
-        if ($errno!=8 && $errno!=2048 && $errno!=2)
-            Logger_Log("ERROR",$errstr."($errno) File:".$errfile." Line:".$errline);
-        else
-            Logger_Log("ALERT",$errstr."($errno) File:".$errfile." Line:".$errline);
+        if ($errno!=8 && $errno!=2048 && $errno!=2) {
+            Logger_Log("ERROR", $errstr."($errno) File:".$errfile." Line:".$errline);
+        } else {
+            Logger_Log("ALERT", $errstr."($errno) File:".$errfile." Line:".$errline);
+        }
     }
 
 
     
-function __construct()
-{
-    global $TotalTTL;
-    $TotalTTL=timeGetTime();
-}
+    function __construct()
+    {
+        global $TotalTTL;
+        $TotalTTL=timeGetTime();
+    }
 
-    public function __load() {
+    public function __load()
+    {
 
     }
 
-    public function __unload() {
+    public function __unload()
+    {
     }
 }
 ?>

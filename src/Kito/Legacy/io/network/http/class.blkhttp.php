@@ -19,56 +19,62 @@
  * @author The Blankis < blankitoracing@gmail.com >
  */
 
-class BLKHTTP 
+class BLKHTTP
 {
     public static function rel2abs( $rel, $base ) 
     {
 
         $base_data = parse_url($base);
         
-        if($rel === null || $rel == '')
+        if($rel === null || $rel == '') {
             return $base;
+        }
         
-        if (stripos( $rel,"http://" )===0 || stripos( $rel,"https://" )===0)
+        if (stripos($rel, "http://")===0 || stripos($rel, "https://")===0) {
             return $rel;
+        }
         
-        if (strpos( $rel,"//" )===0)
+        if (strpos($rel, "//")===0) {
             return parse_url($base, PHP_URL_SCHEME) . ':' . $rel;
+        }
         
-        if (strpos( $rel,"#" )===0 || strpos( $rel,"?" )===0)
+        if (strpos($rel, "#")===0 || strpos($rel, "?")===0) {
             return $base . $rel;
+        }
         
         $server = $base_data['scheme'].'://';
         
-        if(isset($base_data['user']))
-        {
+        if(isset($base_data['user'])) {
             $server .= $base_data['user'];
             
-            if(isset($base_data['pass']))
+            if(isset($base_data['pass'])) {
                 $server .= ':'.$base_data['pass'];
+            }
             
             $server .= '@';
         }
         
         $server .= $base_data['host'];
         
-        if(isset($base_data['port']))        
+        if(isset($base_data['port'])) {        
             $server .= ':'.$base_data['port'];
+        }
         
-        if (strpos( $rel,"/" )===0)
+        if (strpos($rel, "/")===0) {
             return $server . $rel;
+        }
         
         
-        $path = parse_url($rel,PHP_URL_PATH);
+        $path = parse_url($rel, PHP_URL_PATH);
         //$path = @preg_replace( '#/[^/]*$#', '', $path );
         
         // replace '//' or  '/./' or '/foo/../' with '/'
-	$path = preg_replace( "/(\/\.?\/)/", "/", $path );
-	$path = preg_replace( "/\/(?!\.\.)[^\/]+\/\.\.\//", "/", $path );
+        $path = preg_replace("/(\/\.?\/)/", "/", $path);
+        $path = preg_replace("/\/(?!\.\.)[^\/]+\/\.\.\//", "/", $path);
 
         var_dump($server . $path);
         return $server .'/'. $path;
-	
+    
     }
     
     
@@ -79,39 +85,42 @@ class BLKHTTP
     private $workDir = null;
     private $retryTime = 0;
     
-//    private function makeCookieFile()
-//    {
-//        $PATH = dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'COOKIES';            
-//        @mkdir($PATH,0777,true);
-//
-//        $PATH.=DIRECTORY_SEPARATOR.uniqid();
-//                
-//        $this->cookies[] = $PATH;
-//        
-//        return $PATH;
-//    }        
+    //    private function makeCookieFile()
+    //    {
+    //        $PATH = dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'COOKIES';            
+    //        @mkdir($PATH,0777,true);
+    //
+    //        $PATH.=DIRECTORY_SEPARATOR.uniqid();
+    //                
+    //        $this->cookies[] = $PATH;
+    //        
+    //        return $PATH;
+    //    }        
     private function clearCookies()
     {        
-        foreach($this->cookies as $PATH)
-            if(file_exists($PATH))
-                unlink ($PATH);        
+        foreach($this->cookies as $PATH) {
+            if(file_exists($PATH)) {
+                unlink($PATH);
+            }
+        }        
     }
     
     public function startSession($sessionName = null)
     {
         $this->clearCookies();
         
-        if($sessionName===null)
+        if($sessionName===null) {
             $sessionName = 'tmp.'.uniqid();
+        }
         
-//        if($sessionName===null)        
-//            $PATH = $this->makeCookieFile();        
-//        else
-//        {
+        //        if($sessionName===null)        
+        //            $PATH = $this->makeCookieFile();        
+        //        else
+        //        {
             $PATH = $this->workDir . DIRECTORY_SEPARATOR . 'COOKIES';       
-            @mkdir($PATH,0777,true);
+            @mkdir($PATH, 0777, true);
             $PATH .= DIRECTORY_SEPARATOR.$sessionName.'.cookie';            
-//        }            
+        //        }            
         
         $this->setCURLOption(CURLOPT_COOKIEJAR, $PATH);
         $this->setCURLOption(CURLOPT_COOKIEFILE, $PATH);                     
@@ -122,8 +131,9 @@ class BLKHTTP
     {
         $this->workDir = $workDir;
         
-        if(!file_exists($this->workDir))
-            mkdir ($this->workDir, 0777, true);
+        if(!file_exists($this->workDir)) {
+            mkdir($this->workDir, 0777, true);
+        }
             
         $this->cHandler = curl_init();
         
@@ -134,7 +144,7 @@ class BLKHTTP
         $this->setCURLOption(CURLOPT_SSL_VERIFYPEER, false);
         $this->setCURLOption(CURLOPT_FOLLOWLOCATION, false);
         $this->setCURLOption(CURLOPT_USERAGENT,  'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');        
-//        $this->setCURLOption(CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');        
+        //        $this->setCURLOption(CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');        
         
         $this->startSession($sessionName);
     }
@@ -163,43 +173,47 @@ class BLKHTTP
     {
         $raw = explode("\r\n\r\n", $raw, 2);
         
-        if(count($raw)!=2)
-            throw new Exception ('Invalid HTTP Response');
+        if(count($raw)!=2) {
+            throw new Exception('Invalid HTTP Response');
+        }
         
         $headers = explode("\r\n", $raw[0]);                        
         $data = $raw[1];               
         unset($raw);
         
-        if(count($headers)<1)
-            throw new Exception ('Invalid HTTP Response');        
+        if(count($headers)<1) {
+            throw new Exception('Invalid HTTP Response');
+        }        
         
         $httpCode = null;
         $aux = array();
-        foreach($headers as $header)
-            if($httpCode===null)
+        foreach($headers as $header) {
+            if($httpCode===null) {
                 $httpCode  = $header;
-            else                
+            } else                
             {
-                $tmp = explode(':', $header,2);
-                if(count($tmp)==2)
+                        $tmp = explode(':', $header, 2);
+                if(count($tmp)==2) {
                     $aux[strtolower(trim($tmp[0]))] = trim($tmp[1]);
+                }
             }
+        }
         unset($tmp);
         $headers = $aux;
-        unset ($aux);
+        unset($aux);
         
         $httpCode = explode(' ', $httpCode, 3);
 
-        if(count($httpCode)!=3)
-        {
+        if(count($httpCode)!=3) {
             echo $raw;
-            throw new Exception ('Invalid HTTP Response');           
+            throw new Exception('Invalid HTTP Response');           
         }
         
         $httpCode = $httpCode[1];
         
-        if($httpCode>99 && $httpCode<200)
-            return self::parseResponse ($data);
+        if($httpCode>99 && $httpCode<200) {
+            return self::parseResponse($data);
+        }
         
         return array(
                         'httpCode'=>$httpCode,
@@ -208,43 +222,47 @@ class BLKHTTP
                     );
     }
     
-    private function curlExec($url,$referer = NULL)
+    private function curlExec($url,$referer = null)
     {               
-        $this->setCURLOption (CURLOPT_REFERER, $referer);
+        $this->setCURLOption(CURLOPT_REFERER, $referer);
         
-        if($referer!==null)
+        if($referer!==null) {
             $url = self::rel2abs($url, $referer);
+        }
         
         echo "CURL EXEC ($referer): ".$url."\n";                
         
-        $this->setCURLOption (CURLOPT_URL, $url);
+        $this->setCURLOption(CURLOPT_URL, $url);
                 
         $result = curl_exec($this->cHandler);
         
-        if($result===false)                
-            throw new Exception ('CURL:'.curl_error($this->cHandler), curl_errno ($this->cHandler));        
+        if($result===false) {                
+            throw new Exception('CURL:'.curl_error($this->cHandler), curl_errno($this->cHandler));
+        }        
         
         $response = self::parseResponse($result);
         
-        if(isset($response['httpHeaders']['location']))
-            return $this->doCall ($response['httpHeaders']['location'], array(), false, 'application/x-www-form-urlencoded', $url);
+        if(isset($response['httpHeaders']['location'])) {
+            return $this->doCall($response['httpHeaders']['location'], array(), false, 'application/x-www-form-urlencoded', $url);
+        }
         
         $this->lastURL = $url;        
         $this->lastResponse = $response;       
         
-        if($response['httpCode']==429)
-        {
+        if($response['httpCode']==429) {
             $this->retryTime=$this->retryTime+5;            
             var_dump("Error 429. Retry in: ".$this->retryTime);
             sleep($this->retryTime);            
             return $this->curlExec($url, $referer);
         }
-        elseif($this->retryTime>0)
+        elseif($this->retryTime>0) {
             $this->retryTime--;
+        }
             
         
-        if($response['httpCode']>399 && $response['httpCode']<600)
-            HTTPException::throwResponseCodeException ($response['httpCode']);            
+        if($response['httpCode']>399 && $response['httpCode']<600) {
+            HTTPException::throwResponseCodeException($response['httpCode']);
+        }            
         
         
         
@@ -259,40 +277,39 @@ class BLKHTTP
     
     
     
-    public function doCall($url,$params=array(),$post=false,$enctype='application/x-www-form-urlencoded',$referer = NULL)
+    public function doCall($url,$params=array(),$post=false,$enctype='application/x-www-form-urlencoded',$referer = null)
     {      
         $this->setCURLOption(CURLOPT_CUSTOMREQUEST, $post?'POST':'GET');
         $this->setCURLOption(CURLOPT_POST, $post);
         
 
-        if($post)
-        {
-           if($enctype=='multipart/form-data')            
-               $this->setCURLOption(CURLOPT_POSTFIELDS, $params);           
-           elseif($enctype=='text/plain') 
-           {
-               throw new Exception ('Enctype text/plain not implemented');
-           }
-           elseif($enctype=='application/x-www-form-urlencoded')            
-               $this->setCURLOption(CURLOPT_POSTFIELDS, http_build_query($params));           
-           else
-               throw new Exception ('Invalid Enctype value');
+        if($post) {
+            if($enctype=='multipart/form-data') {            
+                $this->setCURLOption(CURLOPT_POSTFIELDS, $params);           
+            } elseif($enctype=='text/plain') {
+                throw new Exception('Enctype text/plain not implemented');
+            }
+            elseif($enctype=='application/x-www-form-urlencoded') {            
+                $this->setCURLOption(CURLOPT_POSTFIELDS, http_build_query($params));           
+            } else {
+                throw new Exception('Invalid Enctype value');
+            }
            
-           $this->setCURLOption(CURLOPT_HTTPHEADER, array('Content-Type: '.$enctype));
+            $this->setCURLOption(CURLOPT_HTTPHEADER, array('Content-Type: '.$enctype));
         }
         else
         {
-            if(count($params)>0)
-            {
-                if(strpos($url, '?')!==FALSE)
+            if(count($params)>0) {
+                if(strpos($url, '?')!==false) {
                     $url.='&'.http_build_query($params);
-                else
+                } else {
                     $url.='?'.http_build_query($params);
+                }
             }
         }
                 
         
-        return $this->curlExec($url,$referer);
+        return $this->curlExec($url, $referer);
     }    
     
     public function getReponseCode()
@@ -391,24 +408,28 @@ class BLKHTTP
             599 => 'Network connect timeout error',
         );                                
         
-        if(isset($http_status_codes[$code]))
+        if(isset($http_status_codes[$code])) {
             return $http_status_codes[$code];
-        else
+        } else {
             return null;
+        }
     }
     
 }
 
 
 class HTTPException extends Exception
-{ 
+{
+
+ 
 
     public function __construct($message, $code, $previous = null)
     {
-        if(!$previous instanceof Exception)
+        if(!$previous instanceof Exception) {
             parent::__construct($message, $code);
-        else
-            parent::__construct($message." > ".$previous->getMessage(), $code);	
+        } else {
+            parent::__construct($message." > ".$previous->getMessage(), $code);
+        }    
     }    
     
 

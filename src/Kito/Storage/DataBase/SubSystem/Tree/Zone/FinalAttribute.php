@@ -34,17 +34,17 @@ class FinalAttribute
 
     public function set($value)
     {
-        return $this->az->set($this->idz,$this->name,$value);
+        return $this->az->set($this->idz, $this->name, $value);
     }
 
     public function get($default=null)
     {
-        return $this->az->get($this->idz,$this->name,$default);
+        return $this->az->get($this->idz, $this->name, $default);
     }
 
     public function delete()
     {
-        return $this->az->delete($this->idz,$this->name);
+        return $this->az->delete($this->idz, $this->name);
     }
 }
 ?>

@@ -28,27 +28,33 @@ use Kito\DataBase\SQL\Exception\DeleteException;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MySQL extends \Kito\DataBase\SQL\Driver {
+class MySQL extends \Kito\DataBase\SQL\Driver
+{
 
-    public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null) {
-        static $CNNs = NULL;
+    public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
+    {
+        static $CNNs = null;
 
-        if ($CNNs === NULL)
+        if ($CNNs === null) {
             $CNNs = array();
+        }
 
         $KEY = implode(',', array($server, $database, $user, $password));
 
-        if (!isset($CNNs[$KEY]))
+        if (!isset($CNNs[$KEY])) {
             $CNNs[$KEY] = new self($server, $database, $user, $password);
+        }
 
         return $CNNs[$KEY];
     }
 
-    public static function getSqlConnectionServerAccount($server, $database) {
-        return self::getMySqlConnection($server, $database, strtoupper(gethostname()), NULL);
+    public static function getSqlConnectionServerAccount($server, $database)
+    {
+        return self::getMySqlConnection($server, $database, strtoupper(gethostname()), null);
     }
 
-    public static function getSqlConnectionLocalHost($database, $user, $password = NULL) {
+    public static function getSqlConnectionLocalHost($database, $user, $password = null)
+    {
         return self::getMySqlConnection('127.0.0.1', $database, $user, $password);
     }
 
@@ -57,13 +63,15 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
     private $user = "test";
     private $password = null;
     private $cnn = null;
-    var $__DEBUG = FALSE;
+    var $__DEBUG = false;
 
-    public function getId() {
+    public function getId()
+    {
         return md5($this->server . $this->user . $this->password . $this->database);
     }
 
-    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null) {
+    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
+    {
         $this->server = $server;
         $this->database = $database;
         $this->user = $user;
@@ -72,23 +80,28 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         $this->connect();
     }
 
-    public function isConnected() {
-        if ($this->cnn === NULL)
+    public function isConnected()
+    {
+        if ($this->cnn === null) {
             return false;
+        }
 
         return @$this->cnn->ping();
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->disconnect();
     }
 
-    public function connect() {
+    public function connect()
+    {
         if (!$this->isConnected()) {
             @$this->cnn = new mysqli($this->server, $this->user, $this->password, $this->database);
 
-            if ($this->cnn->connect_errno > 0)
+            if ($this->cnn->connect_errno > 0) {
                 throw new ConnectException($this->cnn->connect_error . ':' . $this->cnn->connect_errno);
+            }
 
             $this->cnn->set_charset("utf8");
         }
@@ -96,34 +109,40 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         return true;
     }
 
-    public function disconnect() {
-        if ($this->isConnected())
+    public function disconnect()
+    {
+        if ($this->isConnected()) {
             return @$this->cnn->close();
+        }
 
         return true;
     }
 
-    private function doCall($sql) {
+    private function doCall($sql)
+    {
         $this->connect();
 
-        if ($this->__DEBUG)
+        if ($this->__DEBUG) {
             echo "CALL: " . $sql . PHP_EOL;
+        }
 
 
         //echo "$sql\n";
 
         $rs = $this->cnn->query($sql);
 
-        if ($rs === false)
+        if ($rs === false) {
             throw new Exception($this->cnn->error, $this->cnn->errno);
+        }
 
-        if ($rs === true)
+        if ($rs === true) {
             return true;
-        else {
+        } else {
             $data = array();
 
-            while ($row = $rs->fetch_assoc())
+            while ($row = $rs->fetch_assoc()) {
                 array_push($data, $row);
+            }
 
             $rs->free();
 
@@ -131,7 +150,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function query($query) {
+    public function query($query)
+    {
         try {
 
             $t = microtime(true);
@@ -148,7 +168,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function command($command) {
+    public function command($command)
+    {
         try {
 
             $t = microtime(true);
@@ -165,7 +186,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function delete($table, $where = array(), $limit = 100) {
+    public function delete($table, $where = array(), $limit = 100)
+    {
         try {
             return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -173,7 +195,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function insert($table, $data = array()) {
+    public function insert($table, $data = array())
+    {
         try {
             return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
         } catch (Exception $ex) {
@@ -181,7 +204,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function update($table, $data, $where = array(), $limit = 0) {
+    public function update($table, $data, $where = array(), $limit = 0)
+    {
         try {
             return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -189,18 +213,21 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false) {
+    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false)
+    {
         try {
-            if ($rand)
+            if ($rand) {
                 return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . ' ORDER BY RAND() ' . self::getLimit($limit));
-            else
+            } else {
                 return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
+            }
         } catch (Exception $ex) {
             throw new SelectException($ex);
         }
     }
 
-    public function count($table, $where = array()) {
+    public function count($table, $where = array())
+    {
         try {
             $rs = $this->query("SELECT COUNT(*) as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -210,7 +237,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function max($table, $column, $where = array()) {
+    public function max($table, $column, $where = array())
+    {
         try {
             $rs = $this->query("SELECT MAX(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -220,7 +248,8 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    public function min($table, $column, $where = array()) {
+    public function min($table, $column, $where = array())
+    {
         try {
             $rs = $this->query("SELECT MIN(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -230,14 +259,17 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         }
     }
 
-    protected static function getLimit($limit) {
-        if (is_numeric($limit) && $limit > 0)
+    protected static function getLimit($limit)
+    {
+        if (is_numeric($limit) && $limit > 0) {
             return " LIMIT " . $limit . ";";
-        else
+        } else {
             return ";";
+        }
     }
 
-    public function getTables() {
+    public function getTables()
+    {
         $tables = array();
 
         foreach ($this->query("SHOW TABLES;") as $ROW) {
@@ -250,22 +282,26 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         return $tables;
     }
 
-    public function getDatabase() {
+    public function getDatabase()
+    {
         return $this->database;
     }
 
-    public function getRows($table, $count) {
-        static $pos = NULL;
+    public function getRows($table, $count)
+    {
+        static $pos = null;
 
-        if ($pos === NULL)
+        if ($pos === null) {
             $pos = array();
+        }
 
         $hash = $table;
 
-        if (isset($pos[$hash]))
+        if (isset($pos[$hash])) {
             $start = $pos[$hash];
-        else
+        } else {
             $start = 0;
+        }
 
         $pos[$hash] = $start + $count;
 
@@ -275,100 +311,120 @@ class MySQL extends \Kito\DataBase\SQL\Driver {
         if (count($rs) == 0) {
             $pos[$hash] = 0;
 
-            if ($start > 0)
+            if ($start > 0) {
                 return $this->getRows($table, $count);
+            }
         }
 
         return $rs;
     }
 
-    protected function arrayToWhere($data) {
+    protected function arrayToWhere($data)
+    {
         $t = $this->arrayToEqual($data);
-        if ($t != "")
+        if ($t != "") {
             return " where " . $t;
-        else
+        } else {
             return "";
+        }
     }
 
-    protected function arrayToEqual($data, $and = "and", $null_case = "is null") {
+    protected function arrayToEqual($data, $and = "and", $null_case = "is null")
+    {
         $t = "";
         foreach ($data as $key => $value) {
-            if ($t != "")
+            if ($t != "") {
                 $t .= " $and ";
+            }
 
             if (strpos($key, '!') === 0) {
                 $key = substr($key, 1);
                 $t .= 'not ';
             }
 
-            if ($value === null)
+            if ($value === null) {
                 $t .= "`" . $key . "` " . $null_case;
-            else
+            } else {
                 $t .= "`" . $key . "`='" . mysqli_real_escape_string($this->cnn, $value) . "'";
+            }
         }
         return $t;
     }
 
-    protected static function arrayToSelect($data) {
+    protected static function arrayToSelect($data)
+    {
         $t = "";
         foreach ($data as $value) {
-            if ($t != "")
+            if ($t != "") {
                 $t .= ",";
+            }
 
             $t .= "`" . $value . "`";
         }
-        if ($t != "")
+        if ($t != "") {
             return $t;
-        else
+        } else {
             return "*";
+        }
     }
 
-    protected function arrayToInsert($data) {
+    protected function arrayToInsert($data)
+    {
         $t0 = "";
         $t1 = "";
         foreach ($data as $key => $value) {
-            if ($t0 != "")
+            if ($t0 != "") {
                 $t0 .= ",";
+            }
 
-            if ($t1 != "")
+            if ($t1 != "") {
                 $t1 .= ",";
+            }
 
             $t0 .= "`" . $key . "`";
 
-            if ($value === null)
+            if ($value === null) {
                 $t1 .= "null";
-            else
+            } else {
                 $t1 .= "'" . mysqli_real_escape_string($this->cnn, $value) . "'";
+            }
         }
 
         return "(" . $t0 . ") VALUES (" . $t1 . ")";
     }
 
-    function insertUnique($table, $data) {
+    function insertUnique($table, $data)
+    {
         return $this->autoInsert($table, $data);
     }
 
-    function upgradeTable($table, $data, $index) {
+    function upgradeTable($table, $data, $index)
+    {
         return $this->autoUpdate($table, $data, $index);
     }
 
-    function existsRow($table, $where = array()) {
+    function existsRow($table, $where = array())
+    {
         return $this->exists($table, $where);
     }
 
-    function exists($table, $where = array()) {
+    function exists($table, $where = array())
+    {
         return $this->count($table, $where) > 0;
     }
 
-    function copyTable($sourceTable, $destinationTable) {
+    function copyTable($sourceTable, $destinationTable)
+    {
         return $this->command('CREATE TABLE IF NOT EXISTS ' . $destinationTable . ' LIKE ' . $sourceTable . ';');
     }
 
-    public function getDatabases() {
+    public function getDatabases()
+    {
         $rs = $this->query('show databases;');
 
-        foreach ($rs as $index => $row)
+        foreach ($rs as $index => $row) {
             $rs[$index] = array_pop($row);
+        }
 
         return $rs;
     }

@@ -20,6 +20,7 @@ namespace Kito\Storage\DataBase\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class TooManyRowsException extends Exception {
+class TooManyRowsException extends Exception
+{
     //put your code here
 }

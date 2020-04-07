@@ -20,46 +20,56 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The Blankis < blankitoracing@gmail.com >
  */
-abstract class DataN {
+abstract class DataN
+{
 
     private $driver;
     private $tableName;
     private $tablePK;
     private $cache = array();
 
-    private static function compareArray($data0, $data1) {
+    private static function compareArray($data0, $data1)
+    {
         foreach ($data0 as $key0 => $value0) {
-            if (!array_key_exists($key0, $data1))
+            if (!array_key_exists($key0, $data1)) {
                 return false;
+            }
 
-            if ($data1[$key0] != $value0)
+            if ($data1[$key0] != $value0) {
                 return false;
+            }
         }
 
         return true;
     }
 
-    protected function __construct(&$driver, $tableName, $tablePK) {
+    protected function __construct(&$driver, $tableName, $tablePK)
+    {
         $this->driver = $driver;
         $this->tableName = $tableName;
         $this->tablePK = $tablePK;
     }
 
-    protected function getId($data, $create = true) {
-        foreach ($this->cache as $key => $value)
-            if (self::compareArray($data, $value) === true)
+    protected function getId($data, $create = true)
+    {
+        foreach ($this->cache as $key => $value) {
+            if (self::compareArray($data, $value) === true) {
                 return $key;
+            }
+        }
 
 
         $rows = array();
         array_push($rows, $this->tablePK);
-        foreach ($data as $key => $tmp)
+        foreach ($data as $key => $tmp) {
             array_push($rows, $key);
+        }
 
         $rs = $this->driver->autoTable($this->tableName, $data, $rows, $create);
 
-        if ($rs == null)
+        if ($rs == null) {
             return null;
+        }
 
         $pk = $rs[$this->tablePK];
         unset($rs[$this->tablePK]);
@@ -69,20 +79,25 @@ abstract class DataN {
         return $pk;
     }
 
-    protected function exists($data) {
-        foreach ($this->cache as $key => $value)
-            if (self::compareArray($data, $value) === true)
+    protected function exists($data)
+    {
+        foreach ($this->cache as $key => $value) {
+            if (self::compareArray($data, $value) === true) {
                 return true;
+            }
+        }
 
         $rows = array();
         array_push($rows, $this->tablePK);
-        foreach ($data as $key => $tmp)
+        foreach ($data as $key => $tmp) {
             array_push($rows, $key);
+        }
 
         $rs = $this->driver->select($this->tableName, $rows, $data, 1);
 
-        if (count($rs) == 0)
+        if (count($rs) == 0) {
             return false;
+        }
 
         $rs = $rs[0];
 
@@ -94,20 +109,25 @@ abstract class DataN {
         return true;
     }
 
-    protected function getValue($id) {
-        if ($id === NULL)
-            return NULL;
+    protected function getValue($id)
+    {
+        if ($id === null) {
+            return null;
+        }
 
-        if (!is_numeric($id) && !is_string($id))
+        if (!is_numeric($id) && !is_string($id)) {
             SqlToolException::throwInvalidPkException($this->tableName, $this->tablePK, $id);
+        }
 
-        if (isset($this->cache[$id]))
+        if (isset($this->cache[$id])) {
             return $this->cache[$id];
+        }
 
         $rs = $this->driver->select($this->tableName, array(), array($this->tablePK => $id), 1);
 
-        if (count($rs) == 0)
+        if (count($rs) == 0) {
             SqlToolException::throwPkNotFoundException($this->tableName, $this->tablePK, $id);
+        }
 
         $rs = $rs[0];
         unset($rs[$this->tablePK]);
@@ -117,29 +137,35 @@ abstract class DataN {
         return $rs;
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->driver->delete($this->tableName, array($this->tablePK => $id), 0);
         unset($this->cache[$id]);
         return true;
     }
 
-    public function getDriver() {
+    public function getDriver()
+    {
         return $this->driver;
     }
 
-    public function getTableName() {
+    public function getTableName()
+    {
         return $this->tableName;
     }
 
-    public function getTablePK() {
+    public function getTablePK()
+    {
         return $this->tablePK;
     }
 
-    public function select($col = array(), $where = array(), $limit = 100) {
+    public function select($col = array(), $where = array(), $limit = 100)
+    {
         return $this->driver->select($this->tableName, $col, $where, $limit);
     }
 
-    public function count($where = array()) {
+    public function count($where = array())
+    {
         return $this->driver->count($this->tableName, $where);
     }
 

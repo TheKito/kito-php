@@ -19,7 +19,7 @@
  * @author The Blankis < blankitoracing@gmail.com >
  */
 
-class BLKTouchTable 
+class BLKTouchTable
 {
     
     
@@ -29,8 +29,9 @@ class BLKTouchTable
     
     function __construct($SQLConnection, $table) 
     {
-        if(!$SQLConnection instanceof MySql)
-            throw new Exception ('Invalid MySql Object');
+        if(!$SQLConnection instanceof MySql) {
+            throw new Exception('Invalid MySql Object');
+        }
         
         $this->SQLConnection = $SQLConnection;
         $this->table = $table;
@@ -38,8 +39,9 @@ class BLKTouchTable
 
     public function getGCTime() 
     {
-        if($this->time === null)
+        if($this->time === null) {
             $this->time = time();
+        }
         
         return $this->time;
     }

@@ -21,7 +21,8 @@ namespace Kito\DataBase\NoSQL;
  *
  * @author TheKito
  */
-interface QueueInterface {
+interface QueueInterface
+{
 
     public function dequeue();
 

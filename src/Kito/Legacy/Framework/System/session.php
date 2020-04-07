@@ -19,10 +19,22 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-function getSessionsZone(){return getZone(getDBDriver("System"), "Sessions",null,true);}
-function getThisSessionZone(){return getZone(getDBDriver("System"), getSessionId(),getSessionsZone(),false);}
-function getSessionValue($key,$def){return getThisSessionZone()->get($key,$def);}
-function setSessionValue($key,$val){return getThisSessionZone()->set($key,$val);}
+function getSessionsZone()
+{
+    return getZone(getDBDriver("System"), "Sessions", null, true);
+}
+function getThisSessionZone()
+{
+    return getZone(getDBDriver("System"), getSessionId(), getSessionsZone(), false);
+}
+function getSessionValue($key,$def)
+{
+    return getThisSessionZone()->get($key, $def);
+}
+function setSessionValue($key,$val)
+{
+    return getThisSessionZone()->set($key, $val);
+}
 
 
 function loadSession()
@@ -30,14 +42,15 @@ function loadSession()
     $ThisTime=timeGetTime(false);
     $TimeTime=($ThisTime-getSessionValue("UnixTime", $ThisTime));
     setSessionValue("Seconds", $TimeTime);
-    if((float)$TimeTime>(float)  getSessionsZone()->get("MaxSeconds", 20))newSession();
+    if((float)$TimeTime>(float)  getSessionsZone()->get("MaxSeconds", 20)) { newSession();
+    }
     setSessionValue("UnixTime", $ThisTime);
 
     $Client_IP=getIP();
-    if($Client_IP!=getSessionValue("IP", $Client_IP)) newSession();
+    if($Client_IP!=getSessionValue("IP", $Client_IP)) { newSession();
+    }
 
-    if (getSessionValue("Clear", "N")=="N")
-    {
+    if (getSessionValue("Clear", "N")=="N") {
         clearSessions();
         setSessionValue("Clear", "Y");
     }
@@ -48,25 +61,29 @@ function getSessionId()
     $SessionID=false;
     global $FORM_PARAMS;
 
-    if(isset ($FORM_PARAMS["Session"])) $SessionID=$FORM_PARAMS["Session"];
+    if(isset($FORM_PARAMS["Session"])) { $SessionID=$FORM_PARAMS["Session"];
+    }
 
     $tmp=getCookie("Session");
 
-    if($tmp!==false) $SessionID=$tmp;
+    if($tmp!==false) { $SessionID=$tmp;
+    }
 
-    if($SessionID===false) newSession();
+    if($SessionID===false) { newSession();
+    }
 
-    if(isset ($FORM_PARAMS["Session"])  &&  $tmp!==false && $FORM_PARAMS["Session"]==$tmp)reloadSession();
+    if(isset($FORM_PARAMS["Session"])  &&  $tmp!==false && $FORM_PARAMS["Session"]==$tmp) { reloadSession();
+    }
 
     return $SessionID;
 }
 function newSession()
 {
-    $Tmp=getSessionsZone()->get("SessionCount",0);
+    $Tmp=getSessionsZone()->get("SessionCount", 0);
     $Tmp++;
-    getSessionsZone()->set("SessionCount",$Tmp);
+    getSessionsZone()->set("SessionCount", $Tmp);
     $Tmp=sha1($Tmp.timeGetTime().getIP());
-    putCookie("Session",$Tmp);
+    putCookie("Session", $Tmp);
 
     reloadSession($Tmp);
 }
@@ -75,18 +92,21 @@ function reloadSession($ses_id=null)
     $URI="";
     foreach ($_GET as $a => $b)
     {
-        if($a!="Session"  && !empty($b))
+        if($a!="Session"  && !empty($b)) {
             $URI.="$a=$b&";
+        }
     }
-    if($ses_id!=null)
+    if($ses_id!=null) {
         $URI.="Session=".$ses_id;
+    }
 
-    if ($URI=="")
+    if ($URI=="") {
         Header("Location: ./");
-    else
+    } else {
         Header("Location: ./?".$URI);
+    }
 
-    exit ();
+    exit();
 }
 
 function clearSessions()
@@ -95,8 +115,9 @@ function clearSessions()
     foreach (getSessionsZone()->getChild() as $other_ses)
     {
         $TimeTime=($ThisTime-$other_ses->get("UnixTime", $ThisTime));
-        if((float)$TimeTime>(float)getSessionsZone()->get("MaxSeconds", 20))
+        if((float)$TimeTime>(float)getSessionsZone()->get("MaxSeconds", 20)) {
                 $other_ses->delete(true);
+        }
     }
 }
 

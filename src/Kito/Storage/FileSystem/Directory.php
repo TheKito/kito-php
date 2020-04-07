@@ -29,32 +29,36 @@ class Directory extends FileSystem
     {
         parent::__construct($path);
         
-        if(parent::exists() && !parent::isDirectory())
+        if(parent::exists() && !parent::isDirectory()) {
             throw new NotIsDirectoryException($path);
+        }
         
-        if(!$this->isRoot())
+        if(!$this->isRoot()) {
             parent::getParent();
+        }
     }
 
     public function getChild($name)
     {
         $_ = parent::getChild($name);
         
-        if(!self::pathExists($_))
-            return new FileSystem($_,parent::getDirectorySeparator());    
-        elseif(self::pathIsDirectory($_))
-            return new Directory($_,parent::getDirectorySeparator());
-        else if (self::pathIsFile($_))
-            return new File($_,parent::getDirectorySeparator());        
-        else            
-            return new FileSystem($_,parent::getDirectorySeparator());    
+        if(!self::pathExists($_)) {
+            return new FileSystem($_, parent::getDirectorySeparator());    
+        } elseif(self::pathIsDirectory($_)) {
+            return new Directory($_, parent::getDirectorySeparator());
+        } else if (self::pathIsFile($_)) {
+            return new File($_, parent::getDirectorySeparator());        
+        } else {            
+            return new FileSystem($_, parent::getDirectorySeparator());
+        }    
     }
     
     public function getChildren()    
     {
         $_ = array();
-        foreach(self::getSubPaths($this) as $subPath)
-            $_ = $this->getChild ($subPath->getName());
+        foreach(self::getSubPaths($this) as $subPath) {
+            $_ = $this->getChild($subPath->getName());
+        }
         return $_;
     }    
     
@@ -62,15 +66,17 @@ class Directory extends FileSystem
     
     public final function create()
     {
-        if(parent::exists())
+        if(parent::exists()) {
             return;
+        }
                
         $this->getParent()->create();
         
         parent::validateWritable();
         
-        if(!mkdir ($this->__toString()))
-            throw new CreateDirectoryException($this->__toString());  
+        if(!mkdir($this->__toString())) {
+            throw new CreateDirectoryException($this->__toString());
+        }  
                          
     }
 

@@ -20,6 +20,7 @@ namespace Kito\Storage\DataBase\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class UpdateException extends Exception {
+class UpdateException extends Exception
+{
     //put your code here
 }

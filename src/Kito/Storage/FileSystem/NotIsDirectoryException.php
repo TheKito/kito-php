@@ -20,6 +20,7 @@ namespace Kito\Storage\FileSystem;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotIsDirectoryException extends Exception {
+class NotIsDirectoryException extends Exception
+{
     //put your code here
 }

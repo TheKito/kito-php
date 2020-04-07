@@ -24,7 +24,7 @@ class AttributeValue extends DataPair64
     private static $tablePk="ATTRIBUTE_VALUE_ID";
     private static $tableValue="ATTRIBUTE_VALUE_VALUE";
 
-    public function  __construct($cnn)
+    public function __construct($cnn)
     {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue);
     }
@@ -34,7 +34,7 @@ class AttributeValue extends DataPair64
         return parent::getId($value);
     }
 
-    public function  getValue($id)
+    public function getValue($id)
     {
         return parent::getValue($id);
     }

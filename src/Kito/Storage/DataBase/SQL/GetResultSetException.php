@@ -20,6 +20,7 @@ namespace Kito\Storage\DataBase\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class GetResultSetException extends Exception {
+class GetResultSetException extends Exception
+{
     //put your code here
 }

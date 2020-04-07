@@ -29,26 +29,27 @@ class FinalZone
         return $this->id;
     }
 
-    private function  __construct(&$z,$id)
+    private function __construct(&$z,$id)
     {
         $this->z=$z;
         $this->id=$id;
     }
 
-    public static function  getRoot($cnn)
+    public static function getRoot($cnn)
     {
-        return new FinalZone(new Zone($cnn),null);
+        return new FinalZone(new Zone($cnn), null);
     }
 
     public function get($name)
     {
-        return new FinalZone($this->z, $this->z->getId($this->id,$name));        
+        return new FinalZone($this->z, $this->z->getId($this->id, $name));        
     }
 
     public static function getGlobalMant($parent)
     {
-        if($parent===false)
+        if($parent===false) {
             return false;
+        }
         
         $t=$parent;
         $last=$parent;
@@ -57,11 +58,11 @@ class FinalZone
 
         while($t!==false)
         {
-//            if($t->getAttribute("CountMant")->get(0)<$count)
-//            {
+            //            if($t->getAttribute("CountMant")->get(0)<$count)
+            //            {
                 $last=$t;
-//                $count=$t->getAttribute("CountMant")->get(0);
-//            }
+            //                $count=$t->getAttribute("CountMant")->get(0);
+            //            }
 
             $t=$t->getMant();
         }
@@ -75,39 +76,41 @@ class FinalZone
         $t=$this->getZones();
 
         $lzone=false;
-        $ltime=round(microtime(true),0)+10;
+        $ltime=round(microtime(true), 0)+10;
 
         foreach($t as $zzz)
         {
             $time=$zzz->getAttribute("TimeMant")->get(0);
 
-            if($time<$ltime)
-            {
+            if($time<$ltime) {
                 $ltime=$time;
                 $lzone=$zzz;
             }
         }
 
-        if($lzone!==false)
-            $lzone->getAttribute("TimeMant")->set(round(microtime(true),0));
+        if($lzone!==false) {
+            $lzone->getAttribute("TimeMant")->set(round(microtime(true), 0));
+        }
         
         return $lzone;
     }
 
     public function getParent()
     {
-        if($this->id==null)
+        if($this->id==null) {
             return null;
+        }
 
         return new FinalZone($this->z, $this->z->getPid($this->id));
     }
         
     public function getName()
     {
-        if($this->id==null)
+        if($this->id==null) {
             return null;
+        }
 
-       return $this->z->getName($this->id);
+        return $this->z->getName($this->id);
     }
 
     public function getZones($limit=null)
@@ -116,62 +119,71 @@ class FinalZone
 
         foreach ($this->z->getZoneIds($this->id) as $sid)
         {
-            if($limit!=null)
+            if($limit!=null) {
                 $limit--;
+            }
 
-            if($limit!=null && $limit>=0)
-                $t[$sid]=new FinalZone ($this->z, $sid);
+            if($limit!=null && $limit>=0) {
+                $t[$sid]=new FinalZone($this->z, $sid);
+            }
         }
         return $t;
     }
 
     public function delete($recursive=true)
     {
-        if($this->id==null)
+        if($this->id==null) {
             return false;
+        }
 
-        return $this->z->delete($this->id,$recursive);
+        return $this->z->delete($this->id, $recursive);
     }
 
     public function getAttribute($name)
     {
-        if($this->id==null)
+        if($this->id==null) {
             return null;
+        }
 
         return new FinalAttribute($this->z->getAZ(), $this->id, $name);
     }
     
     public function getAttributes($limit=null)
     {
-        if($this->id==null)
+        if($this->id==null) {
             return array();
+        }
 
-        return $this->z->getAZ()->getAttributes($this->id,$limit);
+        return $this->z->getAZ()->getAttributes($this->id, $limit);
     }
 
     public function link($other_zone)
     {
-        if($this->id==null)
+        if($this->id==null) {
             return false;
+        }
 
-        return $this->z->getZL()->set($this->id,$other_zone->id)!=0;
+        return $this->z->getZL()->set($this->id, $other_zone->id)!=0;
     }
 
     public function unLink($other_zone)
     {
-        if($this->id==null)
+        if($this->id==null) {
             return false;
+        }
 
-        return $this->z->getZL()->delete($this->id,$other_zone->id);
+        return $this->z->getZL()->delete($this->id, $other_zone->id);
     }
 
     public function getLinks()
     {
         $t=array();
 
-        if($this->id==null)
-            foreach($this->z->getZL()->gets($this->id) as $idz)
-                $t[$idz]=new FinalZone ($this->z, $idz);
+        if($this->id==null) {
+            foreach($this->z->getZL()->gets($this->id) as $idz) {
+                $t[$idz]=new FinalZone($this->z, $idz);
+            }
+        }
 
         return $t;
     }

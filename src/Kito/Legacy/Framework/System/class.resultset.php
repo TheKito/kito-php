@@ -24,56 +24,64 @@ interface IResultSet
     //NAV
 
     /**
-    * next element in resultset
-    * @return boolean
-    */
+     * next element in resultset
+     *
+     * @return boolean
+     */
     function next();
 
     /**
-    * last element in resultset
-    * @return boolean
-    */
+     * last element in resultset
+     *
+     * @return boolean
+     */
     function last();
 
     /**
-    * previous element in resultset
-    * @return boolean
-    */
+     * previous element in resultset
+     *
+     * @return boolean
+     */
     function prev();
 
     /**
-    * first element in resultset
-    * @return boolean
-    */
+     * first element in resultset
+     *
+     * @return boolean
+     */
     function first();
 
     /**
-    * move to $pos eleent in resultset
-    * @return boolean
-    */
+     * move to $pos eleent in resultset
+     *
+     * @return boolean
+     */
     function move($pos);
 
 
     //Read
 
     /**
-    * get row in resultset as array with index colname
-    * @return Array<String,mixed>
-    */
+     * get row in resultset as array with index colname
+     *
+     * @return Array<String,mixed>
+     */
     function get();
 
     /**
-    * get total elements in resultset
-    * @return Integer
-    */
+     * get total elements in resultset
+     *
+     * @return Integer
+     */
     function count();
 
     //Other
 
     /**
-    * freememory in resultset
-    * @return boolean
-    */
+     * freememory in resultset
+     *
+     * @return boolean
+     */
     function flush();
 
 }

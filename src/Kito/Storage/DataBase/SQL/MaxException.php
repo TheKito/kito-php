@@ -20,6 +20,7 @@ namespace Kito\Storage\DataBase\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MaxException extends Exception {
+class MaxException extends Exception
+{
     //put your code here
 }

@@ -19,9 +19,10 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-class ZoneForm extends HForm {
+class ZoneForm extends HForm
+{
     var $zone;
-    function  __construct($zone_id)
+    function __construct($zone_id)
     {
         $this->zone= Zone::getZone($zone_id, getDBDriver("System"));
     }
@@ -32,7 +33,7 @@ class ZoneForm extends HForm {
         array_push($a, new FormHidden("", "id", $this->zone->id));
 
         $combo=new FormSelect("Parent", "parent_id", $this->zone->getParent()->id);
-        $combo->setList($this->zone->getParents(),true);
+        $combo->setList($this->zone->getParents(), true);
         array_push($a, $combo);
 
         foreach ($this->zone->getAttributes() as $name)
@@ -45,7 +46,8 @@ class ZoneForm extends HForm {
         return $a;
     }
 
-    protected function getModule() {
+    protected function getModule()
+    {
         return "Zones";
     }
 }

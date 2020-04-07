@@ -19,7 +19,8 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-class MySQLRS implements IResultSet {
+class MySQLRS implements IResultSet
+{
     var $rs;
     var $pos;
     function __construct($rs)
@@ -30,12 +31,12 @@ class MySQLRS implements IResultSet {
 
     function next()
     {
-        if($this->pos<$this->count())
-        {
+        if($this->pos<$this->count()) {
             return $this->move($this->pos+1);
         }
-        else
+        else {
             return false;
+        }
     }
 
     function last()
@@ -45,12 +46,12 @@ class MySQLRS implements IResultSet {
 
     function prev()
     {
-        if($this->pos>0)
-        {
+        if($this->pos>0) {
             return $this->move($this->pos-1);
         }
-        else
+        else {
             return false;
+        }
     }
 
     function first()
@@ -66,8 +67,9 @@ class MySQLRS implements IResultSet {
     function count()
     {
         $r=@mysql_num_rows($this->rs);
-        if($r===false)
+        if($r===false) {
             $r=-1;
+        }
 
         return $r;
     }
@@ -77,22 +79,24 @@ class MySQLRS implements IResultSet {
         return mysql_free_result($this->rs);
     }
 
-    function move ($Pos)
+    function move($Pos)
     {
-        if ($Pos>=0 && $Pos<$this->count())
-            if(@mysql_data_seek($this->rs,$Pos))
-            {
+        if ($Pos>=0 && $Pos<$this->count()) {
+            if(@mysql_data_seek($this->rs, $Pos)) {
                 $this->pos=$Pos;
                 return true;
             }
-            else
+            else {
                 return false;
-        else
+            } 
+        } else {
             return false;
+        }
 
     }
 
-    function  __destruct() {
+    function __destruct()
+    {
         $this->flush();
     }
 }

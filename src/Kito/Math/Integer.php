@@ -21,13 +21,16 @@ namespace Kito\Math;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Integer {
+class Integer
+{
 
-    public static function mergeInteger(int $x, int $y): int {
+    public static function mergeInteger(int $x, int $y): int
+    {
         return ($x + $y) * ($x + $y + 1) / 2 + $y;
     }
 
-    public static function splitInteger($z): array {
+    public static function splitInteger($z): array
+    {
         $w = floor((sqrt(8 * $z + 1) - 1) / 2);
         $t = ($w * $w + $w) / 2;
         $y = $z - $t;

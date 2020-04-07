@@ -19,22 +19,35 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-function getAuthZone(){return Zone::getZoneByName("Authentication", getSystemZone(), true);}
-function getUsersZone(){return Zone::getZoneByName("Users", getAuthZone(), true);}
-function getGroupsZone(){return Zone::getZoneByName("Groups", getAuthZone(), true);}
-
-include_once 'class.user.php';
-include_once 'class.group.php';
-
-function doAuthBasic($realm,$authModule=false){return setSessionValue("Realm", $realm) && setSessionValue("AuthMethod", $authModule) && header('WWW-Authenticate: Basic realm="'.$realm.'"');}
-if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER']!="")
+function getAuthZone()
 {
+    return Zone::getZoneByName("Authentication", getSystemZone(), true);
+}
+function getUsersZone()
+{
+    return Zone::getZoneByName("Users", getAuthZone(), true);
+}
+function getGroupsZone()
+{
+    return Zone::getZoneByName("Groups", getAuthZone(), true);
+}
+
+require_once 'class.user.php';
+require_once 'class.group.php';
+
+function doAuthBasic($realm,$authModule=false)
+{
+    return setSessionValue("Realm", $realm) && setSessionValue("AuthMethod", $authModule) && header('WWW-Authenticate: Basic realm="'.$realm.'"');
+}
+if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER']!="") {
     $mod=getSessionValue("AuthMethod", false);
-    if ($mod=="") $mod=false;
+    if ($mod=="") { $mod=false;
+    }
 
     $user=split("@", $_SERVER['PHP_AUTH_USER'], 2);
-    if(!User::auth($user[0], $user[1],$_SERVER['PHP_AUTH_PW'],$mod))    
+    if(!User::auth($user[0], $user[1], $_SERVER['PHP_AUTH_PW'], $mod)) {    
         doAuthBasic(getSessionValue("Realm", ""), $mod);
+    }
 }
 
 Group::getGroup("Root");

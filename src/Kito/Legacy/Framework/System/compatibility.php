@@ -21,47 +21,47 @@
 
 function doCheck()
 {
-        if (getParam("Tag")=="Iframe")
-        {
-            //setSessionValue("Iframe", "Y");
-            write("<html>");
-                write("<head>");
-                write("</head>");
-                write("<body>");
-                    write('<script language=javascript>');
-                        write("var loc='./?Tag=Javascript&Session=".getSessionId()."&Params=".  getParam("Params")."';");
-                        write("parent.location.href=loc;");
-                    write('</script>');
-                write("</body>");
-            write("</html>");
-            return;
-        }
+    if (getParam("Tag")=="Iframe") {
+        //setSessionValue("Iframe", "Y");
+        write("<html>");
+            write("<head>");
+            write("</head>");
+            write("<body>");
+                write('<script language=javascript>');
+                    write("var loc='./?Tag=Javascript&Session=".getSessionId()."&Params=".  getParam("Params")."';");
+                    write("parent.location.href=loc;");
+                write('</script>');
+            write("</body>");
+        write("</html>");
+        return;
+    }
 
-        if (getParam("Tag")=="Javascript")
-            setSessionValue("Javascript", "Y");
+    if (getParam("Tag")=="Javascript") {
+        setSessionValue("Javascript", "Y");
+    }
 
-        if (getParam("Tag")=="Meta")
-            setSessionValue("Meta", "Y");
+    if (getParam("Tag")=="Meta") {
+        setSessionValue("Meta", "Y");
+    }
 
-        if(getParam("Tag")=="Javascript" || getParam("Tag")=="Meta")
-        {
+    if(getParam("Tag")=="Javascript" || getParam("Tag")=="Meta") {
 
-            $url="./?Session=".getSessionId();
-            setSessionValue("Setup", "Y");
-            $p=unserialize(base64_decode(urldecode(getParam("Params"))));
-            if(is_array($p))
-            {
+        $url="./?Session=".getSessionId();
+        setSessionValue("Setup", "Y");
+        $p=unserialize(base64_decode(urldecode(getParam("Params"))));
+        if(is_array($p)) {
                 
-                $u="./?";
-                $p["Session"]=getSessionId();
-                foreach ($p as $key => $value)
-                    $u.=$key."=".$value."&";
-                
+            $u="./?";
+            $p["Session"]=getSessionId();
+            foreach ($p as $key => $value) {
+                $u.=$key."=".$value."&";
             }
-
-            Header("Location: ".$url);
-            return;
+                
         }
+
+        Header("Location: ".$url);
+        return;
+    }
 
         $params=urlencode(base64_encode(serialize($_GET)));
         write("<html>");
@@ -72,8 +72,9 @@ function doCheck()
             write("<body>");
                 write("Loading...");
                 write("<span style=display:none>");
-                    foreach(getApplicationZone()->getChild() as $zone)
-                        write($zone->getLink());
+    foreach(getApplicationZone()->getChild() as $zone) {
+        write($zone->getLink());
+    }
                 write("</span>");
                 write('<iframe style=display:none src="./?Tag=Iframe&Module=Compatibility&Session='.getSessionId().'&Params='.$params.'"></iframe>');
                 write('<script language=javascript>');

@@ -19,60 +19,76 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-include_once 'class.resultset.php';
-include_once 'class.driver.php';
-function getDataZone(){return getZone(getDBDriver("System"), "Data",getSystemZone(),true);}
-function getDataSourcesZone(){return getZone(getDBDriver("System"), "Sources",getDataZone(),true);}
-function getDataLinksZone(){return getZone(getDBDriver("System"), "Links",getDataZone(),true);}
-function getDataSourceZone($name){return getZone(getDBDriver("System"), $name,getDataSourcesZone(),true);}
-function getDataLinkZone($name){return getZone(getDBDriver("System"), $name,getDataLinksZone(),true);}
+require_once 'class.resultset.php';
+require_once 'class.driver.php';
+function getDataZone()
+{
+    return getZone(getDBDriver("System"), "Data", getSystemZone(), true);
+}
+function getDataSourcesZone()
+{
+    return getZone(getDBDriver("System"), "Sources", getDataZone(), true);
+}
+function getDataLinksZone()
+{
+    return getZone(getDBDriver("System"), "Links", getDataZone(), true);
+}
+function getDataSourceZone($name)
+{
+    return getZone(getDBDriver("System"), $name, getDataSourcesZone(), true);
+}
+function getDataLinkZone($name)
+{
+    return getZone(getDBDriver("System"), $name, getDataLinksZone(), true);
+}
 
 function loadDataBase()
 {
-    if (defined("SYSTEM_DATABASE_MASTER_DRIVER") && defined("SYSTEM_DATABASE_MASTER_DRIVER_PARAMS"))
-    {
-       if(getDBDriver("System",SYSTEM_DATABASE_MASTER_DRIVER,unserialize(SYSTEM_DATABASE_MASTER_DRIVER_PARAMS))===false)
+    if (defined("SYSTEM_DATABASE_MASTER_DRIVER") && defined("SYSTEM_DATABASE_MASTER_DRIVER_PARAMS")) {
+        if(getDBDriver("System", SYSTEM_DATABASE_MASTER_DRIVER, unserialize(SYSTEM_DATABASE_MASTER_DRIVER_PARAMS))===false) {
                trigger_error("SYSTEM_DATABASE_MASTER_DRIVER error to load driver", E_USER_ERROR);
+        }
     }
-    else
+    else {
         trigger_error("SYSTEM_DATABASE_MASTER_DRIVER not found", E_USER_ERROR);
+    }
 }
 function getDBDriver($name,$driver_module=null,$params=null)
- {
+{
     static $databases  = array(); //Internal DB Name -> IDriver;
 
-    if(isset($databases[$name]))
+    if(isset($databases[$name])) {
         return $databases[$name];
+    }
 
 
-    if ($name!="System")
-    {
+    if ($name!="System") {
         $zone=getDataSourceZone($name);
-        if ($zone!=false)
-        {
-//            foreach ($zone->getAttributes() as $attr)
-//                echo $attr;
+        if ($zone!=false) {
+            //            foreach ($zone->getAttributes() as $attr)
+            //                echo $attr;
 
         }
     }
 
-    if($driver_module==null)
+    if($driver_module==null) {
         return false;
+    }
 
     $databases[$name]=getModule($driver_module)->getDriver($params);
     
-    if($databases[$name]!==false)
-    {
+    if($databases[$name]!==false) {
         $databases[$name]->zone=getDataSourceZone($name);
-        $databases[$name]->zone->set("Module",$driver_module);
-        foreach ($params as $key => $value)
-            $databases[$name]->zone->set($key,$value);
+        $databases[$name]->zone->set("Module", $driver_module);
+        foreach ($params as $key => $value) {
+            $databases[$name]->zone->set($key, $value);
+        }
 
     }
 
 
     return $databases[$name];
- }
+}
 
 
 
