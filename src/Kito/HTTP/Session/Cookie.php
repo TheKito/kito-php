@@ -23,7 +23,7 @@ use Kito\Cryptography\SecureID;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CookieSessionID
+class Cookie
 {
 
     private $name;
