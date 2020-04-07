@@ -20,6 +20,7 @@ namespace Kito\Cryptography;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class InvalidHashValueException extends Exception {
+class InvalidHashValueException extends Exception
+{
 
 }

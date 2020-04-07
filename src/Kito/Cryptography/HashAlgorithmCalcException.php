@@ -20,6 +20,7 @@ namespace Kito\Cryptography;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class HashAlgorithmCalcException extends Exception {
+class HashAlgorithmCalcException extends Exception
+{
 
 }
