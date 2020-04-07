@@ -24,7 +24,7 @@ namespace Kito\Storage\DataBase\NoSQL;
 interface KeyValueInterface
 {
 
-    public function get(string $key);
+    public function get(string $key): string;
 
     public function set(string $key, $var): bool;
 
