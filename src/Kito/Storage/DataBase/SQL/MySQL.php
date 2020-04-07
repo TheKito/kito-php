@@ -17,12 +17,6 @@
 namespace Kito\Storage\DataBase\SQL;
 
 use \mysqli;
-use Kito\DataBase\SQL\Exception\ConnectException;
-use Kito\DataBase\SQL\Exception\CommandException;
-use Kito\DataBase\SQL\Exception\SelectException;
-use Kito\DataBase\SQL\Exception\InsertException;
-use Kito\DataBase\SQL\Exception\UpdateException;
-use Kito\DataBase\SQL\Exception\DeleteException;
 
 /**
  *
