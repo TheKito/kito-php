@@ -16,7 +16,7 @@
 /**
  * form
  *
- * @author Blankis <blankitoracing@gmail.com>
+ * @author TheKito <blankitoracing@gmail.com>
  */
 getModule("HTML");
 abstract class HForm extends HTMLElement

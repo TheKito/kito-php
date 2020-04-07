@@ -16,7 +16,7 @@
 /**
  *
  *
- * @author Blankis <blankitoracing@gmail.com>
+ * @author TheKito <blankitoracing@gmail.com>
  */
  HTML::loadTemplate(dirname(__FILE__)."/DefaultTemplate/");
 //Structure::getStructure("Default")->loadHTMLFile(file_get_contents(dirname(__FILE__)."/Default.html"));

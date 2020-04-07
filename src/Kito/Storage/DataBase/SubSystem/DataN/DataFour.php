@@ -18,7 +18,7 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
  *
- * @author The Blankis < blankitoracing@gmail.com >
+ * @author The TheKito < blankitoracing@gmail.com >
  */
 class DataFour extends DataN
 {

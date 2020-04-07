@@ -16,7 +16,7 @@
 /**
  * 
  *
- * @author Blankis <blankitoracing@gmail.com>
+ * @author TheKito <blankitoracing@gmail.com>
  */
 
 require_once 'class.resultset.php';

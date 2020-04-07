@@ -16,7 +16,7 @@
 /**
  * dataform
  *
- * @author Blankis <blankitoracing@gmail.com>
+ * @author TheKito <blankitoracing@gmail.com>
  */
 getModule("Form");
 class DataForm extends HForm

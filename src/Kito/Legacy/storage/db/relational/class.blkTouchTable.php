@@ -16,7 +16,7 @@
 
 /**
  *
- * @author The Blankis < blankitoracing@gmail.com >
+ * @author The TheKito < blankitoracing@gmail.com >
  */
 
 class BLKTouchTable

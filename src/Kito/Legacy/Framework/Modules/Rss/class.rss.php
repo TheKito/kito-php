@@ -16,7 +16,7 @@
 /**
  * rss
  *
- * @author Blankis <blankitoracing@gmail.com>
+ * @author TheKito <blankitoracing@gmail.com>
  */
 class item
 {

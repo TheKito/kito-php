@@ -15,7 +15,7 @@
 
 /**
  *
- * @author The Blankis < blankitoracing@gmail.com >
+ * @author The TheKito < blankitoracing@gmail.com >
  */
 require_once dirname(__FILE__)."/../Sql/class.datathree.php";
 class Link extends DataThree

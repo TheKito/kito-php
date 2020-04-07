@@ -15,7 +15,7 @@
 
 /**
  *
- * @author The Blankis < blankitoracing@gmail.com >
+ * @author The TheKito < blankitoracing@gmail.com >
  */
 require_once dirname(__FILE__)."/class.city.php";
 class CityStreet extends StateCity
