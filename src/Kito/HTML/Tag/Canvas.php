@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Canvas extends HTMLElement {
+class Canvas extends Element {
 
     function __construct($name) {
-        $this->tag = "canvas";
         $this->closeMode = 3;
 
         $this->addChild("Your browser does not support HTML5 canvas element.");

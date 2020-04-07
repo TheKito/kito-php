@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class FigCaption extends HTMLElement {
+class FigCaption extends Element {
 
     function __construct() {
-        $this->tag = "figcaption";
         $this->closeMode = 3;
     }
 

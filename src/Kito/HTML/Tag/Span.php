@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Span extends HTMLElement {
+class Span extends Element {
 
     function __construct() {
-        $this->tag = "span";
         $this->closeMode = 3;
     }
 

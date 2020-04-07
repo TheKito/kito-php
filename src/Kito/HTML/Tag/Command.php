@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Command extends HTMLElement {
+class Command extends Element {
 
     function __construct($type) {
-        $this->tag = "command";
         $this->closeMode = 3;
         $this->setAttr("type", $type);
     }

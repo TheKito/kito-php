@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class KeyGen extends HTMLElement {
+class KeyGen extends Element {
 
     function __construct($name) {
-        $this->tag = "keygen";
         $this->closeMode = 3;
         $this->setAttr("name", $name);
     }

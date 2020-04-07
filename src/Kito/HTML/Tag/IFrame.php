@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class IFrame extends HTMLElement {
+class IFrame extends Element {
 
     function __construct($src) {
-        $this->tag = "iframe";
         $this->closeMode = 0;
         $this->setAttr("src", $src);
         $this->setStyleAttr("width", "100%");

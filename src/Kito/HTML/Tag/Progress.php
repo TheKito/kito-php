@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Progress extends HTMLElement {
+class Progress extends Element {
 
     function __construct() {
-        $this->tag = "progress";
         $this->closeMode = 3;
     }
 

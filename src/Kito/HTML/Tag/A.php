@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class A extends HTMLElement {
+class A extends Element {
 
     function __construct($href, $element) {
-        $this->tag = "a";
         $this->closeMode = 3; // </a>
         $this->setAttr("href", $href);
         $this->addChild($element);

@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class DataList extends HTMLElement {
+class DataList extends Element {
 
     function __construct($name) {
-        $this->tag = "datalist";
         $this->closeMode = 3;
         $this->setAttr("name", $name);
     }

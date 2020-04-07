@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Head extends HTMLElement {
+class Head extends Element {
 
     function __construct() {
-        $this->tag = "head";
         $this->closeMode = 0;
     }
 

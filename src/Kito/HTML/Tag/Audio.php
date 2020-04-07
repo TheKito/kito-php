@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Audio extends HTMLElement {
+class Audio extends Element {
 
     function __construct($src, $background = false) {
-        $this->tag = "audio";
         $this->closeMode = 3;
 
         $this->addChild("Your browser does not support HTML5 audio element.");

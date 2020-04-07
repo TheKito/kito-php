@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Aside extends HTMLElement {
+class Aside extends Element {
 
     function __construct() {
-        $this->tag = "aside";
         $this->closeMode = 3;
     }
 

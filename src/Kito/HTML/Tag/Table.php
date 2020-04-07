@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Table extends HTMLElement {
+class Table extends Element {
 
     function __construct() {
-        $this->tag = "table";
         $this->closeMode = 0;
         $this->setStyleAttr("width", "100%");
         $this->setStyleAttr("height", "100%");

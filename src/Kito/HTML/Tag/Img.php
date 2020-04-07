@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Img extends HTMLElement {
+class Img extends Element {
 
     function __construct($src, $alt = false) {
-        $this->tag = "img";
         $this->closeMode = 2;
         $this->setAttr("src", $src);
         if ($alt !== false) {

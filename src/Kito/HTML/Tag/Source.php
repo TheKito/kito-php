@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Source extends HTMLElement {
+class Source extends Element {
 
     function __construct() {
-        $this->tag = "source";
         $this->closeMode = 3;
     }
 

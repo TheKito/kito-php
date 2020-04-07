@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Form extends HTMLElement {
+class Form extends Element {
 
     function __construct() {
-        $this->tag = "form";
         $this->closeMode = 0;
     }
 

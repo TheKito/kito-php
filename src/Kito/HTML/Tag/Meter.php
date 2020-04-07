@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Meter extends HTMLElement {
+class Meter extends Element {
 
     function __construct() {
-        $this->tag = "meter";
         $this->closeMode = 3;
     }
 

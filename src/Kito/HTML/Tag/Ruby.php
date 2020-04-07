@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Ruby extends HTMLElement {
+class Ruby extends Element {
 
     function __construct() {
-        $this->tag = "ruby";
         $this->closeMode = 3;
     }
 

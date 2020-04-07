@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Meta extends HTMLElement {
+class Meta extends Element {
 
     function __construct($content) {
-        $this->tag = "meta";
         $this->closeMode = 2;
         $this->setAttr("content", $content);
     }

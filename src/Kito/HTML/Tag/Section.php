@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Section extends HTMLElement {
+class Section extends Element {
 
     function __construct() {
-        $this->tag = "section";
         $this->closeMode = 3;
     }
 

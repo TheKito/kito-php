@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Embed extends HTMLElement {
+class Embed extends Element {
 
     function __construct($src) {
-        $this->tag = "embed";
         $this->closeMode = 3;
         $this->setAttr("src", $src);
     }

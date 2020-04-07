@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Option extends HTMLElement {
+class Option extends Element {
 
     function __construct($main = false) {
-        $this->tag = "option";
         $this->closeMode = 0;
         if ($main) {
             $this->setAttr("selected", "");

@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Link extends HTMLElement {
+class Link extends Element {
 
     function __construct($rel, $type, $href) {
-        $this->tag = "link";
         $this->closeMode = 2;
         $this->setAttr("rel", $rel);
         $this->setAttr("type", $type);

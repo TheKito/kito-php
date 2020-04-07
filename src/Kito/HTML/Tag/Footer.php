@@ -21,10 +21,9 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Footer extends HTMLElement {
+class Footer extends Element {
 
     function __construct() {
-        $this->tag = "footer";
         $this->closeMode = 3;
     }
 
