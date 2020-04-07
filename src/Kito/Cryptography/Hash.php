@@ -70,17 +70,17 @@ class Hash
         return strtoupper($t);
     }
 
-    public function check(string $hashValue, string $data)
+    public function check(string $hashValue, string $data) : bool
     {
         return $this->calc($data) == strtoupper($hashValue);
     }
 
-    public function checkHash(string $hashValue)
+    public function checkHash(string $hashValue) : bool
     {
         return strlen($hashValue) == strlen($this->example);
     }
 
-    public function validateHash(string $hashValue)
+    public function validateHash(string $hashValue) : void
     {
         if (!$this->checkHash($hashValue)) {
             throw new InvalidHashValueException($hashValue);
