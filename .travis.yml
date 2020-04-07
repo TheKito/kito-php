@@ -1,38 +1,55 @@
+# Travis CI (MIT License) configuration file
+# @link https://travis-ci.org/
+
+# Use new container based environment
+sudo: false
+
+# Declare project language.
+# @link http://about.travis-ci.org/docs/user/languages/php/
 language: php
 
-php:  
-  - 7.2
-  - 7.3
-  - 7.4
-  - nightly
+# Declare versions of PHP to use. Use one decimal max.
+# @link http://docs.travis-ci.com/user/build-configuration/
+matrix:
+    fast_finish: true
 
-cache:
-  directories:
-    - $HOME/.composer/cache
+    include:
+        # aliased to a recent 7.1 version
+        - php: '7.1'
+          env: SNIFF=1
+        # aliased to a recent 7.2 version
+        - php: '7.2'
+        # aliased to a recent 7.3 version
+        - php: '7.3'
+        # php nightly
+        - php: 'nightly'
+
+    allow_failures:
+        - php: nightly
 
 before_install:
-    # Speed up build time by disabling Xdebug when its not needed.
-    - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-    # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
-    - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then composer install; fi
+  - export PHPCS_DIR=/tmp/phpcs
+  - export PHPCOMPAT_DIR=/tmp/PHPCompatibility
+  # Install PHP CodeSniffer.
+  - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
+  # Install PHP Compatibility Standard.
+  - git clone -b master --depth 1 https://github.com/wimg/PHPCompatibility.git $PHPCOMPAT_DIR
+  # Set install path for PHP Compatibility Standard.
+  # @link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#setting-the-installed-standard-paths
+  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $PHPCOMPAT_DIR
+  # After CodeSniffer install you should refresh your path.
+  - phpenv rehash
 
 
-
-  
 script: phpunit
 
-jobs:
-  allow_failures:
-    - php: nightly
-
-  include:
-    - stage: Metrics and quality
-      php: 7.2
-      env: CODE_STANDARD
-      script:
-        - bin/phpcs
-
-    - stage: Metrics and quality
-      env: PHPSTAN
-      script:
-        - bin/phpstan analyse
+# Run test script commands.
+# All commands must exit with code 0 on success. Anything else is considered failure.
+script:
+  # Search for PHP syntax errors.
+  - find -L . -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+  # Run PHPCS.
+  # If the custom ruleset is named `.phpcs.xml`, `phpcs.xml`, `.phpcs.xml.dist` or `phpcs.xml.dist`
+  # and, like the travis script, is in the root of the project, you can leave
+  # out the `--standard=` part of the command.
+  - if [[ "$SNIFF" == "1" ]]; then $PHPCS_DIR/bin/phpcs . --standard=./custom-ruleset.xml; fi
