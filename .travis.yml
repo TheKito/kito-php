@@ -48,4 +48,4 @@ jobs:
     - stage: Metrics and quality
       env: PHPSTAN
       script:
-        - $PHPSTAN_DIR/phpstan analyse 
+        - $PHPSTAN_DIR/phpstan . 
