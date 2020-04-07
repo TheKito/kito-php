@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,11 +18,9 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class BLKTOR
-{
+class BLKTOR {
 
-    public static function getNewTOR()
-    {
+    public static function getNewTOR() {
         while (true) {
             try {
                 $port = self::getFreePort();
@@ -55,8 +53,7 @@ class BLKTOR
     private $r_lock = null;
     private $command = null;
 
-    public function check()
-    {
+    public function check() {
         while (!$this->isConnectionReady()) {
             try {
                 echo "ReStarting TOR on port #" . $this->port . "\n";
@@ -74,23 +71,20 @@ class BLKTOR
         }
     }
 
-    private static function makeDir($path)
-    {
+    private static function makeDir($path) {
         is_dir($path) || mkdir($path, 0700, true);
         chown($path, 'debian-tor');
         chgrp($path, 'debian-tor');
     }
 
-    private static function makeFile($path)
-    {
+    private static function makeFile($path) {
         is_file($path) || touch($path);
         chmod($path, 0700);
         chown($path, 'debian-tor');
         chgrp($path, 'debian-tor');
     }
 
-    public function __construct($port)
-    {
+    public function __construct($port) {
         $this->port = $port;
 
         $this->torPath = "/tmp/tor/";
@@ -138,8 +132,7 @@ class BLKTOR
         $this->waitConnectionReady();
     }
 
-    private static function getFreePort()
-    {
+    private static function getFreePort() {
         while (true) {
             $port = rand(10000, 19999);
 
@@ -149,8 +142,7 @@ class BLKTOR
         }
     }
 
-    private static function isPortInUse($port)
-    {
+    private static function isPortInUse($port) {
         $connection = @fsockopen('127.0.0.1', $port);
 
         if (is_resource($connection)) {
@@ -161,8 +153,7 @@ class BLKTOR
         return false;
     }
 
-    private function waitPortReady()
-    {
+    private function waitPortReady() {
         $time = time();
         while (time() - $time < 1 * 60) {
             if (self::isPortInUse($this->port)) {
@@ -173,8 +164,7 @@ class BLKTOR
         throw new Exception('Port not ready');
     }
 
-    public function isConnectionReady()
-    {
+    public function isConnectionReady() {
         static $lt = 0;
 
         //        if(time()-$lt<10)
@@ -201,8 +191,7 @@ class BLKTOR
         return false;
     }
 
-    public function waitConnectionReady()
-    {
+    public function waitConnectionReady() {
 
         $time = time();
         while (time() - $time < 1 * 90) {
@@ -219,19 +208,16 @@ class BLKTOR
         throw new Exception('Connection not ready');
     }
 
-    function getPort()
-    {
+    function getPort() {
         return $this->port;
     }
 
-    function attachTor($curlHandler)
-    {
+    function attachTor($curlHandler) {
         curl_setopt($curlHandler, CURLOPT_PROXY, '127.0.0.1:' . $this->port);
         curl_setopt($curlHandler, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
     }
 
-    private function gcGetPortsLocked()
-    {
+    private function gcGetPortsLocked() {
         $output = array();
 
         exec('/usr/bin/lslocks', $output);
@@ -263,8 +249,7 @@ class BLKTOR
         return $tmp;
     }
 
-    private function gc()
-    {
+    private function gc() {
         $portsLocked = $this->gcGetPortsLocked();
 
         foreach (scandir($this->torPath) as $port) {
