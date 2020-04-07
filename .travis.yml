@@ -9,10 +9,10 @@ php:
 before_install:
   - export PHPCS_DIR=/tmp/phpcs
   - export PHPCOMPAT_DIR=/tmp/PHPCompatibility
-  - export PHPSTAN_DIR=/tmp/PHPSTAN
+#  - export PHPSTAN_DIR=/tmp/PHPSTAN
   - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
   #- git clone -b master --depth 1 https://github.com/wimg/PHPCompatibility.git $PHPCOMPAT_DIR
-  - git clone -b master --depth 1 https://github.com/phpstan/phpstan.git $PHPSTAN_DIR
+#  - git clone -b master --depth 1 https://github.com/phpstan/phpstan.git $PHPSTAN_DIR
   
   # Set install path for PHP Compatibility Standard.
   # @link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#setting-the-installed-standard-paths
@@ -48,4 +48,6 @@ jobs:
     - stage: Metrics and quality
       env: PHPSTAN
       script:
+        - export PHPSTAN_DIR=/tmp/PHPSTAN
+        - git clone -b master --depth 1 https://github.com/phpstan/phpstan.git $PHPSTAN_DIR        
         - $PHPSTAN_DIR/phpstan analyse -c phpstan.neon 
