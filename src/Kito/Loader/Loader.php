@@ -62,7 +62,7 @@ class Loader
         }
     }
 
-    private static function createDirectories(array $path)
+    private static function createDirectories(array $path) : void
     {
         $_ = array();
 
@@ -81,7 +81,7 @@ class Loader
 
     public function getCachePath(): string
     {
-        return self::arrayToPath($this->getCachePath);
+        return self::pathToString($this->cachePath);
     }
 
     public function setCachePath($path): self
