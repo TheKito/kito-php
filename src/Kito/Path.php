@@ -24,11 +24,11 @@ class Path
 {
 
     
-    public static function getRoot($directorySeparator = DIRECTORY_SEPARATOR)
+    public static function getRoot($directorySeparator = DIRECTORY_SEPARATOR) : Path
     {
         return new Path(array(), $directorySeparator);
     }
-    private static function parsePath($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
+    private static function parsePath($stringPath, $directorySeparator = DIRECTORY_SEPARATOR) : array
     {
         $tmp = array();
         foreach(explode($directorySeparator, str_replace("/", $directorySeparator, str_replace("\\", $directorySeparator, $stringPath))) as $name)
@@ -51,7 +51,7 @@ class Path
         return $tmp;        
     }
     
-    public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
+    public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR) : Path
     {
         return new Path(self::parsePath($stringPath, $directorySeparator), $directorySeparator);
     }
@@ -63,55 +63,58 @@ class Path
         $this->directorySeparator = $directorySeparator;
         $this->pathElements = $pathElements;
     }    
-    public function isRoot()
+    public function isRoot() : bool
     {
         return $this->getDeep()==0;
     }    
-    public function getDeep()
+    public function getDeep() : int
     {
         return count($this->pathElements);
     }    
-    public function getName()
+    public function getName() : string
     {
         return end($this->pathElements);
     }    
-    public function getChild($name)
+    public function getChild($name) : Path
     {
         return new Path(array_merge($this->pathElements, array($name)), $this->directorySeparator);
     }    
-    public function getParent()
+    public function getParent() : Path
     {
-        if($this->isRoot()) { return null ;
-        } return new Path(array_slice($this->pathElements, 0, count($this->pathElements)-1, true), $this->directorySeparator);
+        if($this->isRoot()) { 
+            return null;
+        }
+        return new Path(array_slice($this->pathElements, 0, count($this->pathElements)-1, true), $this->directorySeparator);
     }    
-    public function __toString()
+    public function __toString() : string
     {
         return $this->directorySeparator . implode($this->directorySeparator, $this->pathElements);
     }    
-    public function combine(Path $subPath)
+    public function combine(Path $subPath) : Path
     {
         return new Path(array_merge($this->pathElements, $subPath->pathElements), $this->directorySeparator);
     }        
-    public function getDirectorySeparator()
+    public function getDirectorySeparator() : string
     {
         return $this->directorySeparator;
     }
-    public function getElements()
+    public function getElements() : array
     {
         return $this->pathElements;
     }
-    public function getElement($index)
+    public function getElement($index) : string
     {
         return isset($this->pathElements[$index])?$this->pathElements[$index]:null;
     }
-    public function getUID()
+    public function getUID() : string
     {
         return implode('#', $this->pathElements);
     }   
     
-    public function setDirectorySeparator($directorySeparator)
+    public function setDirectorySeparator($directorySeparator) : Path
     {
         $this->directorySeparator = $directorySeparator;
+        return $this;
     }
 
 
