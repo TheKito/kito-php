@@ -23,7 +23,7 @@ namespace Kito\Loader;
 class Sources
 {
 
-    public static function attach(Loader $loader)
+    public static function attach(Loader $loader) : void
     {
         $loader->addRepository('/Psr/Log', 'https://raw.githubusercontent.com/php-fig/log/master/Psr/Log');
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message/master/src');
