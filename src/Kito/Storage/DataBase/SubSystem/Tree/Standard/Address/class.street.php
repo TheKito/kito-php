@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,26 +18,22 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class CityStreet extends StateCity
-{
+class CityStreet extends StateCity {
 
     private $zone4;
 
-    public function __construct($root_zone, $contry_code, $state_code, $city_code, $street_code)
-    {
+    public function __construct($root_zone, $contry_code, $state_code, $city_code, $street_code) {
         parent::__construct($root_zone, $contry_code, $state_code, $city_code);
 
         $this->zone4 = parent::getParentZone()->get($street_code);
         $this->zone4->getAttribute("Type")->set("Street");
     }
 
-    public function getStreetZone()
-    {
+    public function getStreetZone() {
         return $this->zone4;
     }
 
-    public function getNumbers()
-    {
+    public function getNumbers() {
         $list = array();
 
         foreach (self::getStreetZone()->getZones() as $zone) {

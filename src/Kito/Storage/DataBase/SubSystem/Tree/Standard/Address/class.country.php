@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,25 +18,21 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class AddressCountry extends Address
-{
+class AddressCountry extends Address {
 
     private $zone1;
 
-    public function __construct($root_zone, $contry_code)
-    {
+    public function __construct($root_zone, $contry_code) {
         parent::__construct($root_zone);
         $this->zone1 = parent::getParentZone()->get($contry_code);
         $this->zone1->getAttribute("Type")->set("Country");
     }
 
-    public function getCountryZone()
-    {
+    public function getCountryZone() {
         return $this->zone1;
     }
 
-    public function getStates()
-    {
+    public function getStates() {
         $list = array();
 
         foreach (self::getCountryZone()->getZones() as $zone) {

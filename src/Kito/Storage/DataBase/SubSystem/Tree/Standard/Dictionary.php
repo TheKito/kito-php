@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,21 +18,18 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class Dictionary
-{
+class Dictionary {
 
     private $zone;
 
-    public function __construct($root_zone)
-    {
+    public function __construct($root_zone) {
         $z = $root_zone;
         $z = $z->get("Standard");
         $z = $z->get("Dictionary");
         $this->zone = $z;
     }
 
-    private static function procWord($word)
-    {
+    private static function procWord($word) {
         $t = $word;
         $t = strtoupper($t);
 
@@ -45,8 +42,7 @@ class Dictionary
         return $t;
     }
 
-    public function getZone($word)
-    {
+    public function getZone($word) {
         $z = $this->zone->get($this->getKeysWord($word));
 
         foreach (str_split($word) as $l) {
@@ -58,8 +54,7 @@ class Dictionary
         return $z;
     }
 
-    private function getKeysWord($word)
-    {
+    private function getKeysWord($word) {
         $word = self::procWord($word);
         $b = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
@@ -73,8 +68,7 @@ class Dictionary
         return $tmp;
     }
 
-    public function getWord($zone)
-    {
+    public function getWord($zone) {
         $len = $zone->getAttribute("len")->get();
 
         if (!is_numeric($len)) {
@@ -91,8 +85,7 @@ class Dictionary
         return $word;
     }
 
-    private function getWords($zone, &$list = array())
-    {
+    private function getWords($zone, &$list = array()) {
         foreach ($zone->getZones() as $subzone) {
             $this->getWords($subzone, $list);
         }
@@ -107,8 +100,7 @@ class Dictionary
         return $list;
     }
 
-    public function search($word)
-    {
+    public function search($word) {
         $list = array();
         $t = $this->getKeysWord($word);
 

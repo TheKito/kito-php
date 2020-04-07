@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,8 +18,7 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class AttributeZone extends DataThree
-{
+class AttributeZone extends DataThree {
 
     private static $tableName = "BLK_ZONE_ATTRIBUTE";
     private static $tablePk = "ZONE_ATTRIBUTE_ID";
@@ -27,14 +26,12 @@ class AttributeZone extends DataThree
     private static $tableValue1 = "ZONE_ATTRIBUTE_ATTRIBUTE_ID";
     private $a;
 
-    public function __construct($cnn)
-    {
+    public function __construct($cnn) {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
         $this->a = new Attribute($cnn);
     }
 
-    public function set($idz, $name, $value)
-    {
+    public function set($idz, $name, $value) {
         $lid = $this->getIdMagic($idz, $name);
 
         if ($this->getValue($lid) == $value) {
@@ -45,8 +42,7 @@ class AttributeZone extends DataThree
         $this->delete($lid);
     }
 
-    public function get($idz, $name, $default = null)
-    {
+    public function get($idz, $name, $default = null) {
         $lid = $this->getIdMagic($idz, $name);
         if ($lid != null) {
             return $this->getValue($lid);
@@ -58,13 +54,11 @@ class AttributeZone extends DataThree
         }
     }
 
-    public function remove($idz, $name)
-    {
+    public function remove($idz, $name) {
         return $this->delete($this->getIdMagic($idz, $name));
     }
 
-    private function getIdMagic($idz, $name)
-    {
+    private function getIdMagic($idz, $name) {
         $rs = $this->getCnn()->select(self::$tableName, array(self::$tablePk, self::$tableValue1), array(self::$tableValue0 => $idz), 0);
 
         foreach ($rs as $row) {
@@ -76,8 +70,7 @@ class AttributeZone extends DataThree
         return null;
     }
 
-    public function getAttributes($idz, $limit = null)
-    {
+    public function getAttributes($idz, $limit = null) {
         $a = array();
         $rs = $this->getCnn()->select(self::$tableName, array(self::$tableValue1), array(self::$tableValue0 => $idz), 0);
 
@@ -95,13 +88,11 @@ class AttributeZone extends DataThree
         return $a;
     }
 
-    protected function getId($idz, $name, $value)
-    {
+    protected function getId($idz, $name, $value) {
         return parent::getId($idz, $this->a->getId($name, $value));
     }
 
-    private function getName($id)
-    {
+    private function getName($id) {
         if ($id == null) {
             return null;
         }
@@ -109,8 +100,7 @@ class AttributeZone extends DataThree
         return $this->a->getName(parent::getValue1($id));
     }
 
-    protected function getValue($id)
-    {
+    protected function getValue($id) {
         if ($id == null) {
             return null;
         }
@@ -118,8 +108,7 @@ class AttributeZone extends DataThree
         return $this->a->getValue(parent::getValue1($id));
     }
 
-    protected function delete($id)
-    {
+    protected function delete($id) {
         if ($id == null) {
             return false;
         }

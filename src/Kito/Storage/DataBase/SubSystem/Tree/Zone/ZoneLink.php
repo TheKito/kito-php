@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,16 +18,14 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class ZoneLink extends Link
-{
+class ZoneLink extends Link {
 
     private static $tableName = "BLK_ZONE_LINK";
     private static $tablePk = "ZONE_LINK_ID";
     private static $tableValue0 = "ZONE_LINK_ZONE_ID_A";
     private static $tableValue1 = "ZONE_LINK_ZONE_ID_B";
 
-    public function __construct($cnn)
-    {
+    public function __construct($cnn) {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
     }
 
