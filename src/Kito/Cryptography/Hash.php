@@ -59,7 +59,7 @@ class Hash
         $this->example = $this->calc('');
     }
 
-    public function calc($data): string
+    public function calc(string $data): string
     {
         $t = hash($this->name, $data);
 
@@ -70,7 +70,7 @@ class Hash
         return strtoupper($t);
     }
 
-    public function check(string $hashValue, $data)
+    public function check(string $hashValue, string $data)
     {
         return $this->calc($data) == strtoupper($hashValue);
     }
