@@ -22,7 +22,7 @@
 class HTMLembed extends HTMLElement
 {
 
-    function  __construct($src)
+    function __construct($src)
     {
         $this->tag="embed";
         $this->closeMode=3;

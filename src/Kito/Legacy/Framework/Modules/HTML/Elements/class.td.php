@@ -22,7 +22,7 @@
 class HTMLtd extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="td";
         $this->closeMode=0;

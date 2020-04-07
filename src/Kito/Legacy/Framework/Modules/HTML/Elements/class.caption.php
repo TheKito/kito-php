@@ -22,7 +22,7 @@
 class HTMLcaption extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="caption";
         $this->closeMode=0;

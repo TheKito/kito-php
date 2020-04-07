@@ -20,9 +20,11 @@ namespace Kito\Cryptography;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class SecureID {
+class SecureID
+{
 
-    public static function get(int $length) {
+    public static function get(int $length)
+    {
         return bin2hex(openssl_random_pseudo_bytes($length));
     }
 

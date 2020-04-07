@@ -22,13 +22,14 @@
 class HTMLimg extends HTMLElement
 {
 
-    function  __construct($src,$alt=false)
+    function __construct($src,$alt=false)
     {
         $this->tag="img";
         $this->closeMode=2;
         $this->setAttr("src", $src);
-        if($alt!==false)
+        if($alt!==false) {
             $this->setAttr("alt", $alt);
+        }
     }
    
 }

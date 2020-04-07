@@ -18,18 +18,20 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class HTMLa extends HTMLElement {
+class HTMLa extends HTMLElement
+{
 
 
 
-    function  __construct($href,$element)
+    function __construct($href,$element)
     {
         $this->tag="a";
         $this->closeMode=3; // </a>
         $this->setAttr("href", $href);
         $this->addChild($element);
-        if (getSessionValue("Javascript", "N")=="Y")
+        if (getSessionValue("Javascript", "N")=="Y") {
             $this->setAttr("onclick", "return blk_html_a_onclick(this);");
+        }
     }
 
     public  function getHTML()

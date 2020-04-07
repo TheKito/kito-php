@@ -22,7 +22,7 @@
 class HTMLbr extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="br";
         $this->closeMode=2;

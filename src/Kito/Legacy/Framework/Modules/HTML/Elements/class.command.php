@@ -22,7 +22,7 @@
 class HTMLcommand extends HTMLElement
 {
 
-    function  __construct($type)
+    function __construct($type)
     {
         $this->tag="command";
         $this->closeMode=3;

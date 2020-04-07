@@ -19,22 +19,24 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-class ModuleForm extends HForm {
+class ModuleForm extends HForm
+{
 
 
     protected function getElements()
     {
         $a=array();
-        array_push($a, new FormText("Module Name", "Module",""));
+        array_push($a, new FormText("Module Name", "Module", ""));
 
-        $combo=new FormSelect("System Modules", "Module2","");
-        $combo->setList(scandir(dirname(__FILE__)."/../",1));
+        $combo=new FormSelect("System Modules", "Module2", "");
+        $combo->setList(scandir(dirname(__FILE__)."/../", 1));
         array_push($a, $combo);
 
         return $a;
     }
 
-    protected function getModule() {
+    protected function getModule()
+    {
         return "IDE";
     }
 }

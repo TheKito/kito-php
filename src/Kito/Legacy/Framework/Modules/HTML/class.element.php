@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-abstract class HTMLElement {
+abstract class HTMLElement
+{
     private $childs=array();
     private $attr=array();
     var $styleattr=array();
@@ -26,16 +27,27 @@ abstract class HTMLElement {
     var $closeMode=0; // 0 </tag>, 1 NO CLOSE, 2 <tag ... />, 3 auto (0 or 2 if elements)
     var $id;
     var $name;
-    public function getAttr($name){return $this->attr[strtoupper($name)];}
-    public function getTag(){return $this->tag;}
-    public function getAttrs(){return $this->attr;}
-    public function getChilds(){return $this->childs;}
+    public function getAttr($name)
+    {
+        return $this->attr[strtoupper($name)];
+    }
+    public function getTag()
+    {
+        return $this->tag;
+    }
+    public function getAttrs()
+    {
+        return $this->attr;
+    }
+    public function getChilds()
+    {
+        return $this->childs;
+    }
     private static function getId($name)
     {
         static $a=array();
 
-        if(!isset ($a[$name]))
-        {
+        if(!isset($a[$name])) {
             $a[$name]=0;
             return $name;
         }
@@ -50,62 +62,63 @@ abstract class HTMLElement {
     }
     public function toHtml($direct_write=false)
     {
-       // $this->doDBUpdate();
+        // $this->doDBUpdate();
 
         $style=ArrayToTags($this->styleattr, ":", ";", false);
-        if($style!="")
+        if($style!="") {
             $this->setAttr("style", $style);
+        }
 
         $out="";
 
         $out.="<".$this->tag.ArrayToTags($this->attr, "=", " ", true).($this->closeMode==2 || ($this->closeMode==3 && count($this->childs)==0)?" /":"").">";
 
-        if($direct_write)
-        {
-            write ($out);
+        if($direct_write) {
+            write($out);
             $out="";
         }
 
-        if($this->closeMode==0 || $this->closeMode==3)
+        if($this->closeMode==0 || $this->closeMode==3) {
             foreach($this->childs as $child)
             {
-                if($direct_write && !method_exists($this, "proxyElement"))
-                {
-                    if($child instanceof HTMLElement)
+                if($direct_write && !method_exists($this, "proxyElement")) {
+                    if($child instanceof HTMLElement) {
                         $out.=$child->toHtml(true);
-                    else
+                    } else {
                         $out.=$child;
+                    }
                 }
                 else
                 {
-//                    if($child instanceof HTMLElement)
-//                        $html=$child->toHtml(false);
-//                    else
-                        $html=$child;
+                    //                    if($child instanceof HTMLElement)
+                    //                        $html=$child->toHtml(false);
+                    //                    else
+                    $html=$child;
 
-                    if(method_exists($this, "proxyElement"))
+                    if(method_exists($this, "proxyElement")) {
                         $out.=$this->proxyElement($html);
-                    else
+                    } else {
                         $out.=$html;
+                    }
 
 
                 }
                 
                 //$out=" ".$out;
 
-                if($direct_write)
-                {
-                    write ($out);
+                if($direct_write) {
+                    write($out);
                     $out="";
                 }
             }
+        }
 
-        if($this->closeMode==0 || ($this->closeMode==3 && count($this->childs)>0))
+        if($this->closeMode==0 || ($this->closeMode==3 && count($this->childs)>0)) {
             $out.="</".$this->tag.">";
+        }
             
-        if($direct_write)
-        {
-            write ($out);
+        if($direct_write) {
+            write($out);
             $out="";
         }
 
@@ -113,33 +126,37 @@ abstract class HTMLElement {
         return $out;
     }
     public function addChild($element) //HTMLElement
-    {   if(is_array($element))
-        {
-            foreach ($element as $e)
+    {
+        if(is_array($element)) {
+            foreach ($element as $e) {
                 array_push($this->childs, $e);
+            }
             return true;
         }
-        else
+        else {
             return array_push($this->childs, &$element);
+        }
     }
     public function setAttr($name,$value)
     {
         $name=strtoupper($name);
-        if ($name=="NAME")
-        {
+        if ($name=="NAME") {
             $this->name=$value;
             $this->setAttr("id", HTMLElement::getId($value));
         }
 
-        if ($name=="ID")
+        if ($name=="ID") {
             $this->id=$value;
+        }
 
 
-        if ($name=="WIDTH"  || $name=="HEIGHT")
+        if ($name=="WIDTH"  || $name=="HEIGHT") {
             $this->setStyleAttr($name, $value);
+        }
 
-        if ($name=="src" || $name=="href")
+        if ($name=="src" || $name=="href") {
             $value=HTMLElement::getUrl($value);
+        }
 
         $this->attr[$name]=$value;
     }
@@ -156,26 +173,31 @@ abstract class HTMLElement {
 
         //GET PARAMS READ
         $new_params=array();
-        foreach ($_GET as $key => $value)
+        foreach ($_GET as $key => $value) {
             $new_params[$key]=$value;
+        }
 
-        if(array_count_values($href_)>1)
+        if(array_count_values($href_)>1) {
             foreach (explode("&", $href_[1]) as $key => $value)
             {
-                $pair=explode("=", $value,2);
-                if(array_count_values($pair)>1)
+                $pair=explode("=", $value, 2);
+                if(array_count_values($pair)>1) {
                     $new_params[$pair[0]]=$pair[1];
-                else
+                } else {
                     $new_params[$pair[0]]="";
+                }
             }
+        }
 
         //GET PARAMS WRITE
         $str_params="";
-        foreach ($new_params as $key => $value)
-            if ($str_params=="")
+        foreach ($new_params as $key => $value) {
+            if ($str_params=="") {
                 $str_params.="?".urlencode($key)."=".urlencode($value);
-            else
+            } else {
                 $str_params.="&".urlencode($key)."=".urlencode($value);
+            }
+        }
 
         return $href_[0].$str_params;
 
@@ -185,17 +207,19 @@ abstract class HTMLElement {
         $zone=getModuleZone("HTML");
         $zone=getZone($zone->driver, "Elements", $zone, true);
         $zone=getZone($zone->driver, strtoupper($this->tag), $zone, false);
-        $zone->get("CloseMode",$this->closeMode);
+        $zone->get("CloseMode", $this->closeMode);
         $zone=getZone($zone->driver, "Attributes", $zone, true);
         
-        foreach ($this->attr as $key => $value)
+        foreach ($this->attr as $key => $value) {
             $zone->get($key, $value);
+        }
 
         $zone=getModuleZone("HTML");
         $zone=getZone($zone->driver, "Style", $zone, true);
         $zone=getZone($zone->driver, "Attributes", $zone, true);
-        foreach ($this->styleattr as $key => $value)
+        foreach ($this->styleattr as $key => $value) {
             $zone->get($key, $value);
+        }
 
 
     }

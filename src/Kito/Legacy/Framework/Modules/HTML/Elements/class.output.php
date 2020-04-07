@@ -22,7 +22,7 @@
 class HTMLoutput extends HTMLElement
 {
 
-    function  __construct($name)
+    function __construct($name)
     {
         $this->tag="output";
         $this->closeMode=3;        

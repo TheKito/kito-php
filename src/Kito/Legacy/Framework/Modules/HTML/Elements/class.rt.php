@@ -21,7 +21,7 @@
 class HTMLrt extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="rt";
         $this->closeMode=3;

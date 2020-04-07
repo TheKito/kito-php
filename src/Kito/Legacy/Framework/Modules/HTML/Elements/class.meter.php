@@ -21,7 +21,7 @@
 class HTMLmeter extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="meter";
         $this->closeMode=3;

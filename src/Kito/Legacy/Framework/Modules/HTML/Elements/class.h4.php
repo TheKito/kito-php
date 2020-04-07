@@ -22,7 +22,7 @@
 class HTMLh4 extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="h4";
         $this->closeMode=3;

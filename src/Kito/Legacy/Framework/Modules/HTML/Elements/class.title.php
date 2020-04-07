@@ -22,7 +22,7 @@
 class HTMLtitle extends HTMLElement
 {
 
-    function  __construct($title)
+    function __construct($title)
     {
         $this->tag="title";
         $this->closeMode=0;

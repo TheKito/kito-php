@@ -18,23 +18,31 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class Editor extends Module {
+class Editor extends Module
+{
     //put your code here
-        public function __construct() {getModule("HTML");
-        }
-        public function __destruct() {
-        }
-        public function __load() {
-            write('<script type="text/javascript">
+    public function __construct()
+    {
+        getModule("HTML");
+    }
+    public function __destruct()
+    {
+    }
+    public function __load()
+    {
+        write(
+            '<script type="text/javascript">
 	tinyMCE.init({
 		mode : "textareas",
 		theme : "simple"
 	});
-</script>');
-            write("<form><textarea id=editor name=editor></textarea></form>");
+</script>'
+        );
+        write("<form><textarea id=editor name=editor></textarea></form>");
 
-        }
-    public function __unload() {
-        }
     }
+    public function __unload()
+    {
+    }
+}
 ?>

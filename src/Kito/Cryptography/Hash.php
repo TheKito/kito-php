@@ -20,22 +20,27 @@ namespace Kito\Cryptography;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Hash {
+class Hash
+{
 
-    public static function getAlgorithms(): array {
+    public static function getAlgorithms(): array
+    {
         return hash_algos();
     }
 
-    public static function getAlgorithm($name): Hash {
+    public static function getAlgorithm($name): Hash
+    {
         $lowerName = strtolower($name);
 
         static $_ = null;
 
-        if ($_ === null)
+        if ($_ === null) {
             $_ = array();
+        }
 
-        if (!isset($_[$lowerName]))
+        if (!isset($_[$lowerName])) {
             $_[$lowerName] = new Hash($lowerName);
+        }
 
         return $_[$lowerName];
     }
@@ -43,38 +48,47 @@ class Hash {
     private $name;
     private $example;
 
-    private function __construct($name) {
+    private function __construct($name)
+    {
         $this->name = $name;
 
-        if (!in_array($this->name, self::getAlgorithms()))
+        if (!in_array($this->name, self::getAlgorithms())) {
             throw new HashAlgorithmNotFoundException($this->name);
+        }
 
         $this->example = $this->calc('');
     }
 
-    public function calc($data): string {
+    public function calc($data): string
+    {
         $t = hash($this->name, $data);
 
-        if ($t === false)
+        if ($t === false) {
             throw new HashAlgorithmCalcException($data);
+        }
 
         return strtoupper($t);
     }
 
-    public function check($hashValue, $data) {
+    public function check($hashValue, $data)
+    {
         return $this->calc($data) == strtoupper($hashValue);
     }
 
-    public function checkHash($hashValue) {
+    public function checkHash($hashValue)
+    {
         return strlen($hashValue) == strlen($this->example);
     }
 
-    public function validateHash($hashValue) {
-        if (!$this->checkHash($hashValue))
+    public function validateHash($hashValue)
+    {
+        if (!$this->checkHash($hashValue)) {
             throw new InvalidHashValueException($hashValue);
+        }
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 

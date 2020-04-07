@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class Ip {
+class Ip
+{
     private $ip=false;
     private $object=false;
     private $image_path=false;
@@ -34,27 +35,31 @@ class Ip {
     var $longitude;
     var $area_code;
     var $dma_code;
-    private function  __construct($ip)
+    private function __construct($ip)
     {
-        require_once("geoipcity.php");
+        include_once "geoipcity.php";
 
         $this->ip=$ip;
-        $gi = geoip_open(dirname(__FILE__)."/GeoLiteCity.dat",GEOIP_STANDARD);
-        $this->object = geoip_record_by_addr($gi,$ip);
+        $gi = geoip_open(dirname(__FILE__)."/GeoLiteCity.dat", GEOIP_STANDARD);
+        $this->object = geoip_record_by_addr($gi, $ip);
         geoip_close($gi);
 
         $this->image_path=dirname(__FILE__)."/Images/";
-        if(!file_exists($this->image_path))
-            if(!mkdir($this->image_path,0777,true))
+        if(!file_exists($this->image_path)) {
+            if(!mkdir($this->image_path, 0777, true)) {
                 trigger_error("Can not create $this->image_path", E_USER_ERROR);
+            }
+        }
 
         $this->flag_name=strtolower($data->country_code."_".$data->country_code3).".gif";
        
-        if (!file_exists($this->image_path.$this->flag_name))
+        if (!file_exists($this->image_path.$this->flag_name)) {
             file_put_contents($this->image_path.$this->flag_name, file_get_contents(getFlagURL("http://api.hostip.info/flag.php?ip=".$ip)));
+        }
 
-        if (!file_exists($this->image_path.$this->flag_name))
+        if (!file_exists($this->image_path.$this->flag_name)) {
             $this->flag_name = "unknow.gif";
+        }
 
         $this->area_code=$this->object->area_code;
         $this->city=$this->object->city;

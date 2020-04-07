@@ -21,7 +21,7 @@
 class HTMLarticle extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="article";
         $this->closeMode=3;

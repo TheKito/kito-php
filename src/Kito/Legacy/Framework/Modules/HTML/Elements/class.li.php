@@ -22,7 +22,7 @@
 class HTMLli extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="li";
         $this->closeMode=0;

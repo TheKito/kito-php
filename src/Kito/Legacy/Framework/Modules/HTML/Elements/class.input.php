@@ -22,7 +22,7 @@
 class HTMLinput extends HTMLElement
 {
 
-    function  __construct($type)
+    function __construct($type)
     {
         $this->tag="input";
         $this->closeMode=2;

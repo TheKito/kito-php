@@ -22,7 +22,7 @@
 class HTMLfooter extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="footer";
         $this->closeMode=3;

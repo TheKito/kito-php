@@ -22,7 +22,7 @@
 class HTMLcode extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="code";
         $this->closeMode=0;

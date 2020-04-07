@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class FormHidden extends HTMLElement {
+class FormHidden extends HTMLElement
+{
     var $title;
     var $name;
     var $value;
@@ -43,7 +44,7 @@ class FormHidden extends HTMLElement {
     public  function getHTML()
     {
         return $this->toHtml();
-//        return "<input type=hidden name='$this->name' value='".$this->value."' id='".$this->id."' />";
+        //        return "<input type=hidden name='$this->name' value='".$this->value."' id='".$this->id."' />";
     }
 }
 ?>

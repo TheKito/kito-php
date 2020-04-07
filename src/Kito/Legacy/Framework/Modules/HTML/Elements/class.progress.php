@@ -21,7 +21,7 @@
 class HTMLprogress extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="progress";
         $this->closeMode=3;

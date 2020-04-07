@@ -22,7 +22,7 @@
 class HTMLkeygen extends HTMLElement
 {
 
-    function  __construct($name)
+    function __construct($name)
     {
         $this->tag="keygen";
         $this->closeMode=3;

@@ -22,7 +22,7 @@
 class HTMLhead extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="head";
         $this->closeMode=0;        

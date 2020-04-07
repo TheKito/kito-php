@@ -22,7 +22,7 @@
 class HTMLtr extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="tr";
         $this->closeMode=0;

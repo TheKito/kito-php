@@ -11,11 +11,11 @@
  */
 class INPUThidden extends HTMLinput
 {
-    function  __construct($name,$value)
+    function __construct($name,$value)
     {
         parent::__construct("hidden");
-        $this->setAttr("name",$name);
-        $this->setAttr("value",$value);
+        $this->setAttr("name", $name);
+        $this->setAttr("value", $value);
     }
 }
 ?>

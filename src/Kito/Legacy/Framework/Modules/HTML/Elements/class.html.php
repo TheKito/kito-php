@@ -22,7 +22,7 @@
 class HTMLhtml extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="html";
         $this->closeMode=0;        

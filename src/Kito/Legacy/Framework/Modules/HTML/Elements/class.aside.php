@@ -22,7 +22,7 @@
 class HTMLaside extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="aside";
         $this->closeMode=3;

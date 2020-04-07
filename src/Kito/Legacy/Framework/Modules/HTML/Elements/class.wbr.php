@@ -21,7 +21,7 @@
 class HTMLwbr extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="wbr";
         $this->closeMode=3;

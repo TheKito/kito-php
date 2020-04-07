@@ -28,7 +28,7 @@ class DataForm extends HForm
     var $cols;
     var $rs;
     var $data=array();
-    function  __construct($driver,$table,$pk)
+    function __construct($driver,$table,$pk)
     {
         $this->driver=$driver;
         $this->table=$table;
@@ -37,19 +37,20 @@ class DataForm extends HForm
         $this->pk_name=$this->driver->getPrimaryKey($this->table);
         $this->cols=$this->driver->getTableCols($this->table);
 
-        if($this->pk!=0)
-        {
+        if($this->pk!=0) {
             $sql="";
             foreach ($this->cols as $a => $b)
             {
-                if($sql!="")
+                if($sql!="") {
                     $sql.=", ";
+                }
                 $sql.=$a;
             }
             $sql="select ".$sql." from ".$this->table." where ".$this->pk_name."='".$this->pk."'";
             $this->rs=$this->driver->query($sql);
-            if ($this->rs->first())
+            if ($this->rs->first()) {
                 $this->data=$this->rs->get();
+            }
         }
     }
     protected function getElements()
@@ -58,28 +59,33 @@ class DataForm extends HForm
 
         
 
-        array_push($r,new FormHidden(false, "pk", $this->pk));
-        array_push($r,new FormHidden(false, "table", $this->table));
-        array_push($r,new FormHidden(false, "driver", $this->driver->zone->name));
+        array_push($r, new FormHidden(false, "pk", $this->pk));
+        array_push($r, new FormHidden(false, "table", $this->table));
+        array_push($r, new FormHidden(false, "driver", $this->driver->zone->name));
 
-        if(count($this->data)>0)
-            foreach ($this->data as $col => $val)
+        if(count($this->data)>0) {
+            foreach ($this->data as $col => $val) {
                 array_push($r, new FormText($col, $col, $val));
 
-        else
-            foreach ($this->cols as $col => $val)
+            } 
+        } else {
+            foreach ($this->cols as $col => $val) {
                 array_push($r, new FormText($col, $col, ""));
+            }
+        }
 
 
-        array_push($r,new FormSubmit(false, false, false));
+        array_push($r, new FormSubmit(false, false, false));
         return $r;
     }
 
-    protected function getFunction() {
+    protected function getFunction()
+    {
         return "Form";
     }
 
-    protected function getModule() {
+    protected function getModule()
+    {
         return "DataBase";
     }
 

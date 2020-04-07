@@ -18,10 +18,11 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class FormSelect extends HTMLElement {
+class FormSelect extends HTMLElement
+{
 
-//    var $array=array();
-//    var $use_index=false;
+    //    var $array=array();
+    //    var $use_index=false;
 
     var $title;
     var $name;
@@ -53,10 +54,11 @@ class FormSelect extends HTMLElement {
 
         foreach ($array as $key => $value)
         {
-            if($use_index===false)
+            if($use_index===false) {
                 $html="<option value='".$value."' ".($value==$this->value?"selected":"").">$value</option>";
-            else
+            } else {
                 $html="<option value='".$key."' ".($key==$this->value?"selected":"").">$value</option>";
+            }
 
             $this->addChild($html);
         }

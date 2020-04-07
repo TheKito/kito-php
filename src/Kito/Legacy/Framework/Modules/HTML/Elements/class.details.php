@@ -22,7 +22,7 @@
 class HTMLdetails extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="details";
         $this->closeMode=3;

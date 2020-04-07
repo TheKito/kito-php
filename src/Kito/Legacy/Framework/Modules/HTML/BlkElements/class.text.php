@@ -11,12 +11,12 @@
  */
 class INPUTtext extends HTMLinput
 {
-    function  __construct($title,$name,$value)
+    function __construct($title,$name,$value)
     {
         parent::__construct("text");
-        $this->setAttr("name",$name);
-        $this->setAttr("value",$value);
-        $this->setAttr("alt",$title);
+        $this->setAttr("name", $name);
+        $this->setAttr("value", $value);
+        $this->setAttr("alt", $title);
     }
 }
 ?>

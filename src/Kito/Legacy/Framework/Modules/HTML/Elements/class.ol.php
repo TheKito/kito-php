@@ -22,7 +22,7 @@
 class HTMLol extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="ol";
         $this->closeMode=0;

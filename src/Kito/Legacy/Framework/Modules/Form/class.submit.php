@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class FormSubmit extends HTMLElement {
+class FormSubmit extends HTMLElement
+{
 
     var $title;
     var $name;
@@ -43,10 +44,11 @@ class FormSubmit extends HTMLElement {
     {
         $id=HTMLElement::getId("blk_submit");
 
-        if (getSessionValue("Javascript", "N")=="N")
+        if (getSessionValue("Javascript", "N")=="N") {
             return "<input type=submit value='".$this->title."'/>";
-        else
+        } else {
             return "<input value='".$this->title."' type=button onclick='blk_submit_form(blk_get_form(this));' id='".$id."' />".'<script language=javascript>document.getElementById("'.$id.'").style.display="none";</script>';
+        }
 
 
     }

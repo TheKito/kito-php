@@ -22,7 +22,7 @@
 class HTMLb extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="b";
         $this->closeMode=3;

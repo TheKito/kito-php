@@ -21,7 +21,7 @@
 class HTMLsource extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="source";
         $this->closeMode=3;

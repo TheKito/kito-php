@@ -18,10 +18,19 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class Location extends Module {
-        public function __destruct() {}
-        public function __load() {}
-        public function __unload() {}
-        public function __construct() {}
+class Location extends Module
+{
+    public function __destruct()
+    {
     }
+    public function __load()
+    {
+    }
+    public function __unload()
+    {
+    }
+    public function __construct()
+    {
+    }
+}
 ?>

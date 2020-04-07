@@ -23,7 +23,8 @@ use Kito\Cryptography\SecureID;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CookieSessionID {
+class CookieSessionID
+{
 
     private $name;
     private $key;
@@ -34,55 +35,65 @@ class CookieSessionID {
     private $nameCookieB;
     private $sessionId;
 
-    public function __construct(string $name, string $key, Hash $hash) {
+    public function __construct(string $name, string $key, Hash $hash)
+    {
         $this->name = strtoupper($name);
         $this->key = $key;
         $this->hash = $hash;
     }
 
-    private function getNameCookieA(bool $secure) {
+    private function getNameCookieA(bool $secure)
+    {
         $chr = $secure ? '_' : '-';
         return strtoupper($this->hash->calc($this->key . $chr . $this->name));
     }
 
-    private function getNameCookieB(bool $secure) {
+    private function getNameCookieB(bool $secure)
+    {
         return strtoupper($this->hash->calc($this->getNameCookieA($secure) . '+' . $this->key));
     }
 
-    public function renew() {
+    public function renew()
+    {
         $this->sessionId = SecureID::get();
         $this->sendCookies();
     }
 
-    private function sendCookies() {
+    private function sendCookies()
+    {
         setcookie($cA, $SID, time() + 365 * 24 * 60 * 60, '', '', $secure, true);
         setcookie($cB, strtoupper(sha1($hashKey . $SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
     }
 
-    function getSessio_nID($hashKey, $secure = false, $name = 'GSI') {
+    function getSessio_nID($hashKey, $secure = false, $name = 'GSI')
+    {
         $name = strtoupper($name);
         $hashKey = strtoupper($hashKey);
 
-        if ($secure)
+        if ($secure) {
             $cA = strtoupper(sha1($hashKey . '_' . $name));
-        else
+        } else {
             $cA = strtoupper(sha1($hashKey . '-' . $name));
+        }
 
         $cB = strtoupper(sha1($cA . '+' . $hashKey));
 
         static $cache = null;
 
-        if (!is_array($cache))
+        if (!is_array($cache)) {
             $cache = array();
+        }
 
-        if (isset($cache[$cA]))
+        if (isset($cache[$cA])) {
             return $cache[$cA];
+        }
 
 
-        if (isset($_COOKIE[$cA]) && isset($_COOKIE[$cB]) && strtoupper(sha1($hashKey . $_COOKIE[$cA])) == strtoupper($_COOKIE[$cB]))
+        if (isset($_COOKIE[$cA]) && isset($_COOKIE[$cB]) && strtoupper(sha1($hashKey . $_COOKIE[$cA])) == strtoupper($_COOKIE[$cB])) {
             $SID = $_COOKIE[$cA];
-        else
+        } else {
             $SID = strtoupper(bin2hex(openssl_random_pseudo_bytes(20, $cstrong)));
+        }
 
         setcookie($cA, $SID, time() + 365 * 24 * 60 * 60, '', '', $secure, true);
         setcookie($cB, strtoupper(sha1($hashKey . $SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);

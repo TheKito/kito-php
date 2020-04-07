@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class Repeater {
+class Repeater
+{
     public $repeater_containers = false;
     public $repeater_spacers = false;
     public $name = false;
@@ -27,8 +28,9 @@ class Repeater {
     public static function getRepeater($name)
     {
         static $cache=array();
-        if (isset($cache[$name]))
+        if (isset($cache[$name])) {
             return $cache[$name];
+        }
 
         $cache[$name]=new Repeater($name);
         return $cache[$name];
@@ -40,8 +42,8 @@ class Repeater {
         
         $this->name=$repeater_name;
 
-        $this->zone=getZone(getDesignZone()->driver, "Repeaters",getDesignZone(),true);
-        $this->zone=getZone($this->zone->driver, $repeater_name,$this->zone,false);
+        $this->zone=getZone(getDesignZone()->driver, "Repeaters", getDesignZone(), true);
+        $this->zone=getZone($this->zone->driver, $repeater_name, $this->zone, false);
 
         $this->repeater_containers=$this->zone->getList("StructureContainers");
         $this->repeater_spacers=$this->zone->getList("StructureSpacers");
@@ -49,7 +51,10 @@ class Repeater {
     }
 
 
-    public function setTableMode($mode){return $this->zone->set("TableMode",$mode);}
+    public function setTableMode($mode)
+    {
+        return $this->zone->set("TableMode", $mode);
+    }
 
     function doRepeat($list)
     {
@@ -57,42 +62,56 @@ class Repeater {
         $first=true;
         foreach ($list as $element)
         {
-            if($first===false && $this->zone->get("TableMode","0")=="0")
-            {
+            if($first===false && $this->zone->get("TableMode", "0")=="0") {
                 $StrName=$this->repeater_spacers->getNext();
-                if($StrName!==false)
+                if($StrName!==false) {
                     array_push($elements, Structure::getStructure($StrName)->doStructure());
+                }
             }
 
             $StrName=$this->repeater_containers->getNext();
-            if($StrName===false)
-            {
-                if(is_array($element))
+            if($StrName===false) {
+                if(is_array($element)) {
                     array_push($elements, $element["blkmain"]);
-                else
+                } else {
                     array_push($elements, $element);
+                }
             }
             else
             {
-                if(is_array($element))
+                if(is_array($element)) {
                     array_push($elements, Structure::getStructure($StrName)->doStructure($element));
-                else
+                } else {
                     array_push($elements, Structure::getStructure($StrName)->doStructure(array("blkmain" => $element)));
+                }
             }
             
             $first=false;
         }
 
-        if($this->zone->get("TableMode","0")=="0")
+        if($this->zone->get("TableMode", "0")=="0") {
             return $elements;
-        else
-            return HTMLtable::autoTable($elements, $this->zone->get("TableMode","0"));  
+        } else {
+            return HTMLtable::autoTable($elements, $this->zone->get("TableMode", "0"));
+        }  
     }
 
-    public function setContainer($structure){return $this->repeater_containers->add($structure->getName());}
-    public function unsetContainer($structure){return $this->repeater_containers->remove($structure->getName());}
-    public function setSpacer($structure){return $this->repeater_spacers->add($structure->getName());}
-    public function unsetSpacer($structure){return $this->repeater_spacers->remove($structure->getName());}
+    public function setContainer($structure)
+    {
+        return $this->repeater_containers->add($structure->getName());
+    }
+    public function unsetContainer($structure)
+    {
+        return $this->repeater_containers->remove($structure->getName());
+    }
+    public function setSpacer($structure)
+    {
+        return $this->repeater_spacers->add($structure->getName());
+    }
+    public function unsetSpacer($structure)
+    {
+        return $this->repeater_spacers->remove($structure->getName());
+    }
 
 }
 ?>

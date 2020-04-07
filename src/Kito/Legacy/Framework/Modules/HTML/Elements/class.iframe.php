@@ -22,7 +22,7 @@
 class HTMLiframe extends HTMLElement
 {
 
-    function  __construct($src)
+    function __construct($src)
     {
         $this->tag="iframe";
         $this->closeMode=0;

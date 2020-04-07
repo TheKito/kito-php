@@ -21,7 +21,7 @@
 class HTMLheader extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="header";
         $this->closeMode=3;

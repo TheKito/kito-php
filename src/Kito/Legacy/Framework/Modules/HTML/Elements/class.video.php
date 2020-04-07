@@ -22,7 +22,7 @@
 class HTMLvide extends HTMLElement
 {
 
-    function  __construct($src,$controls=true)
+    function __construct($src,$controls=true)
     {
         $this->tag="video";
         $this->closeMode=3;
@@ -30,8 +30,9 @@ class HTMLvide extends HTMLElement
         $this->addChild("Your browser does not support HTML5 video element.");
         $this->setAttr("src", $src);
 
-        if($controls)
+        if($controls) {
             $this->setAttr("controls", "controls");
+        }
 
     }
 

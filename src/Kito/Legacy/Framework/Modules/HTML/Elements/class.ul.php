@@ -22,7 +22,7 @@
 class HTMLul extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="ul";
         $this->closeMode=0;

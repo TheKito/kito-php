@@ -22,7 +22,7 @@
 class HTMLspan extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="span";
         $this->closeMode=3;

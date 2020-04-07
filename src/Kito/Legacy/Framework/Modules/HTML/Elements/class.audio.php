@@ -22,7 +22,7 @@
 class HTMLaudio extends HTMLElement
 {
 
-    function  __construct($src,$background=false)
+    function __construct($src,$background=false)
     {
         $this->tag="audio";
         $this->closeMode=3;
@@ -30,10 +30,11 @@ class HTMLaudio extends HTMLElement
         $this->addChild("Your browser does not support HTML5 audio element.");
         $this->setAttr("src", $src);
 
-        if($background)
+        if($background) {
             $this->setAttr("autoplay", "autoplay");
-        else
+        } else {
             $this->setAttr("controls", "controls");
+        }
 
     }
 

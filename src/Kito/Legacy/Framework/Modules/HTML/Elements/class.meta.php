@@ -22,7 +22,7 @@
 class HTMLmeta extends HTMLElement
 {
 
-    function  __construct($content)
+    function __construct($content)
     {
         $this->tag="meta";
         $this->closeMode=2;

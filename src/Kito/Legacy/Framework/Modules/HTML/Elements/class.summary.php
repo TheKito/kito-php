@@ -21,7 +21,7 @@
 class HTMLsummary extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="summary";
         $this->closeMode=3;

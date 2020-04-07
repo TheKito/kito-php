@@ -21,7 +21,7 @@
 class HTMLruby extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="ruby";
         $this->closeMode=3;

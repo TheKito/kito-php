@@ -21,7 +21,7 @@
 class HTMLtime extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="time";
         $this->closeMode=3;

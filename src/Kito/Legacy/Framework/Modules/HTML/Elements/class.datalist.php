@@ -18,9 +18,10 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class HTMLdatalist extends HTMLElement {
+class HTMLdatalist extends HTMLElement
+{
   
-    function  __construct($name)
+    function __construct($name)
     {
         $this->tag="datalist";
         $this->closeMode=3;
@@ -32,8 +33,7 @@ class HTMLdatalist extends HTMLElement {
         $sl=new HTMLdatalist();
         foreach ($elements as $key => $value)
         {
-            if($use_index===false)
-            {
+            if($use_index===false) {
                 $op=new HTMLoption(false);
                 $op->setAttr("value", $value);
             }

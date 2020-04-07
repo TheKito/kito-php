@@ -18,24 +18,28 @@
  * @author The Blankis < blankitoracing@gmail.com >
  */
 class BLKExceptionMessage extends Exception
-{ 
+{
+
+ 
 
     public function __construct($message, $code, $previous = null)
     {
-        if(!$previous instanceof Exception)
+        if(!$previous instanceof Exception) {
             parent::__construct($message, $code);
-        else
-            parent::__construct($message." > ".$previous->getMessage(), $code);	
+        } else {
+            parent::__construct($message." > ".$previous->getMessage(), $code);
+        }    
     }    
     
 
     
     public static function throwExceptionMessage($message,$data = null)
     {               
-        if($data===null)
+        if($data===null) {
             throw new self($message, crc32(strtolower($message)), null);
-        else
+        } else {
             throw new self($message.': '.$data, crc32(strtolower($message)), null);
+        }
     }
     
 

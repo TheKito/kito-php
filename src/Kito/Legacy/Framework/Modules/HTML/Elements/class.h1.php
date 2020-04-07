@@ -22,7 +22,7 @@
 class HTMLh1 extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="h1";
         $this->closeMode=3;

@@ -22,7 +22,7 @@
 class HTMLhr extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="hr";
         $this->closeMode=2;

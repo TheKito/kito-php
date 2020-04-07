@@ -22,7 +22,7 @@
 class HTMLi extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="i";
         $this->closeMode=3;

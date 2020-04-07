@@ -18,42 +18,48 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class DataBase extends Module {
+class DataBase extends Module
+{
 
     public static function getTable($rs)
     {
         
 
-        if(!$rs->first())
+        if(!$rs->first()) {
             return false;
+        }
 
         $elements=array();
-        foreach ($rs->get() as $col => $val)
-            array_push ($elements, $col);
+        foreach ($rs->get() as $col => $val) {
+            array_push($elements, $col);
+        }
 
         $cols=count($elements);
 
         while($rs->next())
         {
             $row=$rs->get();
-            foreach ($row as $value)
-                array_push ($elements, $value);
+            foreach ($row as $value) {
+                array_push($elements, $value);
+            }
         }
 
         return HTMLtable::autoTable($elements, $cols);
     }
 
     //put your code here
-    public function __construct() {
+    public function __construct()
+    {
 
     }
-    public function __destruct() {
+    public function __destruct()
+    {
 
     }
-    public function __load() {
+    public function __load()
+    {
         //TEST
-        if(getParam("Module")=="DataBase")
-        {
+        if(getParam("Module")=="DataBase") {
             include_once 'class.form.php';
             $frm=new DataForm(getSystemZone()->driver, "BLK_ATTR", 1);
             write($frm->getHtml());
@@ -64,7 +70,7 @@ class DataBase extends Module {
     {
         return $value!="que?";
     }
-        public function Form_Save($params)
+    public function Form_Save($params)
     {
         return true;
     }
@@ -87,10 +93,11 @@ class DataBase extends Module {
             foreach ($driver->getTables() as $table)
             {
                 $aaa=array();
-                array_push ($aa, $table);
+                array_push($aa, $table);
 
-                foreach ($driver->getTableCols($table) as $col => $data)
+                foreach ($driver->getTableCols($table) as $col => $data) {
                     array_push($aaa, $col);
+                }
 
                 array_push($aa, $aaa);
             }
@@ -115,7 +122,8 @@ class DataBase extends Module {
 
         return $a;
     }
-    public function __unload() {
+    public function __unload()
+    {
     }
 }
 ?>

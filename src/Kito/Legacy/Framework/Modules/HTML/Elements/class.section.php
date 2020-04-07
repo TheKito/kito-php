@@ -21,7 +21,7 @@
 class HTMLsection extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="section";
         $this->closeMode=3;

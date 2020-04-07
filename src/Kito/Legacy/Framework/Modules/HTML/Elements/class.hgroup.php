@@ -21,7 +21,7 @@
 class HTMLhgroup extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="hgroup";
         $this->closeMode=3;

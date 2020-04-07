@@ -22,7 +22,7 @@
 class HTMLstyle extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="style";
         $this->closeMode=3;

@@ -2,17 +2,19 @@
 //reporte de estado desde el modulo
 function update_form_element(target,token,name,value,res)
 {
-    if(target!="_self")
+    if(target!="_self") {
         return parent.update_form_element("_self",token,name,value,res);
+    }
     
     form=blk_get_form2(token);
     element=blk_get_element(form,name);
 
     element_base=blk_get_element(form,name+"_BASE");
-    if (element_base!=null)
+    if (element_base!=null) {
         element_base.value=value;
-    else
+    } else {
         element.value=value;
+    }
 
     blk_element_status(element.id,res)
 
@@ -23,8 +25,9 @@ function update_form_element(target,token,name,value,res)
 function blk_element_change(element)
 {
     t=document.getElementById(element.id+"_BASE");
-    if(t!=null && t.value==element.value)     
+    if(t!=null && t.value==element.value) {     
         blk_element_status(element.id,"");
+    }
 }
 
 //pierde foco
@@ -33,16 +36,16 @@ function blk_form_change(element)
     t=document.getElementById(element.id+"_BASE");
     f=blk_get_form(element);
 
-    if(t!=null && t.value!=element.value)
-    {
+    if(t!=null && t.value!=element.value) {
         blk_element_status(element.id,"L");
 
         //f.target=f.name+"I";
         //alert(f.target);
         return blk_submit_form(f);
     }
-    else
+    else {
         return false;
+    }
 }
 
 
@@ -52,23 +55,26 @@ function blk_element_status(element,status)
     obj=document.getElementById(element);
     msg=document.getElementById(element+"_MSG");
 
-    if(obj!=null)
+    if(obj!=null) {
         obj.readonly=status=="L";
+    }
 
-    if(msg==null){}
-    else if(status=="")
+    if(msg==null) {}
+    else if(status=="") {
         msg.innerHTML="";
-    else if(status=="Y")
+    } else if(status=="Y") {
         msg.innerHTML="<img width=20 height=20 src='?Module=Form&Tag=Image&Image=ok.png'>";
-    else if(status=="N")
+    } else if(status=="N") {
         msg.innerHTML="<img width=20 height=20 src='?Module=Form&Tag=Image&Image=error.jpg'>";
-    else if(status=="L")
+    } else if(status=="L") {
         msg.innerHTML="<img width=20 height=20 src='?Module=Form&Tag=Image&Image=load.gif'>";
-    else
+    } else {
         msg.innerHTML="<img width=20 height=20 src='?Module=Form&Tag=Image&Image=warn.jpg'>"+status;
+    }
     
-    if(status=="Y")
+    if(status=="Y") {
         window.setTimeout("blk_element_status('"+element+"','');", 10000);
+    }
 }
 //Envia formulario
 function blk_submit_form(form)
@@ -88,8 +94,9 @@ function blk_get_form(element)
         for(ii=0; ii<f.elements.length; ii++)
         {
             e=f.elements[ii];
-            if(e.id==element.id)
+            if(e.id==element.id) {
                 return f;
+            }
         }
         
     }
@@ -108,8 +115,9 @@ function blk_get_form2(token)
         {
             e=f.elements[ii];
                         
-            if(e.name=="blk_form_token" && e.value==token)
+            if(e.name=="blk_form_token" && e.value==token) {
                 return f;
+            }
         }
 
     }
@@ -120,13 +128,14 @@ function blk_get_element(form,name)
 {
 
 
-        for(ii=0; ii<form.elements.length; ii++)
+    for(ii=0; ii<form.elements.length; ii++)
         {
-            e=form.elements[ii];
+        e=form.elements[ii];
 
-            if(e.name==name)
-                return e;
+        if(e.name==name) {
+            return e;
         }
+    }
 
 
     return null;

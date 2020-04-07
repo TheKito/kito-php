@@ -22,7 +22,7 @@
 class HTMLh5 extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="h5";
         $this->closeMode=3;

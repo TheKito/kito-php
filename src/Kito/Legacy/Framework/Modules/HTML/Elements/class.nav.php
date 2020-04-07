@@ -21,7 +21,7 @@
 class HTMLnav extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="nav";
         $this->closeMode=3;

@@ -18,7 +18,8 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class FormText extends HTMLElement {
+class FormText extends HTMLElement
+{
 
     var $title;
     var $value;

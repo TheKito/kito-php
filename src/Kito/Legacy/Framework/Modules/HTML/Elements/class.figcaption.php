@@ -22,7 +22,7 @@
 class HTMLfigcaption extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="figcaption";
         $this->closeMode=3;

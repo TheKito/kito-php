@@ -22,7 +22,7 @@
 class HTMLcanvas extends HTMLElement
 {
 
-    function  __construct($name)
+    function __construct($name)
     {
         $this->tag="canvas";
         $this->closeMode=3;

@@ -18,9 +18,10 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class HTMLtable extends HTMLElement {
+class HTMLtable extends HTMLElement
+{
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="table";
         $this->closeMode=0;
@@ -32,10 +33,11 @@ class HTMLtable extends HTMLElement {
     {
         $tbl=new HTMLtable();        
 
-        if($col>0)
+        if($col>0) {
             $tr=new HTMLtr();
-        else
+        } else {
             $tr=array();
+        }
 
         $count=abs($col);
         foreach ($elements as $element)
@@ -44,22 +46,21 @@ class HTMLtable extends HTMLElement {
             $td->addChild($element);
 
 
-            if($col>0)
+            if($col>0) {
                 $tr->addChild($td);
-            else
+            } else
             {
-                if(!isset($tr[$count]))
+                if(!isset($tr[$count])) {
                     $tr[$count]=new HTMLtr();
+                }
 
                 $tr[$count]->addChild($td);
             }
 
             $count--;
 
-            if($count==0)
-            {
-                if($col>0)
-                {
+            if($count==0) {
+                if($col>0) {
                     $tbl->addChild($tr);
                     $tr=new HTMLtr();
                 }
@@ -69,11 +70,13 @@ class HTMLtable extends HTMLElement {
 
         }
 
-        if($col<0)
-            foreach ($tr as $tr_)
+        if($col<0) {
+            foreach ($tr as $tr_) {
                 $tbl->addChild($tr_);
-        else
+            } 
+        } else {
             $tbl->addChild($tr);
+        }
 
         return $tbl;
     }

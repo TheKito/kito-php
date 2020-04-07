@@ -22,7 +22,7 @@
 class HTMLdiv extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="div";
         $this->closeMode=3;

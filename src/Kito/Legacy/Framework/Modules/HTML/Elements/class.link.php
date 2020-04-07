@@ -22,7 +22,7 @@
 class HTMLlink extends HTMLElement
 {
 
-    function  __construct($rel,$type,$href)
+    function __construct($rel,$type,$href)
     {
         $this->tag="link";
         $this->closeMode=2;

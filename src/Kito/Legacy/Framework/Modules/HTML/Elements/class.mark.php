@@ -21,7 +21,7 @@
 class HTMLmark extends HTMLElement
 {
 
-    function  __construct()
+    function __construct()
     {
         $this->tag="mark";
         $this->closeMode=3;

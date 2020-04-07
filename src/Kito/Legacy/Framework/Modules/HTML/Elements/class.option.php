@@ -22,12 +22,13 @@
 class HTMLoption extends HTMLElement
 {
 
-    function  __construct($main=false)
+    function __construct($main=false)
     {
         $this->tag="option";
         $this->closeMode=0;
-        if($main)
-            $this->setAttr ("selected", "");
+        if($main) {
+            $this->setAttr("selected", "");
+        }
     }
    
 }

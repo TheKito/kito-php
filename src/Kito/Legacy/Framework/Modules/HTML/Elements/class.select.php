@@ -18,9 +18,10 @@
  *
  * @author Blankis <blankitoracing@gmail.com>
  */
-class HTMLselect extends HTMLElement {
+class HTMLselect extends HTMLElement
+{
   
-    function  __construct()
+    function __construct()
     {
         $this->tag="select";
         $this->closeMode=0;        
@@ -31,21 +32,22 @@ class HTMLselect extends HTMLElement {
         $sl=new HTMLselect();
         foreach ($elements as $key => $value)
         {
-            if($use_index===false)
-            {
-                if($value."-"==$element."-")
+            if($use_index===false) {
+                if($value."-"==$element."-") {
                     $op=new HTMLoption(true);
-                else
+                } else {
                     $op=new HTMLoption(false);
+                }
 
                 $op->setAttr("value", $value);
             }
             else
             {
-                if($key."-"==$element."-")
+                if($key."-"==$element."-") {
                     $op=new HTMLoption(true);
-                else
+                } else {
                     $op=new HTMLoption(false);
+                }
                 
                 $op->setAttr("value", $key);
                 //print_r($op);

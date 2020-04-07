@@ -19,19 +19,21 @@
  * @author Blankis <blankitoracing@gmail.com>
  */
 
-class HTMLscript extends HTMLElement {
+class HTMLscript extends HTMLElement
+{
 
     var $file=false;
     var $lines=array();
 
-    function  __construct($path=false)
+    function __construct($path=false)
     {
         $this->tag="script";
         $this->closeMode=0;
         $this->setAttr("language", "'javascript'");
 
-        if($path!==false)
+        if($path!==false) {
             $this->setAttr("src", "'".$path."'");
+        }
     }
 
 }

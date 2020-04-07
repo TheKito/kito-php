@@ -20,46 +20,54 @@ namespace Kito\Lab;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Executable {
+class Executable
+{
 
     private $filename;
 
-    public function __construct($filename) {
+    public function __construct($filename)
+    {
         $this->filename = $filename;
 
-        if (!file_exists($this->filename))
+        if (!file_exists($this->filename)) {
             $this->throwBinaryException("not exists");
+        }
 
-        if (!is_file($this->filename))
+        if (!is_file($this->filename)) {
             $this->throwBinaryException('not is file');
+        }
 
-        if (!is_readable($this->filename))
+        if (!is_readable($this->filename)) {
             $this->throwBinaryException('not is readable');
+        }
 
-        if (!is_executable($this->filename))
+        if (!is_executable($this->filename)) {
             $this->throwBinaryException('not is executable');
+        }
     }
 
-    private function throwBinaryException($message) {
+    private function throwBinaryException($message)
+    {
         throw new \Exception("$this->filename binary $message");
     }
 
-    public function executeAndWait(array $args) {
+    public function executeAndWait(array $args)
+    {
         $command = $this->filename . ' ' . implode(' ', $args);
 
         return shell_exec($command);
     }
 
-//    private function openProcess($cmd)
-//    {
-//        $descriptorspec = array(
-//            0 => array("pipe", "r"),  // stdin
-//            1 => array("pipe", "w"),  // stdout
-//            2 => array("pipe", "w"),  // stderr
-//        );
-//        
-//        $pipes = array();
-//        
-//        proc_open($cmd, $descriptorspec, $pipes);
-//    }
+    //    private function openProcess($cmd)
+    //    {
+    //        $descriptorspec = array(
+    //            0 => array("pipe", "r"),  // stdin
+    //            1 => array("pipe", "w"),  // stdout
+    //            2 => array("pipe", "w"),  // stderr
+    //        );
+    //        
+    //        $pipes = array();
+    //        
+    //        proc_open($cmd, $descriptorspec, $pipes);
+    //    }
 }

@@ -20,7 +20,7 @@
  */
 class SPANContainer extends HTMLspan
 {
-    function  __construct($name)
+    function __construct($name)
     {
         parent::__construct();
         $this->setAttr("name", "C_".$name);
@@ -30,10 +30,11 @@ class SPANContainer extends HTMLspan
     {
         static $a=array();
 
-        if($new===false)
+        if($new===false) {
             return $a;
-        else
+        } else {
             array_push($a, $new);
+        }
     }
 }
 ?>
