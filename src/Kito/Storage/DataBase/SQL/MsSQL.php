@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\DataBase\SQL\Driver;
+namespace Kito\Storage\DataBase\SQL;
 
 use Kito\DataBase\SQL\Exception\ConnectException;
 use Kito\DataBase\SQL\Exception\SelectDBException;
@@ -32,7 +32,7 @@ use Kito\Exception\NotImplementedException;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MsSQL extends \Kito\DataBase\SQL\Driver
+class MsSQL extends Driver
 {
 
     private $server;
