@@ -29,7 +29,7 @@ class Integer
         return ($x + $y) * ($x + $y + 1) / 2 + $y;
     }
 
-    public static function splitInteger($z): array
+    public static function splitInteger(int $z): array
     {
         $w = floor((sqrt(8 * $z + 1) - 1) / 2);
         $t = ($w * $w + $w) / 2;
