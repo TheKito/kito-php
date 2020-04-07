@@ -24,11 +24,11 @@ class Path
 {
 
     
-    public static function getRoot($directorySeparator = DIRECTORY_SEPARATOR) : Path
+    public static function getRoot(string $directorySeparator = DIRECTORY_SEPARATOR) : Path
     {
         return new Path(array(), $directorySeparator);
     }
-    private static function parsePath($stringPath, $directorySeparator = DIRECTORY_SEPARATOR) : array
+    private static function parsePath(string $stringPath,string $directorySeparator = DIRECTORY_SEPARATOR) : array
     {
         $tmp = array();
         foreach(explode($directorySeparator, str_replace("/", $directorySeparator, str_replace("\\", $directorySeparator, $stringPath))) as $name)
@@ -51,14 +51,14 @@ class Path
         return $tmp;        
     }
     
-    public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR) : Path
+    public static function getFromString(string $stringPath,string $directorySeparator = DIRECTORY_SEPARATOR) : Path
     {
         return new Path(self::parsePath($stringPath, $directorySeparator), $directorySeparator);
     }
     
     private $directorySeparator;
     protected $pathElements;
-    public function __construct(array $pathElements = array(), $directorySeparator = DIRECTORY_SEPARATOR)
+    public function __construct(array $pathElements = array(), string $directorySeparator = DIRECTORY_SEPARATOR)
     {
         $this->directorySeparator = $directorySeparator;
         $this->pathElements = $pathElements;
@@ -75,11 +75,11 @@ class Path
     {
         return end($this->pathElements);
     }    
-    public function getChild($name) : Path
+    public function getChild(string $name) : Path
     {
         return new Path(array_merge($this->pathElements, array($name)), $this->directorySeparator);
     }    
-    public function getParent() : Path
+    public function getParent() : ?Path
     {
         if($this->isRoot()) { 
             return null;
@@ -102,7 +102,7 @@ class Path
     {
         return $this->pathElements;
     }
-    public function getElement($index) : string
+    public function getElement(int $index) : string
     {
         return isset($this->pathElements[$index])?$this->pathElements[$index]:null;
     }
@@ -111,7 +111,7 @@ class Path
         return implode('#', $this->pathElements);
     }   
     
-    public function setDirectorySeparator($directorySeparator) : Path
+    public function setDirectorySeparator(string $directorySeparator) : Path
     {
         $this->directorySeparator = $directorySeparator;
         return $this;
