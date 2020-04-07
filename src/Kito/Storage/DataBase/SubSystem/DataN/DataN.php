@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,16 +20,14 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-abstract class DataN
-{
+abstract class DataN {
 
     private $driver;
     private $tableName;
     private $tablePK;
     private $cache = array();
 
-    private static function compareArray($data0, $data1)
-    {
+    private static function compareArray($data0, $data1) {
         foreach ($data0 as $key0 => $value0) {
             if (!array_key_exists($key0, $data1)) {
                 return false;
@@ -43,15 +41,13 @@ abstract class DataN
         return true;
     }
 
-    protected function __construct(&$driver, $tableName, $tablePK)
-    {
+    protected function __construct(&$driver, $tableName, $tablePK) {
         $this->driver = $driver;
         $this->tableName = $tableName;
         $this->tablePK = $tablePK;
     }
 
-    protected function getId($data, $create = true)
-    {
+    protected function getId($data, $create = true) {
         foreach ($this->cache as $key => $value) {
             if (self::compareArray($data, $value) === true) {
                 return $key;
@@ -79,8 +75,7 @@ abstract class DataN
         return $pk;
     }
 
-    protected function exists($data)
-    {
+    protected function exists($data) {
         foreach ($this->cache as $key => $value) {
             if (self::compareArray($data, $value) === true) {
                 return true;
@@ -109,8 +104,7 @@ abstract class DataN
         return true;
     }
 
-    protected function getValue($id)
-    {
+    protected function getValue($id) {
         if ($id === null) {
             return null;
         }
@@ -137,35 +131,29 @@ abstract class DataN
         return $rs;
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         $this->driver->delete($this->tableName, array($this->tablePK => $id), 0);
         unset($this->cache[$id]);
         return true;
     }
 
-    public function getDriver()
-    {
+    public function getDriver() {
         return $this->driver;
     }
 
-    public function getTableName()
-    {
+    public function getTableName() {
         return $this->tableName;
     }
 
-    public function getTablePK()
-    {
+    public function getTablePK() {
         return $this->tablePK;
     }
 
-    public function select($col = array(), $where = array(), $limit = 100)
-    {
+    public function select($col = array(), $where = array(), $limit = 100) {
         return $this->driver->select($this->tableName, $col, $where, $limit);
     }
 
-    public function count($where = array())
-    {
+    public function count($where = array()) {
         return $this->driver->count($this->tableName, $where);
     }
 

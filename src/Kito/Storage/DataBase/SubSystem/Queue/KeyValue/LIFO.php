@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,11 +21,9 @@ namespace Kito\DataBase\NoSQL\Queue\KeyValue;
  *
  * @author TheKito
  */
-class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
-{
+class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
 
-    public function dequeue()
-    {
+    public function dequeue() {
         if ($this->isEmpty()) {
             return null;
         }
@@ -35,8 +33,7 @@ class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
         return $this->backend->get($this->getKeyItem($id));
     }
 
-    public function isEmpty(): bool
-    {
+    public function isEmpty(): bool {
         return parent::count() == 0;
     }
 

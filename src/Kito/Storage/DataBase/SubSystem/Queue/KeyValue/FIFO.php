@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,18 +20,15 @@ namespace Kito\DataBase\NoSQL\Queue\KeyValue;
  *
  * @author TheKito
  */
-class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
-{
+class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
 
     protected const secondaryCounter = 'secondaryCount';
 
-    protected function getSecondaryCounterName(): string
-    {
+    protected function getSecondaryCounterName(): string {
         return $this->getKey(self::secondaryCounter);
     }
 
-    public function dequeue()
-    {
+    public function dequeue() {
         if ($this->isEmpty()) {
             return null;
         }
@@ -44,13 +41,11 @@ class FIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
         return $item;
     }
 
-    public function isEmpty(): bool
-    {
+    public function isEmpty(): bool {
         return $this->count() == 0;
     }
 
-    public function count(): int
-    {
+    public function count(): int {
         return $this->backend->get($this->getMainCounterName()) - $this->backend->get($this->getSecondaryCounterName());
     }
 
