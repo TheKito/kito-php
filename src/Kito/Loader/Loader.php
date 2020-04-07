@@ -84,7 +84,7 @@ class Loader
         return self::pathToString($this->cachePath);
     }
 
-    public function setCachePath($path): self
+    public function setCachePath(string $path): self
     {
         $this->cachePath = self::pathFromString($path);
         return $this;
@@ -98,7 +98,7 @@ class Loader
         return $this;
     }
 
-    public function __construct($cachePath = __DIR__)
+    public function __construct(string $cachePath = __DIR__)
     {
         $this->setCachePath($cachePath);
         $this->addRepository('/Kito', 'https://raw.githubusercontent.com/TheKito/kito-php/master/src/');
@@ -107,7 +107,7 @@ class Loader
         Sources::attach($this);
     }
 
-    public function loadClass(string $classNameSpace)
+    public function loadClass(string $classNameSpace) : void
     {
         $classPath = self::pathFromString($classNameSpace);
         $classFile = self::pathToString(array_merge($this->cachePath, $classPath)) . '.php';
@@ -121,7 +121,7 @@ class Loader
         }
     }
 
-    private function downloadClass(array $classPath, string $classFile)
+    private function downloadClass(array $classPath, string $classFile) : void
     {
         $className = array_pop($classPath);
 
