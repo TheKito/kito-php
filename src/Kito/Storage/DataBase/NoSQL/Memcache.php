@@ -74,7 +74,7 @@ class Memcache implements KeyValueInterface
         return $this->proxy->increment($_);
     }
 
-    public function get(string $key)
+    public function get(string $key) : ?string
     {
         $_ = $this->proxy->get($this->parseKey($key));
 
