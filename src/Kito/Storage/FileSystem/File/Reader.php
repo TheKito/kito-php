@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -14,71 +15,72 @@
  */
 
 namespace Kito\FileSystem\File;
-use Kito\FileSystem\Exception\IOException;
+
 use Kito\DataType\Path;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-
 class Reader extends \Kito\FileSystem\File
 {
-    private $handle=false;
-    
-    public function __construct(Path $path) 
+
+    private $handle = false;
+
+    public function __construct(Path $path)
     {
-        parent::validateExistence();        
+        parent::validateExistence();
         parent::validateReadable();
 
         $this->handle = fopen($this->__toString(), $mode);
-        
-        if($this->handle===false) {
+
+        if ($this->handle === false) {
             throw new IOException($this->__toString());
         }
     }
-    
+
     public function readLine($maxLength = null)
     {
-        if($this->eof()) {
+        if ($this->eof()) {
             return null;
         }
-        
+
         $line = fgets($this->handle, $maxLength);
-        
-        if($line===false) {
+
+        if ($line === false) {
             throw new IOException($this->__toString());
-        }        
-        
+        }
+
         return $line;
     }
-    
+
     public function read($length)
     {
-        if($this->eof()) {
+        if ($this->eof()) {
             return null;
         }
-        
+
         $line = fread($this->handle, $length);
-        
-        if($line===false) {
+
+        if ($line === false) {
             throw new IOException($this->__toString());
-        }        
-        
+        }
+
         return $line;
     }
-    
+
     public function eof()
     {
         return feof($this->handle);
     }
-    
-    public function __destruct() 
+
+    public function __destruct()
     {
-        if($this->handle!==false) {
-            if(!fclose($this->handle)) {
+        if ($this->handle !== false) {
+            if (!fclose($this->handle)) {
                 throw new IOException($this->__toString());
             }
         }
-    }            
+    }
+
 }

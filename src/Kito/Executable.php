@@ -46,12 +46,12 @@ class Executable
         }
     }
 
-    private function throwBinaryException($message) : void
+    private function throwBinaryException($message): void
     {
         throw new \Exception("$this->filename binary $message");
     }
 
-    public function executeAndWait(array $args) : string
+    public function executeAndWait(array $args): string
     {
         $command = $this->filename . ' ' . implode(' ', $args);
 

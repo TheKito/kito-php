@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -9,18 +10,21 @@
  *
  * @author andresrg
  */
-require_once dirname(__FILE__)."/class.message.php";
 class UserMessage extends Message
 {
+
     public static function newMessage($user_context)
     {
         return parent::newMessage($user_context);
     }
+
     public function newResponse($user_context)
     {
-        $m=parent::newResponse();
+        $m = parent::newResponse();
         $m->base_zone->link($user_context->get("Messages"));
         return $m;
     }
+
 }
+
 ?>

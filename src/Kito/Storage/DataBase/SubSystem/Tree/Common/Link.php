@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,11 +18,9 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/../Sql/class.datathree.php";
 class Link extends DataThree
 {
 
-    
     private $tableName;
     private $tablePk;
     private $tableValue0;
@@ -30,17 +29,17 @@ class Link extends DataThree
     public function __construct($cnn, $tableName, $tablePk, $tableValue0, $tableValue1)
     {
         parent::__construct($cnn, $tableName, $tablePk, $tableValue0, $tableValue1);
-        $this->tableName=$tableName;
-        $this->tablePk=$tablePk;
-        $this->tableValue0=$tableValue0;
-        $this->tableValue1=$tableValue1;
+        $this->tableName = $tableName;
+        $this->tablePk = $tablePk;
+        $this->tableValue0 = $tableValue0;
+        $this->tableValue1 = $tableValue1;
     }
 
-    public function set($id_a,$id_b)
+    public function set($id_a, $id_b)
     {
-        if($id_a<$id_b) {
+        if ($id_a < $id_b) {
             return parent::getId($id_a, $id_b);
-        } elseif($id_a>$id_b) {
+        } elseif ($id_a > $id_b) {
             return parent::getId($id_b, $id_a);
         } else {
             return 0;
@@ -49,17 +48,17 @@ class Link extends DataThree
 
     public function gets($idAorB)
     {
-        $t=array();
-        $rs=parent::getCnn()->select($this->tableName, array($this->tableValue0), array($this->tableValue1=>$idAorB), 0);
-        foreach($rs as $row) {
-            if(!in_array($row[$this->tableValue0], $t)) {
+        $t = array();
+        $rs = parent::getCnn()->select($this->tableName, array($this->tableValue0), array($this->tableValue1 => $idAorB), 0);
+        foreach ($rs as $row) {
+            if (!in_array($row[$this->tableValue0], $t)) {
                 array_push($t, $row[$this->tableValue0]);
             }
         }
 
-        $rs=parent::getCnn()->select($this->tableName, array($this->tableValue1), array($this->tableValue0=>$idAorB), 0);
-        foreach($rs as $row) {
-            if(!in_array($row[$this->tableValue1], $t)) {
+        $rs = parent::getCnn()->select($this->tableName, array($this->tableValue1), array($this->tableValue0 => $idAorB), 0);
+        foreach ($rs as $row) {
+            if (!in_array($row[$this->tableValue1], $t)) {
                 array_push($t, $row[$this->tableValue1]);
             }
         }
@@ -67,15 +66,17 @@ class Link extends DataThree
         return $t;
     }
 
-    public function delete($id_a,$id_b)
+    public function delete($id_a, $id_b)
     {
-        if($id_a<$id_b) {
-            return parent::getCnn()->delete($this->tableName, array($this->tableValue0=>$id_a,$this->tableValue1=>$id_b));
-        } elseif($id_a>$id_b) {
-            return parent::getCnn()->delete($this->tableName, array($this->tableValue0=>$id_b,$this->tableValue1=>$id_a));
+        if ($id_a < $id_b) {
+            return parent::getCnn()->delete($this->tableName, array($this->tableValue0 => $id_a, $this->tableValue1 => $id_b));
+        } elseif ($id_a > $id_b) {
+            return parent::getCnn()->delete($this->tableName, array($this->tableValue0 => $id_b, $this->tableValue1 => $id_a));
         } else {
             return false;
         }
     }
+
 }
+
 ?>

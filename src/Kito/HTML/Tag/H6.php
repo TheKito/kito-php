@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class H6 extends Element {
+class H6 extends Element
+{
 
-    function __construct() {
+    function __construct()
+    {
         $this->closeMode = 3;
     }
 

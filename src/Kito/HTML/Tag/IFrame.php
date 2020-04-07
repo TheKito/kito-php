@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class IFrame extends Element {
+class IFrame extends Element
+{
 
-    function __construct($src) {
+    function __construct($src)
+    {
         $this->closeMode = 0;
         $this->setAttr("src", $src);
         $this->setStyleAttr("width", "100%");

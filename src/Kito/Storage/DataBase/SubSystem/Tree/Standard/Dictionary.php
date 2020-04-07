@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,18 +20,21 @@
  */
 class Dictionary
 {
+
     private $zone;
+
     public function __construct($root_zone)
     {
-        $z=$root_zone;
-        $z=$z->get("Standard");
-        $z=$z->get("Dictionary");
-        $this->zone=$z;
+        $z = $root_zone;
+        $z = $z->get("Standard");
+        $z = $z->get("Dictionary");
+        $this->zone = $z;
     }
+
     private static function procWord($word)
     {
-        $t=$word;
-        $t=strtoupper($t);
+        $t = $word;
+        $t = strtoupper($t);
 
         $t = str_replace("Á", "A", $t);
         $t = str_replace("É", "E", $t);
@@ -40,12 +44,13 @@ class Dictionary
 
         return $t;
     }
-    public  function getZone($word)
+
+    public function getZone($word)
     {
-        $z=$this->zone->get($this->getKeysWord($word));
+        $z = $this->zone->get($this->getKeysWord($word));
 
         foreach (str_split($word) as $l) {
-            $z=$z->get($l);
+            $z = $z->get($l);
         }
 
         $z->getAttribute("len")->set(strlen($word));
@@ -55,49 +60,47 @@ class Dictionary
 
     private function getKeysWord($word)
     {
-        $word=self::procWord($word);
-        $b=array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9");        
+        $word = self::procWord($word);
+        $b = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-        $tmp="";
-        foreach($b as $key) {
-            if(strpos($word, $key)!==false) {
-                $tmp.=$key;
+        $tmp = "";
+        foreach ($b as $key) {
+            if (strpos($word, $key) !== false) {
+                $tmp .= $key;
             }
         }
 
         return $tmp;
     }
 
-
     public function getWord($zone)
     {
-        $len=$zone->getAttribute("len")->get();
+        $len = $zone->getAttribute("len")->get();
 
-        if(!is_numeric($len)) {
+        if (!is_numeric($len)) {
             return null;
         }
 
-        $word="";
-        $z=$zone;
-        for ($i=0;$i<$len;$i++)
-        {
-            $word=$z->getName().$word;
-            $z=$z->getParent();
+        $word = "";
+        $z = $zone;
+        for ($i = 0; $i < $len; $i++) {
+            $word = $z->getName() . $word;
+            $z = $z->getParent();
         }
 
         return $word;
     }
 
-    private function getWords($zone,&$list=array())
+    private function getWords($zone, &$list = array())
     {
-        foreach($zone->getZones() as $subzone) {
-                $this->getWords($subzone, $list);
+        foreach ($zone->getZones() as $subzone) {
+            $this->getWords($subzone, $list);
         }
-        
-        $len=$zone->getAttribute("len")->get();
-        
 
-        if(is_numeric($len)) {
+        $len = $zone->getAttribute("len")->get();
+
+
+        if (is_numeric($len)) {
             array_push($list, $this->getWord($zone));
         }
 
@@ -106,29 +109,28 @@ class Dictionary
 
     public function search($word)
     {
-        $list=array();
-        $t=$this->getKeysWord($word);
+        $list = array();
+        $t = $this->getKeysWord($word);
 
-        foreach($this->zone->getZones() as $zone)
-        {
-            
-            $total=strlen($t);
-            $c1=$zone->getName();
+        foreach ($this->zone->getZones() as $zone) {
+
+            $total = strlen($t);
+            $c1 = $zone->getName();
 
             foreach (str_split($t) as $l) {
-                if(strpos($c1, $l)!==false) {
+                if (strpos($c1, $l) !== false) {
                     $total--;
                 }
             }
-            
-            if($total<strlen($t)/3) {
+
+            if ($total < strlen($t) / 3) {
                 $this->getWords($zone, $list);
-            }            
-            
+            }
         }
 
         return $list;
     }
 
 }
+
 ?>

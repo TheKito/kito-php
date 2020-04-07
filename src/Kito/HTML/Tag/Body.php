@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Body extends Element {
+class Body extends Element
+{
 
-    function __construct() {
+    function __construct()
+    {
         $this->closeMode = 0;
         if (getSessionValue("Javascript", "N") == "Y") {
             $this->setAttr("onload", "return blk_html_body_onload(this);");

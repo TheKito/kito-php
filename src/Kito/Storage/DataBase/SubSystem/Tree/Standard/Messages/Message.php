@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,23 +20,24 @@
  */
 class Message
 {
-    protected $base_zone;
-    private function __construct($container_zone,$message_id=null)
-    {
-        $z=$container_zone->get("Messages");
 
-        if($message_id==null) {
-            $count=$z->getAttribute("Count")->get(0);
+    protected $base_zone;
+
+    private function __construct($container_zone, $message_id = null)
+    {
+        $z = $container_zone->get("Messages");
+
+        if ($message_id == null) {
+            $count = $z->getAttribute("Count")->get(0);
             $count++;
 
-            if($z->getAttribute("Count")->set($count)===false) {
+            if ($z->getAttribute("Count")->set($count) === false) {
                 throw new Exception("Can not create new message id");
             }
 
-            $this->base_zone=$z->get($count);
-        }
-        else {
-            $this->base_zone=$z->get($message_id);
+            $this->base_zone = $z->get($count);
+        } else {
+            $this->base_zone = $z->get($message_id);
         }
 
         $this->base_zone->getAttribute("Type")->set("Message");
@@ -45,6 +47,7 @@ class Message
     {
         return $this->getData("Text");
     }
+
     public function setText($text)
     {
         return $this->setData("Text", $text);
@@ -54,6 +57,7 @@ class Message
     {
         return $this->getData("Link");
     }
+
     public function setLink($link)
     {
         return $this->setData("Link", $link);
@@ -63,6 +67,7 @@ class Message
     {
         return $this->base_zone->getAttribute($key)->set($value);
     }
+
     protected function getData($key)
     {
         return $this->base_zone->getAttribute($key)->get();
@@ -72,10 +77,12 @@ class Message
     {
         return new Message($this->z);
     }
+
     public static function newMessage($container_zone)
     {
         return new Message($container_zone);
     }
 
 }
+
 ?>

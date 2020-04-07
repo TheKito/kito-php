@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,19 +18,18 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-
 class FinalAttribute
 {
+
     private $idz;
     private $name;
-
     private $az;
-    
-    public function __construct(&$az,$idz,$name)
+
+    public function __construct(&$az, $idz, $name)
     {
-        $this->az=$az;
-        $this->idz=$idz;
-        $this->name=$name;
+        $this->az = $az;
+        $this->idz = $idz;
+        $this->name = $name;
     }
 
     public function set($value)
@@ -37,7 +37,7 @@ class FinalAttribute
         return $this->az->set($this->idz, $this->name, $value);
     }
 
-    public function get($default=null)
+    public function get($default = null)
     {
         return $this->az->get($this->idz, $this->name, $default);
     }
@@ -46,5 +46,7 @@ class FinalAttribute
     {
         return $this->az->delete($this->idz, $this->name);
     }
+
 }
+
 ?>

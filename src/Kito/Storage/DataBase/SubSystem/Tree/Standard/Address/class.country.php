@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,15 +18,15 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/class.address.php";
 class AddressCountry extends Address
 {
+
     private $zone1;
 
-    public function __construct($root_zone,$contry_code)
+    public function __construct($root_zone, $contry_code)
     {
         parent::__construct($root_zone);
-        $this->zone1=parent::getParentZone()->get($contry_code);
+        $this->zone1 = parent::getParentZone()->get($contry_code);
         $this->zone1->getAttribute("Type")->set("Country");
     }
 
@@ -33,17 +34,20 @@ class AddressCountry extends Address
     {
         return $this->zone1;
     }
+
     public function getStates()
     {
-        $list=array();
+        $list = array();
 
         foreach (self::getCountryZone()->getZones() as $zone) {
-            if($zone->getAttribute("Type")->get()=="State") {
-                $list[$zone->getName()]=new CountryState(parent::getRootZone(), self::getCountryZone()->getName(), $zone->getName());
+            if ($zone->getAttribute("Type")->get() == "State") {
+                $list[$zone->getName()] = new CountryState(parent::getRootZone(), self::getCountryZone()->getName(), $zone->getName());
             }
         }
-        
+
         return $list;
     }
+
 }
+
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,12 +18,12 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/../Sql/class.datapair64.php";
 class AttributeName extends DataPair64
 {
-    public static $tableName="BLK_ATTRIBUTE_NAME";
-    public static $tablePk="ATTRIBUTE_NAME_ID";
-    private static $tableValue="ATTRIBUTE_NAME_VALUE";
+
+    public static $tableName = "BLK_ATTRIBUTE_NAME";
+    public static $tablePk = "ATTRIBUTE_NAME_ID";
+    private static $tableValue = "ATTRIBUTE_NAME_VALUE";
 
     public function __construct($cnn)
     {
@@ -38,5 +39,7 @@ class AttributeName extends DataPair64
     {
         return strtoupper(parent::getValue($id));
     }
+
 }
+
 ?>

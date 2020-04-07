@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -14,26 +15,25 @@
  */
 
 namespace Kito\Storage\FileSystem;
+
 use \Kito\Type\Path;
-use Kito\FileSystem\Exception\NotIsDirectoryException;
-use Kito\FileSystem\Exception\CreateDirectoryException;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-
 class Directory extends FileSystem
 {
-    public function __construct(Path $path) 
+
+    public function __construct(Path $path)
     {
         parent::__construct($path);
-        
-        if(parent::exists() && !parent::isDirectory()) {
+
+        if (parent::exists() && !parent::isDirectory()) {
             throw new NotIsDirectoryException($path);
         }
-        
-        if(!$this->isRoot()) {
+
+        if (!$this->isRoot()) {
             parent::getParent();
         }
     }
@@ -41,45 +41,40 @@ class Directory extends FileSystem
     public function getChild($name)
     {
         $_ = parent::getChild($name);
-        
-        if(!self::pathExists($_)) {
-            return new FileSystem($_, parent::getDirectorySeparator());    
-        } elseif(self::pathIsDirectory($_)) {
+
+        if (!self::pathExists($_)) {
+            return new FileSystem($_, parent::getDirectorySeparator());
+        } elseif (self::pathIsDirectory($_)) {
             return new Directory($_, parent::getDirectorySeparator());
         } else if (self::pathIsFile($_)) {
-            return new File($_, parent::getDirectorySeparator());        
-        } else {            
+            return new File($_, parent::getDirectorySeparator());
+        } else {
             return new FileSystem($_, parent::getDirectorySeparator());
-        }    
+        }
     }
-    
-    public function getChildren()    
+
+    public function getChildren()
     {
         $_ = array();
-        foreach(self::getSubPaths($this) as $subPath) {
+        foreach (self::getSubPaths($this) as $subPath) {
             $_ = $this->getChild($subPath->getName());
         }
         return $_;
-    }    
-    
-    
-    
-    public final function create()
-    {
-        if(parent::exists()) {
-            return;
-        }
-               
-        $this->getParent()->create();
-        
-        parent::validateWritable();
-        
-        if(!mkdir($this->__toString())) {
-            throw new CreateDirectoryException($this->__toString());
-        }  
-                         
     }
 
+    public final function create()
+    {
+        if (parent::exists()) {
+            return;
+        }
+
+        $this->getParent()->create();
+
+        parent::validateWritable();
+
+        if (!mkdir($this->__toString())) {
+            throw new CreateDirectoryException($this->__toString());
+        }
+    }
 
 }
-    

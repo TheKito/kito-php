@@ -21,12 +21,14 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Script extends Element {
+class Script extends Element
+{
 
     var $file = false;
     var $lines = array();
 
-    function __construct($path = false) {
+    function __construct($path = false)
+    {
         $this->closeMode = 0;
         $this->setAttr("language", "'javascript'");
 

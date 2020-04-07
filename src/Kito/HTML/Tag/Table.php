@@ -21,15 +21,18 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Table extends Element {
+class Table extends Element
+{
 
-    function __construct() {
+    function __construct()
+    {
         $this->closeMode = 0;
         $this->setStyleAttr("width", "100%");
         $this->setStyleAttr("height", "100%");
     }
 
-    public static function autoTable($elements, $col) {
+    public static function autoTable($elements, $col)
+    {
         $tbl = new HTMLtable();
 
         if ($col > 0) {

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,33 +18,37 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/class.city.php";
 class CityStreet extends StateCity
 {
+
     private $zone4;
 
-    public function __construct($root_zone,$contry_code,$state_code,$city_code,$street_code)
+    public function __construct($root_zone, $contry_code, $state_code, $city_code, $street_code)
     {
         parent::__construct($root_zone, $contry_code, $state_code, $city_code);
 
-        $this->zone4=parent::getParentZone()->get($street_code);
+        $this->zone4 = parent::getParentZone()->get($street_code);
         $this->zone4->getAttribute("Type")->set("Street");
     }
+
     public function getStreetZone()
     {
         return $this->zone4;
     }
+
     public function getNumbers()
     {
-        $list=array();
+        $list = array();
 
         foreach (self::getStreetZone()->getZones() as $zone) {
-            if($zone->getAttribute("Type")->get()=="Number") {
-                $list[$zone->getName()]=new StreetNumber(parent::getRootZone(), parent::getCountryZone()->getName(), parent::getStateZone()->getName(), parent::getCityZone()->getName(), self::getStreetZone()->getName(), $zone->getName());
+            if ($zone->getAttribute("Type")->get() == "Number") {
+                $list[$zone->getName()] = new StreetNumber(parent::getRootZone(), parent::getCountryZone()->getName(), parent::getStateZone()->getName(), parent::getCityZone()->getName(), self::getStreetZone()->getName(), $zone->getName());
             }
         }
 
         return $list;
     }
+
 }
+
 ?>

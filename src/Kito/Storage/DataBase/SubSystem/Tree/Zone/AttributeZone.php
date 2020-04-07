@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,28 +18,26 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/../Sql/class.datathree.php";
-require_once dirname(__FILE__)."/../Common/class.attribute.php";
 class AttributeZone extends DataThree
 {
-    private static $tableName="BLK_ZONE_ATTRIBUTE";
-    private static $tablePk="ZONE_ATTRIBUTE_ID";
-    private static $tableValue0="ZONE_ATTRIBUTE_ZONE_ID";
-    private static $tableValue1="ZONE_ATTRIBUTE_ATTRIBUTE_ID";
 
+    private static $tableName = "BLK_ZONE_ATTRIBUTE";
+    private static $tablePk = "ZONE_ATTRIBUTE_ID";
+    private static $tableValue0 = "ZONE_ATTRIBUTE_ZONE_ID";
+    private static $tableValue1 = "ZONE_ATTRIBUTE_ATTRIBUTE_ID";
     private $a;
-  
+
     public function __construct($cnn)
     {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
-        $this->a=new Attribute($cnn);
+        $this->a = new Attribute($cnn);
     }
 
-    public function set($idz,$name,$value)
+    public function set($idz, $name, $value)
     {
-        $lid=$this->getIdMagic($idz, $name);
+        $lid = $this->getIdMagic($idz, $name);
 
-        if($this->getValue($lid)==$value) {
+        if ($this->getValue($lid) == $value) {
             return true;
         }
 
@@ -46,67 +45,64 @@ class AttributeZone extends DataThree
         $this->delete($lid);
     }
 
-    public function get($idz,$name,$default=null)
+    public function get($idz, $name, $default = null)
     {
-        $lid=$this->getIdMagic($idz, $name);
-        if($lid!=null) {
+        $lid = $this->getIdMagic($idz, $name);
+        if ($lid != null) {
             return $this->getValue($lid);
-        } else
-        {
-            if($default!=null) {
+        } else {
+            if ($default != null) {
                 $this->getId($idz, $name, $value);
             }
             return $default;
         }
     }
 
-    public function remove($idz,$name)
+    public function remove($idz, $name)
     {
         return $this->delete($this->getIdMagic($idz, $name));
     }
 
-    private function getIdMagic($idz,$name)
+    private function getIdMagic($idz, $name)
     {
-        $rs=$this->getCnn()->select(self::$tableName, array(self::$tablePk,self::$tableValue1), array(self::$tableValue0=>$idz), 0);
-      
-        foreach ($rs as $row)
-        {
+        $rs = $this->getCnn()->select(self::$tableName, array(self::$tablePk, self::$tableValue1), array(self::$tableValue0 => $idz), 0);
 
-            if($this->a->getName($row[self::$tableValue1])==strtoupper($name)) {
+        foreach ($rs as $row) {
+
+            if ($this->a->getName($row[self::$tableValue1]) == strtoupper($name)) {
                 return $row[self::$tablePk];
             }
         }
         return null;
     }
 
-    public function getAttributes($idz,$limit=null)
+    public function getAttributes($idz, $limit = null)
     {
-        $a=array();
-        $rs=$this->getCnn()->select(self::$tableName, array(self::$tableValue1), array(self::$tableValue0=>$idz), 0);
-        
-        foreach ($rs as $row)
-        {
-            if($limit!=null) {
-                if($limit<=0) {
+        $a = array();
+        $rs = $this->getCnn()->select(self::$tableName, array(self::$tableValue1), array(self::$tableValue0 => $idz), 0);
+
+        foreach ($rs as $row) {
+            if ($limit != null) {
+                if ($limit <= 0) {
                     break;
                 } else {
                     $limit--;
                 }
             }
 
-            array_push($a, $this->a->getName($row[self::$tableValue1]));        
+            array_push($a, $this->a->getName($row[self::$tableValue1]));
         }
         return $a;
     }
 
-    protected function getId($idz,$name,$value)
+    protected function getId($idz, $name, $value)
     {
         return parent::getId($idz, $this->a->getId($name, $value));
     }
 
     private function getName($id)
     {
-        if($id==null) {
+        if ($id == null) {
             return null;
         }
 
@@ -115,7 +111,7 @@ class AttributeZone extends DataThree
 
     protected function getValue($id)
     {
-        if($id==null) {
+        if ($id == null) {
             return null;
         }
 
@@ -124,17 +120,17 @@ class AttributeZone extends DataThree
 
     protected function delete($id)
     {
-        if($id==null) {
+        if ($id == null) {
             return false;
         }
 
-        $aid=parent::getValue1($id);
+        $aid = parent::getValue1($id);
 
-        if(!parent::delete($id)) {
+        if (!parent::delete($id)) {
             return false;
         }
 
-        if(!parent::inUse(self::$tableValue1, $aid)) { //check node
+        if (!parent::inUse(self::$tableValue1, $aid)) { //check node
             $this->a->delete($aid);
         }
 
@@ -142,4 +138,5 @@ class AttributeZone extends DataThree
     }
 
 }
+
 ?>

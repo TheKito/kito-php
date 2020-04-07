@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Video extends Element {
+class Video extends Element
+{
 
-    function __construct($src, $controls = true) {
+    function __construct($src, $controls = true)
+    {
         $this->closeMode = 3;
 
         $this->addChild("Your browser does not support HTML5 video element.");

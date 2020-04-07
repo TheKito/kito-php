@@ -21,13 +21,16 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Select extends Element {
+class Select extends Element
+{
 
-    function __construct() {
+    function __construct()
+    {
         $this->closeMode = 0;
     }
 
-    public static function autoSelect($elements, $element = false, $use_index = false) {
+    public static function autoSelect($elements, $element = false, $use_index = false)
+    {
         $sl = new HTMLselect();
         foreach ($elements as $key => $value) {
             if ($use_index === false) {

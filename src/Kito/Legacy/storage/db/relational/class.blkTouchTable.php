@@ -1,5 +1,5 @@
 <?php
- 
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,46 +18,44 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-
 class BLKTouchTable
 {
-    
-    
+
     private $SQLConnection = null;
-    private $table = null;    
+    private $table = null;
     private $time = null;
-    
-    function __construct($SQLConnection, $table) 
+
+    function __construct($SQLConnection, $table)
     {
-        if(!$SQLConnection instanceof MySql) {
+        if (!$SQLConnection instanceof MySql) {
             throw new Exception('Invalid MySql Object');
         }
-        
+
         $this->SQLConnection = $SQLConnection;
         $this->table = $table;
     }
 
-    public function getGCTime() 
+    public function getGCTime()
     {
-        if($this->time === null) {
+        if ($this->time === null) {
             $this->time = time();
         }
-        
+
         return $this->time;
     }
 
     public function touch($data)
-    {        
-        $this->SQLConnection->autoUpdate($this->table, array('gc'=>$this->getGCTime()), $data);                       
-        $data['created']=null;
-        $this->SQLConnection->update($this->table, array('created'=>time()), $data);
-    }    
-    
+    {
+        $this->SQLConnection->autoUpdate($this->table, array('gc' => $this->getGCTime()), $data);
+        $data['created'] = null;
+        $this->SQLConnection->update($this->table, array('created' => time()), $data);
+    }
+
     public function purge($filter = array())
     {
         $filter['!gc'] = $this->getGCTime();
-        $this->SQLConnection->delete($this->table, $filter);                       
+        $this->SQLConnection->delete($this->table, $filter);
         $this->time = null;
     }
-    
+
 }

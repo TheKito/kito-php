@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,27 +18,24 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-require_once dirname(__FILE__)."/../Sql/class.datathree.php";
-require_once dirname(__FILE__)."/class.attributename.php";
-require_once dirname(__FILE__)."/class.attributevalue.php";
 class Attribute extends DataThree
 {
-    private static $tableName="BLK_ATTRIBUTE";
-    private static $tablePk="ATTRIBUTE_ID";
-    private static $tableValue0="ATTRIBUTE_NAME_ID";
-    private static $tableValue1="ATTRIBUTE_VALUE_ID";
 
+    private static $tableName = "BLK_ATTRIBUTE";
+    private static $tablePk = "ATTRIBUTE_ID";
+    private static $tableValue0 = "ATTRIBUTE_NAME_ID";
+    private static $tableValue1 = "ATTRIBUTE_VALUE_ID";
     private $an;
     private $av;
 
     public function __construct($cnn)
     {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
-        $this->an=new AttributeName($cnn);
-        $this->av=new AttributeValue($cnn);
+        $this->an = new AttributeName($cnn);
+        $this->av = new AttributeValue($cnn);
     }
 
-    public function getId($name,$value)
+    public function getId($name, $value)
     {
         return parent::getId($this->an->getId($name), $this->av->getId($value));
     }
@@ -54,26 +52,24 @@ class Attribute extends DataThree
 
     public function delete($id)
     {
-        $anid=parent::getValue0($id);
-        $avid=parent::getValue1($id);
+        $anid = parent::getValue0($id);
+        $avid = parent::getValue1($id);
 
-        if(!parent::delete($id)) {
+        if (!parent::delete($id)) {
             return false;
         }
-        
-        if(!parent::inUse(self::$tableValue0, $anid)) {
+
+        if (!parent::inUse(self::$tableValue0, $anid)) {
             $this->an->delete($anid);
         }
 
-        if(!parent::inUse(self::$tableValue1, $avid)) {
+        if (!parent::inUse(self::$tableValue1, $avid)) {
             $this->av->delete($avid);
         }
 
         return true;
-
     }
 
-    
-
 }
+
 ?>

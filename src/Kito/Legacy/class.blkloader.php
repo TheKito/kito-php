@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,56 +18,56 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-
 class BLKLoader
 {
+
     private static $files = array();
-    
+
     public static function addPath($directory)
     {
-        if(!is_dir($directory)) {
-            throw new Exception('Invalid directory: '. $directory);
+        if (!is_dir($directory)) {
+            throw new Exception('Invalid directory: ' . $directory);
         }
-        
 
-        foreach (scandir($directory) as $name)        
-        {
-            if($name=='.' || $name=='..') {
+
+        foreach (scandir($directory) as $name) {
+            if ($name == '.' || $name == '..') {
                 continue;
-            }     
-            
-            $path = $directory.'/'.$name;
-            
-            if(is_dir($path)) {
+            }
+
+            $path = $directory . '/' . $name;
+
+            if (is_dir($path)) {
                 self::addPath($path);
-            } elseif (is_file($path) && strtolower(pathinfo($path, PATHINFO_EXTENSION))=='php' && (stripos(basename($path), 'class.')===0 ||  stripos(basename($path), 'interface.')===0)) {
+            } elseif (is_file($path) && strtolower(pathinfo($path, PATHINFO_EXTENSION)) == 'php' && (stripos(basename($path), 'class.') === 0 || stripos(basename($path), 'interface.') === 0)) {
                 self::$files[$path] = $path;
-            }            
+            }
         }
     }
-    
-    
+
     public static function loadClass($name)
     {
-        foreach(self::$files as $path) {
-            if(stristr(basename($path), $name)!==false) {
+        foreach (self::$files as $path) {
+            if (stristr(basename($path), $name) !== false) {
                 $txt = preg_replace("/[^A-Za-z0-9]/", '', file_get_contents($path));
-                
-                if(stristr($txt, 'class'.$name)!==false || stristr($txt, 'interface'.$name)!==false) {                                    
+
+                if (stristr($txt, 'class' . $name) !== false || stristr($txt, 'interface' . $name) !== false) {
                     include_once $path;
                 }
-                
-                if(class_exists($name) || interface_exists($name)) {
+
+                if (class_exists($name) || interface_exists($name)) {
                     break;
                 }
             }
         }
-            
-        if(!class_exists($name) && !interface_exists($name)) {
-            throw new Exception('Class not found: '. $name);
+
+        if (!class_exists($name) && !interface_exists($name)) {
+            throw new Exception('Class not found: ' . $name);
         }
     }
+
 }
+
 spl_autoload_register(
     function ($name) {
         BLKLoader::loadClass($name);

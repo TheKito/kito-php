@@ -17,13 +17,6 @@
 namespace Kito\Storage\FileSystem;
 
 use Kito\Type\Path;
-use Kito\FileSystem\Exception\NotIsDirectoryException;
-use Kito\FileSystem\Exception\NotIsFileException;
-use Kito\FileSystem\Exception\NotIsLinkException;
-use Kito\FileSystem\Exception\NotIsReadableException;
-use Kito\FileSystem\Exception\NotIsWritableException;
-use Kito\FileSystem\Exception\NotFoundException;
-use Kito\FileSystem\Exception\IOException;
 
 /**
  *

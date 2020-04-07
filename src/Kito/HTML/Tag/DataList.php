@@ -21,14 +21,17 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class DataList extends Element {
+class DataList extends Element
+{
 
-    function __construct($name) {
+    function __construct($name)
+    {
         $this->closeMode = 3;
         $this->setAttr("name", $name);
     }
 
-    public static function autoDataList($elements, $use_index = false) {
+    public static function autoDataList($elements, $use_index = false)
+    {
         $sl = new HTMLdatalist();
         foreach ($elements as $key => $value) {
             if ($use_index === false) {

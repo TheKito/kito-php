@@ -23,35 +23,35 @@ namespace Kito\Storage\DataBase\SQL;
 abstract class Driver
 {
 
-    public abstract function isConnected():bool;
+    public abstract function isConnected(): bool;
 
-    public abstract function query($query):array;
+    public abstract function query($query): array;
 
-    public abstract function command($command):bool;
+    public abstract function command($command): bool;
 
-    public abstract function delete($table, $where = array(), $limit = 100):bool;
+    public abstract function delete($table, $where = array(), $limit = 100): bool;
 
-    public abstract function insert($table, $data = array()):bool;
+    public abstract function insert($table, $data = array()): bool;
 
-    public abstract function update($table, $data, $where = array(), $limit = 0):bool;
+    public abstract function update($table, $data, $where = array(), $limit = 0): bool;
 
-    public abstract function select($table, $column = array(), $where = array(), $limit = 100, $rand = false):array;
+    public abstract function select($table, $column = array(), $where = array(), $limit = 100, $rand = false): array;
 
-    public abstract function count($table, $where = array()):int;
+    public abstract function count($table, $where = array()): int;
 
-    public abstract function max($table, $column, $where = array()):int;
+    public abstract function max($table, $column, $where = array()): int;
 
-    public abstract function min($table, $column, $where = array()):int;
+    public abstract function min($table, $column, $where = array()): int;
 
-    public abstract function getTables():array;
+    public abstract function getTables(): array;
 
-    public abstract function getDatabases():array;
+    public abstract function getDatabases(): array;
 
-    public abstract function getDatabase():string;
+    public abstract function getDatabase(): string;
 
-    public abstract function copyTable($sourceTable, $destinationTable):bool;
+    public abstract function copyTable($sourceTable, $destinationTable): bool;
 
-    public final function getArray($table, $column, $where = array()):array
+    public final function getArray($table, $column, $where = array()): array
     {
         $r = array();
 
@@ -62,7 +62,7 @@ abstract class Driver
         return $r;
     }
 
-    public final function getHashMap($table, $columnKey, $columnValue, $where = array()):array
+    public final function getHashMap($table, $columnKey, $columnValue, $where = array()): array
     {
         $r = array();
 
@@ -73,7 +73,7 @@ abstract class Driver
         return $r;
     }
 
-    public final function getRow($table, $column = array(), $where = array()):array
+    public final function getRow($table, $column = array(), $where = array()): array
     {
         $RS = $this->select($table, $column, $where, 2);
 
@@ -88,7 +88,7 @@ abstract class Driver
         return $RS[0];
     }
 
-    public final function getText($table, $column, $where = array()):?string
+    public final function getText($table, $column, $where = array()): ?string
     {
         $ROW = $this->getRow($table, array($column), $where);
 
@@ -99,7 +99,7 @@ abstract class Driver
         return $ROW[$column];
     }
 
-    public final function autoTable($table, $data, $column = array(), $create = true):array
+    public final function autoTable($table, $data, $column = array(), $create = true): array
     {
         $rs = $this->select($table, $column, $data, 1);
 
@@ -122,7 +122,7 @@ abstract class Driver
         }
     }
 
-    public final function autoUpdate($table, $data, $index):int
+    public final function autoUpdate($table, $data, $index): int
     {
         $UPDATES = 0;
 
@@ -148,7 +148,7 @@ abstract class Driver
         return $UPDATES;
     }
 
-    public final function autoInsert($table, $data):bool
+    public final function autoInsert($table, $data): bool
     {
         $rs = $this->select($table, array(), $data, 1);
 
@@ -163,7 +163,7 @@ abstract class Driver
         return false;
     }
 
-    public function getTablesWithPrefix($prefix):array
+    public function getTablesWithPrefix($prefix): array
     {
         $prefixLen = strlen($prefix);
 

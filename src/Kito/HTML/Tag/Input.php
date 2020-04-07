@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Input extends Element {
+class Input extends Element
+{
 
-    function __construct($type) {
+    function __construct($type)
+    {
         $this->closeMode = 2;
         $this->setAttr("type", $type);
     }

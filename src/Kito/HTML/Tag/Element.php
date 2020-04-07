@@ -21,7 +21,8 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-abstract class Element {
+abstract class Element
+{
 
     private $childs = array();
     private $attr = array();
@@ -32,27 +33,32 @@ abstract class Element {
 
     public static function getName() 
     {
-        $_ = explode('\\',get_called_class());
+        $_ = explode('\\', get_called_class());
         return strtolower(array_pop($_));                
     }
     
-    public function getAttr($name) {
+    public function getAttr($name)
+    {
         return $this->attr[strtoupper($name)];
     }
 
-    public function getTag() {
+    public function getTag()
+    {
         return self::getName();
     }
 
-    public function getAttrs() {
+    public function getAttrs()
+    {
         return $this->attr;
     }
 
-    public function getChilds() {
+    public function getChilds()
+    {
         return $this->childs;
     }
 
-    private static function getId($name) {
+    private static function getId($name)
+    {
         static $a = array();
 
         if (!isset($a[$name])) {
@@ -65,11 +71,13 @@ abstract class Element {
         return $name . $a[$name];
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toHtml();
     }
 
-    public function toHtml($direct_write = false) {
+    public function toHtml($direct_write = false)
+    {
         // $this->doDBUpdate();
 
         $style = ArrayToTags($this->styleattr, ":", ";", false);
@@ -129,7 +137,9 @@ abstract class Element {
         return $out;
     }
 
-    public function addChild($element) { //Element
+    public function addChild($element)
+    {
+        //Element
         if (is_array($element)) {
             foreach ($element as $e) {
                 array_push($this->childs, $e);
@@ -140,7 +150,8 @@ abstract class Element {
         }
     }
 
-    public function setAttr($name, $value) {
+    public function setAttr($name, $value)
+    {
         $name = strtoupper($name);
         if ($name == "NAME") {
             $this->name = $value;
@@ -163,12 +174,14 @@ abstract class Element {
         $this->attr[$name] = $value;
     }
 
-    public function setStyleAttr($name, $value) {
+    public function setStyleAttr($name, $value)
+    {
         $name = strtolower($name);
         $this->styleattr[$name] = $value;
     }
 
-    public static function getUrl($url) {
+    public static function getUrl($url)
+    {
         $href_ = explode("?", $url, 2);
 
 
@@ -202,7 +215,8 @@ abstract class Element {
         return $href_[0] . $str_params;
     }
 
-    private function doDBUpdate() {
+    private function doDBUpdate()
+    {
         $zone = getModuleZone("HTML");
         $zone = getZone($zone->driver, "Elements", $zone, true);
         $zone = getZone($zone->driver, strtoupper($this->tag), $zone, false);

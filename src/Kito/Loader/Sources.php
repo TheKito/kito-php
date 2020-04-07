@@ -44,7 +44,7 @@ class Sources
         $loader->addRepository('/Slim/Http', 'https://raw.githubusercontent.com/slimphp/Slim-Http/master/src/');
 
 
-       
+
 
         $loader->addRepository('/Guzzle/Http', 'https://raw.githubusercontent.com/thekito/guzzle/master/src');
 

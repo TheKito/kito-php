@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +20,7 @@ namespace Kito\Storage\FileSystem;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
 class Exception extends \Kito\Exception
 {
-
+    
 }

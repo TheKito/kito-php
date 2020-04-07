@@ -21,9 +21,11 @@ namespace Kito\HTML\Tag;
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
-class Meta extends Element {
+class Meta extends Element
+{
 
-    function __construct($content) {
+    function __construct($content)
+    {
         $this->closeMode = 2;
         $this->setAttr("content", $content);
     }
