@@ -17,6 +17,7 @@
 namespace Kito\String;
 
 use Kito\Math\Integer;
+use Kito\Storage\DataBase\SQL\MySQL;
 
 /**
  *
@@ -28,18 +29,18 @@ class Storage
     private $driver;
     private $prefix;
 
-    public function __construct($driver, $prefix = 'string')
+    public function __construct(MySQL $driver,string $prefix = 'string')
     {
         $this->driver = $driver;
         $this->prefix = $prefix;
     }
 
-    private function getBaseId(string $string)
+    private function getBaseId(string $string) : int
     {
         return mb_strlen($string);
     }
 
-    private function getTableName(int $baseId)
+    private function getTableName(int $baseId) : string
     {
         $tableName = $this->prefix . '__' . dechex($baseId);
 
@@ -67,9 +68,9 @@ class Storage
 
     public function getString(int $id): string
     {
-        $id = Integer::splitInteger($id);
-        $baseId = $id[0];
-        $subId = $id[1];
+        $_ = Integer::splitInteger($id);
+        $baseId = $_[0];
+        $subId = $_[1];
         $tableName = $this->getTableName($baseId);
         return $this->driver->getText($tableName, 'value', array('id' => $subId));
     }
