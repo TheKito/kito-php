@@ -6,19 +6,19 @@ php:
   - 7.4
   - nightly
 
-before_install:
-  - export PHPCS_DIR=/tmp/phpcs
-  - export PHPCOMPAT_DIR=/tmp/PHPCompatibility
+#before_install:
+
+  #- export PHPCOMPAT_DIR=/tmp/PHPCompatibility
 #  - export PHPSTAN_DIR=/tmp/PHPSTAN
-  - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
+
   #- git clone -b master --depth 1 https://github.com/wimg/PHPCompatibility.git $PHPCOMPAT_DIR
 #  - git clone -b master --depth 1 https://github.com/phpstan/phpstan.git $PHPSTAN_DIR
   
   # Set install path for PHP Compatibility Standard.
   # @link https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options#setting-the-installed-standard-paths
-  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $PHPCOMPAT_DIR
+  #- $PHPCS_DIR/bin/phpcs --config-set installed_paths $PHPCOMPAT_DIR
   # After CodeSniffer install you should refresh your path.
-  - phpenv rehash
+  ##- phpenv rehash
 
 
 script: phpunit
@@ -39,14 +39,17 @@ jobs:
     - php: nightly
 
   include:
-    - stage: Metrics and quality
+    - stage: PHPCS
       php: 7.2
-      env: CODE_STANDARD
       script:
+        - export PHPCS_DIR=/tmp/phpcs
+        - export PHPCOMPAT_DIR=/tmp/PHPCompatibility
+        - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
+        - $PHPCS_DIR/bin/phpcs --config-set installed_paths $PHPCOMPAT_DIR
+        - phpenv rehash
         - $PHPCS_DIR/bin/phpcs .
 
-    - stage: Metrics and quality
-      env: PHPSTAN
+    - stage: PHPSTAN      
       script:
         - export PHPSTAN_DIR=/tmp/PHPSTAN
         - git clone -b master --depth 1 https://github.com/phpstan/phpstan.git $PHPSTAN_DIR        
