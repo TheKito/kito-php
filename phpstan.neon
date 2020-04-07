@@ -1,0 +1,6 @@
+parameters:
+	autoload_files:
+		- autoload.php
+	paths:
+		- src
+		- tests
