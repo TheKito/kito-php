@@ -28,7 +28,7 @@ class Hash
         return hash_algos();
     }
 
-    public static function getAlgorithm($name): Hash
+    public static function getAlgorithm(string $name): Hash
     {
         $lowerName = strtolower($name);
 
@@ -48,7 +48,7 @@ class Hash
     private $name;
     private $example;
 
-    private function __construct($name)
+    private function __construct(string $name)
     {
         $this->name = $name;
 
@@ -70,17 +70,17 @@ class Hash
         return strtoupper($t);
     }
 
-    public function check($hashValue, $data)
+    public function check(string $hashValue, $data)
     {
         return $this->calc($data) == strtoupper($hashValue);
     }
 
-    public function checkHash($hashValue)
+    public function checkHash(string $hashValue)
     {
         return strlen($hashValue) == strlen($this->example);
     }
 
-    public function validateHash($hashValue)
+    public function validateHash(string $hashValue)
     {
         if (!$this->checkHash($hashValue)) {
             throw new InvalidHashValueException($hashValue);
