@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,11 +22,9 @@ use \Kito\Type\Path;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Directory extends FileSystem
-{
+class Directory extends FileSystem {
 
-    public function __construct(Path $path)
-    {
+    public function __construct(Path $path) {
         parent::__construct($path);
 
         if (parent::exists() && !parent::isDirectory()) {
@@ -38,8 +36,7 @@ class Directory extends FileSystem
         }
     }
 
-    public function getChild($name)
-    {
+    public function getChild($name) {
         $_ = parent::getChild($name);
 
         if (!self::pathExists($_)) {
@@ -53,8 +50,7 @@ class Directory extends FileSystem
         }
     }
 
-    public function getChildren()
-    {
+    public function getChildren() {
         $_ = array();
         foreach (self::getSubPaths($this) as $subPath) {
             $_ = $this->getChild($subPath->getName());
@@ -62,8 +58,7 @@ class Directory extends FileSystem
         return $_;
     }
 
-    public final function create()
-    {
+    public final function create() {
         if (parent::exists()) {
             return;
         }

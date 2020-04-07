@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,100 +22,84 @@ use Kito\Type\Path;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class FileSystem extends Path
-{
+class FileSystem extends Path {
 
-    public static function pathValidateIsDirectory(Path $path)
-    {
+    public static function pathValidateIsDirectory(Path $path) {
         if (!self::pathIsDirectory($path)) {
             throw new NotIsDirectoryException($path);
         }
     }
 
-    public static function pathValidateIsFile(Path $path)
-    {
+    public static function pathValidateIsFile(Path $path) {
         if (!self::pathIsFile($path)) {
             throw new NotIsFileException($path);
         }
     }
 
-    public static function pathValidateIsLink(Path $path)
-    {
+    public static function pathValidateIsLink(Path $path) {
         if (!self::pathIsLink($path)) {
             throw new NotIsLinkException($path);
         }
     }
 
-    public static function pathValidateReadable(Path $path)
-    {
+    public static function pathValidateReadable(Path $path) {
         if (!self::pathIsReadable($path)) {
             throw new NotIsReadableException($path);
         }
     }
 
-    public static function pathValidateWritable(Path $path)
-    {
+    public static function pathValidateWritable(Path $path) {
         if (!self::pathIsWritable($path)) {
             throw new NotIsWritableException($path);
         }
     }
 
-    public static function pathValidateExistence(Path $path)
-    {
+    public static function pathValidateExistence(Path $path) {
         if (!self::pathExists($path)) {
             throw new NotFoundException($path);
         }
     }
 
-    public static function pathExists(Path $path)
-    {
+    public static function pathExists(Path $path) {
         return file_exists($path->__toString());
     }
 
-    public static function pathIsFile(Path $path)
-    {
+    public static function pathIsFile(Path $path) {
         self::pathValidateExistence($path);
         return is_file($path->__toString());
     }
 
-    public static function pathIsLink(Path $path)
-    {
+    public static function pathIsLink(Path $path) {
         self::pathValidateExistence($path);
         return is_link($path->__toString());
     }
 
-    public static function pathIsDirectory(Path $path)
-    {
+    public static function pathIsDirectory(Path $path) {
         self::pathValidateExistence($path);
         return is_dir($path->__toString());
     }
 
-    public static function pathIsReadable(Path $path)
-    {
+    public static function pathIsReadable(Path $path) {
         self::pathValidateExistence($path);
         return is_readable($path->__toString());
     }
 
-    public static function pathGetModificationTime(Path $path)
-    {
+    public static function pathGetModificationTime(Path $path) {
         self::pathValidateExistence($path);
         return filemtime($path->__toString());
     }
 
-    public static function pathGetFreeSpace(Path $path)
-    {
+    public static function pathGetFreeSpace(Path $path) {
         self::pathValidateExistence($path);
         return disk_free_space($path->__toString());
     }
 
-    public static function pathGetTotalSpace(Path $path)
-    {
+    public static function pathGetTotalSpace(Path $path) {
         self::pathValidateExistence($path);
         return disk_total_space($path->__toString());
     }
 
-    public static function pathSetModificationTime(Path $path, $time)
-    {
+    public static function pathSetModificationTime(Path $path, $time) {
         self::pathValidateExistence($path);
         self::pathValidateWritable($path);
         if (!touch($path->__toString(), $time)) {
@@ -123,14 +107,12 @@ class FileSystem extends Path
         }
     }
 
-    public static function pathFreeSpace(Path $path)
-    {
+    public static function pathFreeSpace(Path $path) {
         self::pathValidateExistence($path);
         return disk_free_space($path->__toString());
     }
 
-    public static function pathIsWritable(Path $path)
-    {
+    public static function pathIsWritable(Path $path) {
         if (self::pathExists($path)) {
             return is_writable($path->__toString());
         } else {
@@ -139,8 +121,7 @@ class FileSystem extends Path
         }
     }
 
-    public static function getSubPaths(Path $path)
-    {
+    public static function getSubPaths(Path $path) {
         self::pathValidateIsDirectory($path);
 
         $tmp = array();
@@ -158,98 +139,79 @@ class FileSystem extends Path
         return $tmp;
     }
 
-    public function exists()
-    {
+    public function exists() {
         return self::pathExists($this);
     }
 
-    public function isFile()
-    {
+    public function isFile() {
         return self::pathIsFile($this);
     }
 
-    public function isLink()
-    {
+    public function isLink() {
         return self::pathIsLink($this);
     }
 
-    public function getParent()
-    {
+    public function getParent() {
         return new Directory(parent::getParent(), parent::getDirectorySeparator());
     }
 
-    public function isReadable()
-    {
+    public function isReadable() {
         return self::pathIsReadable($this);
     }
 
-    public function isWritable()
-    {
+    public function isWritable() {
         return self::pathIsWritable($this);
     }
 
-    public function isDirectory()
-    {
+    public function isDirectory() {
         return self::pathIsDirectory($this);
     }
 
-    public function getFreeSpace()
-    {
+    public function getFreeSpace() {
         return self::pathGetFreeSpace($this);
     }
 
-    public function getTotalSpace()
-    {
+    public function getTotalSpace() {
         return self::pathGetTotalSpace($this);
     }
 
-    public function getModificationTime()
-    {
+    public function getModificationTime() {
         return self::pathGetModificationTime($this);
     }
 
-    public function setModificationTime($time)
-    {
+    public function setModificationTime($time) {
         return self::pathSetModificationTime($this, $time);
     }
 
-    protected function validateExistence()
-    {
+    protected function validateExistence() {
         self::pathValidateExistence($this);
     }
 
-    protected function validateReadable()
-    {
+    protected function validateReadable() {
         self::pathValidateReadable($this);
     }
 
-    protected function validateWritable()
-    {
+    protected function validateWritable() {
         self::pathValidateWritable($this);
     }
 
-    protected function validateIsDirectory()
-    {
+    protected function validateIsDirectory() {
         return self::pathValidateIsDirectory($this);
     }
 
-    protected function validateIsFile()
-    {
+    protected function validateIsFile() {
         return self::pathValidateIsFile($this);
     }
 
-    protected function validateIsLink()
-    {
+    protected function validateIsLink() {
         return self::pathValidateIsLink($this);
     }
 
-    protected function __construct(Path $path)
-    {
+    protected function __construct(Path $path) {
         parent::__construct($path->pathElements, $path->getDirectorySeparator());
     }
 
-    public function combinePath(Path $subPath)
-    {
+    public function combinePath(Path $subPath) {
         return new FileSystem(parent::combinePath($subPath), parent::getDirectorySeparator());
     }
 

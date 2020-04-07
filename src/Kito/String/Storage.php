@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,25 +23,21 @@ use Kito\Storage\DataBase\SQL\MySQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Storage
-{
+class Storage {
 
     private $driver;
     private $prefix;
 
-    public function __construct(MySQL $driver,string $prefix = 'string')
-    {
+    public function __construct(MySQL $driver, string $prefix = 'string') {
         $this->driver = $driver;
         $this->prefix = $prefix;
     }
 
-    private function getBaseId(string $string) : int
-    {
+    private function getBaseId(string $string): int {
         return mb_strlen($string);
     }
 
-    private function getTableName(int $baseId) : string
-    {
+    private function getTableName(int $baseId): string {
         $tableName = $this->prefix . '__' . dechex($baseId);
 
         static $_ = null;
@@ -58,16 +54,14 @@ class Storage
         return $tableName;
     }
 
-    public function getId(string $string): int
-    {
+    public function getId(string $string): int {
         $baseId = $this->getBaseId($string);
         $tableName = $this->getTableName($baseId);
         $subId = $this->driver->autoTable($tableName, array('value' => $string), array('id'))['id'];
         return Integer::mergeInteger($baseId, $subId);
     }
 
-    public function getString(int $id): string
-    {
+    public function getString(int $id): string {
         $_ = Integer::splitInteger($id);
         $baseId = $_[0];
         $subId = $_[1];

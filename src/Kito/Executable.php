@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,13 +20,11 @@ namespace Kito;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Executable
-{
+class Executable {
 
     private $filename;
 
-    public function __construct($filename)
-    {
+    public function __construct($filename) {
         $this->filename = $filename;
 
         if (!file_exists($this->filename)) {
@@ -46,13 +44,11 @@ class Executable
         }
     }
 
-    private function throwBinaryException($message): void
-    {
+    private function throwBinaryException($message): void {
         throw new \Exception("$this->filename binary $message");
     }
 
-    public function executeAndWait(array $args): string
-    {
+    public function executeAndWait(array $args): string {
         $command = $this->filename . ' ' . implode(' ', $args);
 
         return shell_exec($command);

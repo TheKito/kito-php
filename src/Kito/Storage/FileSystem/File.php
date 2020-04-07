@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,17 +22,14 @@ use \Kito\Type\Path;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class File extends FileSystem
-{
+class File extends FileSystem {
 
-    public static function pathFileSize(Path $path)
-    {
+    public static function pathFileSize(Path $path) {
         self::pathValidateReadable($path);
         return filesize($path->__toString());
     }
 
-    public function __construct(Path $path)
-    {
+    public function __construct(Path $path) {
         parent::__construct($path);
 
         if (parent::exists() && !parent::isFile()) {
@@ -40,13 +37,11 @@ class File extends FileSystem
         }
     }
 
-    public final function getSize()
-    {
+    public final function getSize() {
         return self::pathFileSize($this);
     }
 
-    public final function delete()
-    {
+    public final function delete() {
         if (!parent::exists()) {
             return;
         }
@@ -57,34 +52,29 @@ class File extends FileSystem
         }
     }
 
-    public final function copyTo(File $destination)
-    {
+    public final function copyTo(File $destination) {
         if (copy($this->__toString(), $destination->__toString()) === false) {
             throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());
         }
     }
 
-    public function getContent()
-    {
+    public function getContent() {
         parent::validateReadable();
         return file_get_contents($this->__toString());
     }
 
-    public function setContent($content)
-    {
+    public function setContent($content) {
         parent::validateWritable();
         return file_put_contents($this->__toString(), $content);
     }
 
-    public function touch()
-    {
+    public function touch() {
         parent::validateExistence();
         parent::validateWritable();
         touch($this->__toString());
     }
 
-    public final function create()
-    {
+    public final function create() {
         if (parent::exists()) {
             return;
         }
