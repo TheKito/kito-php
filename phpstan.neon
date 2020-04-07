@@ -1,6 +1,7 @@
 parameters:
-	autoload_files:
-		- autoload.php
-	paths:
-		- src
-		- tests
+    autoload_files:
+        - autoload.php
+    paths:
+        - src
+        - tests
+    level: 8
