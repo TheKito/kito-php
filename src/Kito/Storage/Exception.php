@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Storage\DataBase;
+namespace Kito\Storage;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Storage\Exception {
-    
+class Exception extends \Kito\Exception {
+    //put your code here
 }

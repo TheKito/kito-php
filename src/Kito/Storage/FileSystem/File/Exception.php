@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\FileSystem\File;
+namespace Kito\Storage\FileSystem\File;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\FileSystem\Exception {
+class Exception extends \Kito\Storage\FileSystem\Exception {
     
 }

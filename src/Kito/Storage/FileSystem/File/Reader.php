@@ -17,12 +17,13 @@
 namespace Kito\FileSystem\File;
 
 use Kito\DataType\Path;
+use Kito\Storage\FileSystem\File;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Reader extends \Kito\FileSystem\File {
+class Reader extends File {
 
     private $handle = false;
 
