@@ -36,6 +36,8 @@ class Sources {
         $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');        
         
         
+        $loader->addRepository('/GeoIp2', 'https://raw.githubusercontent.com/maxmind/GeoIP2-php/master/src/');        
+        
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/nikic/FastRoute/master/src/');
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/TheKito/FastRoute/master/src/');
 
