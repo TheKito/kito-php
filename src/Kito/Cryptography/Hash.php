@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,16 +20,13 @@ namespace Kito\Cryptography;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Hash
-{
+class Hash {
 
-    public static function getAlgorithms(): array
-    {
+    public static function getAlgorithms(): array {
         return hash_algos();
     }
 
-    public static function getAlgorithm(string $name): Hash
-    {
+    public static function getAlgorithm(string $name): Hash {
         $lowerName = strtolower($name);
 
         static $_ = null;
@@ -48,8 +45,7 @@ class Hash
     private $name;
     private $example;
 
-    private function __construct(string $name)
-    {
+    private function __construct(string $name) {
         $this->name = $name;
 
         if (!in_array($this->name, self::getAlgorithms())) {
@@ -59,8 +55,7 @@ class Hash
         $this->example = $this->calc('');
     }
 
-    public function calc(string $data): string
-    {
+    public function calc(string $data): string {
         $t = hash($this->name, $data);
 
         if ($t === false) {
@@ -70,25 +65,21 @@ class Hash
         return strtoupper($t);
     }
 
-    public function check(string $hashValue, string $data) : bool
-    {
+    public function check(string $hashValue, string $data): bool {
         return $this->calc($data) == strtoupper($hashValue);
     }
 
-    public function checkHash(string $hashValue) : bool
-    {
+    public function checkHash(string $hashValue): bool {
         return strlen($hashValue) == strlen($this->example);
     }
 
-    public function validateHash(string $hashValue) : void
-    {
+    public function validateHash(string $hashValue): void {
         if (!$this->checkHash($hashValue)) {
             throw new InvalidHashValueException($hashValue);
         }
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
