@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Cryptography;
+namespace Kito\HTTP;
 
 /**
  *
