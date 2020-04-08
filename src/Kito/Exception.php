@@ -21,5 +21,17 @@ namespace Kito;
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Exception extends \Exception {
-    //put your code here
+
+    public function __construct($message = "", $code = 0, $previous = null) {
+        if ($code === 0)
+            $code = crc32(get_called_class());
+
+        parent::__construct($message, $code, $previous);
+    }
+
+    public static function throwException($message = "", $code = 0, $previous = null) {
+        $class = get_called_class();
+        throw new $class($message, $code, $previous);
+    }
+
 }
