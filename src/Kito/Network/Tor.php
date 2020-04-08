@@ -14,11 +14,12 @@
  *
  */
 
+namespace Kito\Network;
 /**
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class BLKTOR {
+class Tor {
 
     public static function getNewTOR() {
         while (true) {
