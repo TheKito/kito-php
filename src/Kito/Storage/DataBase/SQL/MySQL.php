@@ -22,7 +22,7 @@ use \mysqli;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MySQL extends \Kito\DataBase\SQL\Driver
+class MySQL extends Driver
 {
 
     public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
