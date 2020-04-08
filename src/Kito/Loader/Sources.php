@@ -29,10 +29,13 @@ class Sources {
         $loader->addRepository('/Psr/Http/Server', 'https://raw.githubusercontent.com/php-fig/http-server-handler/master/src');
         $loader->addRepository('/Psr/Http/Server', 'https://raw.githubusercontent.com/php-fig/http-server-middleware/master/src/');
 
-
+        
         $loader->addRepository('/Fig/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message-util/master/src/');
 
 
+        $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');        
+        
+        
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/nikic/FastRoute/master/src/');
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/TheKito/FastRoute/master/src/');
 
