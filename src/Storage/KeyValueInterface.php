@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Storage\DataBase\NoSQL;
+namespace Kito\Storage;
 
 /**
  * Proxy class for access Memcache or Memcached common functions 
