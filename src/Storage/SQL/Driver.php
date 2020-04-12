@@ -16,40 +16,15 @@
 
 namespace Kito\Storage\SQL;
 
+use \Kito\Interfaces\Storage\SQLInterface;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-abstract class Driver
+abstract class Driver implements SQLInterface
 {
 
-    public abstract function isConnected(): bool;
 
-    public abstract function query($query): array;
-
-    public abstract function command($command): bool;
-
-    public abstract function delete($table, $where = array(), $limit = 100): bool;
-
-    public abstract function insert($table, $data = array()): bool;
-
-    public abstract function update($table, $data, $where = array(), $limit = 0): bool;
-
-    public abstract function select($table, $column = array(), $where = array(), $limit = 100, $rand = false): array;
-
-    public abstract function count($table, $where = array()): int;
-
-    public abstract function max($table, $column, $where = array()): int;
-
-    public abstract function min($table, $column, $where = array()): int;
-
-    public abstract function getTables(): array;
-
-    public abstract function getDatabases(): array;
-
-    public abstract function getDatabase(): string;
-
-    public abstract function copyTable($sourceTable, $destinationTable): bool;
 
     public final function getArray($table, $column, $where = array()): array
     {

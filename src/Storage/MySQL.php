@@ -16,14 +16,14 @@
 
 namespace Kito\Storage\DataBase\SQL;
 
+use \Kito\Interfaces\Storage\SQLInterface;
 use \mysqli;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MySQL extends Driver
-{
+class MySQL extends Driver implements SQLInterface {
 
     public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
     {
