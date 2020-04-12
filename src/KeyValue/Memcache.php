@@ -15,7 +15,7 @@
  */
 declare(strict_types=1);
 
-namespace Kito\KV;
+namespace Kito\KeyValue;
 
 use Kito\LibraryNotFoundException;
 

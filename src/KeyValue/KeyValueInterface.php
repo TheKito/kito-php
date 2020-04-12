@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\KV\Storage;
+namespace Kito\KeyValue\Storage;
 
 /**
  * Proxy class for access Memcache or Memcached common functions 
