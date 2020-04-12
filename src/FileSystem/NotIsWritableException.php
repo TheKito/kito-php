@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\FileSystem;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotIsLinkException extends Exception {
+class NotIsWritableException extends Exception {
     //put your code here
 }

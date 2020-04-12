@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\FileSystem;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotIsReadableException extends Exception {
+class CreateDirectoryException extends Exception {
     //put your code here
 }

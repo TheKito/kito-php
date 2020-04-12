@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Cryptography\Hash;
+namespace Kito\Cryptography;
 
 /**
  *

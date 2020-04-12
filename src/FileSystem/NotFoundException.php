@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\FileSystem;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CreateFileException extends Exception {
+class NotFoundException extends Exception {
     //put your code here
 }

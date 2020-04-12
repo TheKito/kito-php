@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\FileSystem;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotIsDirectoryException extends Exception {
+class CopyFileException extends Exception {
     //put your code here
 }

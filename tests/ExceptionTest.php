@@ -9,34 +9,28 @@ class ExceptionTest extends TestCase
         throw new Kito\Cryptography\Exception("Test");
     }
 
+    public function testKitoCryptographyHashAlgorithmCalcException()
+    {        
+        $this->expectException(Kito\Cryptography\HashAlgorithmCalcException::class);
+        throw new Kito\Cryptography\HashAlgorithmCalcException("Test");
+    }
+
+    public function testKitoCryptographyHashAlgorithmNotFoundException()
+    {        
+        $this->expectException(Kito\Cryptography\HashAlgorithmNotFoundException::class);
+        throw new Kito\Cryptography\HashAlgorithmNotFoundException("Test");
+    }
+
+    public function testKitoCryptographyInvalidHashValueException()
+    {        
+        $this->expectException(Kito\Cryptography\InvalidHashValueException::class);
+        throw new Kito\Cryptography\InvalidHashValueException("Test");
+    }
+
     public function testKitoException()
     {        
         $this->expectException(Kito\Exception::class);
         throw new Kito\Exception("Test");
-    }
-
-    public function testKitoExceptionsCryptographyException()
-    {        
-        $this->expectException(Kito\Exceptions\Cryptography\Exception::class);
-        throw new Kito\Exceptions\Cryptography\Exception("Test");
-    }
-
-    public function testKitoExceptionsCryptographyHashAlgorithmCalcException()
-    {        
-        $this->expectException(Kito\Exceptions\Cryptography\HashAlgorithmCalcException::class);
-        throw new Kito\Exceptions\Cryptography\HashAlgorithmCalcException("Test");
-    }
-
-    public function testKitoExceptionsCryptographyHashAlgorithmNotFoundException()
-    {        
-        $this->expectException(Kito\Exceptions\Cryptography\HashAlgorithmNotFoundException::class);
-        throw new Kito\Exceptions\Cryptography\HashAlgorithmNotFoundException("Test");
-    }
-
-    public function testKitoExceptionsCryptographyInvalidHashValueException()
-    {        
-        $this->expectException(Kito\Exceptions\Cryptography\InvalidHashValueException::class);
-        throw new Kito\Exceptions\Cryptography\InvalidHashValueException("Test");
     }
 
     public function testKitoExceptionsException()
@@ -67,72 +61,6 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Exceptions\Storage\Exception::class);
         throw new Kito\Exceptions\Storage\Exception("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemCopyFileException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\CopyFileException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\CopyFileException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemCreateDirectoryException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\CreateDirectoryException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\CreateDirectoryException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemCreateFileException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\CreateFileException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\CreateFileException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\Exception::class);
-        throw new Kito\Exceptions\Storage\FileSystem\Exception("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemIOException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\IOException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\IOException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotFoundException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotFoundException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotFoundException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotIsDirectoryException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotIsDirectoryException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotIsDirectoryException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotIsFileException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotIsFileException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotIsFileException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotIsLinkException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotIsLinkException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotIsLinkException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotIsReadableException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotIsReadableException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotIsReadableException("Test");
-    }
-
-    public function testKitoExceptionsStorageFileSystemNotIsWritableException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\FileSystem\NotIsWritableException::class);
-        throw new Kito\Exceptions\Storage\FileSystem\NotIsWritableException("Test");
     }
 
     public function testKitoExceptionsStorageSQLCommandException()
@@ -223,6 +151,72 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Exceptions\Storage\SQL\UpdateException::class);
         throw new Kito\Exceptions\Storage\SQL\UpdateException("Test");
+    }
+
+    public function testKitoFileSystemCopyFileException()
+    {        
+        $this->expectException(Kito\FileSystem\CopyFileException::class);
+        throw new Kito\FileSystem\CopyFileException("Test");
+    }
+
+    public function testKitoFileSystemCreateDirectoryException()
+    {        
+        $this->expectException(Kito\FileSystem\CreateDirectoryException::class);
+        throw new Kito\FileSystem\CreateDirectoryException("Test");
+    }
+
+    public function testKitoFileSystemCreateFileException()
+    {        
+        $this->expectException(Kito\FileSystem\CreateFileException::class);
+        throw new Kito\FileSystem\CreateFileException("Test");
+    }
+
+    public function testKitoFileSystemException()
+    {        
+        $this->expectException(Kito\FileSystem\Exception::class);
+        throw new Kito\FileSystem\Exception("Test");
+    }
+
+    public function testKitoFileSystemIOException()
+    {        
+        $this->expectException(Kito\FileSystem\IOException::class);
+        throw new Kito\FileSystem\IOException("Test");
+    }
+
+    public function testKitoFileSystemNotFoundException()
+    {        
+        $this->expectException(Kito\FileSystem\NotFoundException::class);
+        throw new Kito\FileSystem\NotFoundException("Test");
+    }
+
+    public function testKitoFileSystemNotIsDirectoryException()
+    {        
+        $this->expectException(Kito\FileSystem\NotIsDirectoryException::class);
+        throw new Kito\FileSystem\NotIsDirectoryException("Test");
+    }
+
+    public function testKitoFileSystemNotIsFileException()
+    {        
+        $this->expectException(Kito\FileSystem\NotIsFileException::class);
+        throw new Kito\FileSystem\NotIsFileException("Test");
+    }
+
+    public function testKitoFileSystemNotIsLinkException()
+    {        
+        $this->expectException(Kito\FileSystem\NotIsLinkException::class);
+        throw new Kito\FileSystem\NotIsLinkException("Test");
+    }
+
+    public function testKitoFileSystemNotIsReadableException()
+    {        
+        $this->expectException(Kito\FileSystem\NotIsReadableException::class);
+        throw new Kito\FileSystem\NotIsReadableException("Test");
+    }
+
+    public function testKitoFileSystemNotIsWritableException()
+    {        
+        $this->expectException(Kito\FileSystem\NotIsWritableException::class);
+        throw new Kito\FileSystem\NotIsWritableException("Test");
     }
 
     public function testKitoHTMLException()

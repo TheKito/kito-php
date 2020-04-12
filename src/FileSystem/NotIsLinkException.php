@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Cryptography\Hash;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class InvalidHashValueException extends Exception {
-    
+class NotIsLinkException extends Exception {
+    //put your code here
 }

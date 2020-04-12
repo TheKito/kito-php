@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Cryptography\Hash;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Cryptography\Exception {
-    
+class NotIsReadableException extends Exception {
+    //put your code here
 }

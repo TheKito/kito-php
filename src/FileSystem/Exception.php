@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Cryptography\Hash;
+namespace Kito\FileSystem;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class HashAlgorithmCalcException extends Exception {
+class Exception extends \Kito\Exception {
     
 }

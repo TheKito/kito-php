@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\FileSystem;
+namespace Kito\Cryptography;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CreateDirectoryException extends Exception {
-    //put your code here
+class InvalidHashValueException extends Exception {
+    
 }
