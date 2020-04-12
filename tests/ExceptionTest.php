@@ -123,10 +123,10 @@ class ExceptionTest extends TestCase
         throw new Kito\HTTP\Session\Exception("Test");
     }
 
-    public function testKitoKVException()
+    public function testKitoKeyValueException()
     {        
-        $this->expectException(Kito\KV\Exception::class);
-        throw new Kito\KV\Exception("Test");
+        $this->expectException(Kito\KeyValue\Exception::class);
+        throw new Kito\KeyValue\Exception("Test");
     }
 
     public function testKitoLabException()
