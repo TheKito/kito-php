@@ -16,6 +16,10 @@
 
 namespace Kito\Cryptography;
 
+use Kito\Exceptions\Cryptography\HashAlgorithmNotFoundException;
+use Kito\Exceptions\Cryptography\HashAlgorithmCalcException;
+use Kito\Exceptions\Cryptography\InvalidHashValueException;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
