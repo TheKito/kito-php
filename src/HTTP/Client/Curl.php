@@ -16,6 +16,8 @@
 
 namespace Kito\HTTP\Client;
 
+use Kito\LibraryNotFoundException;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -25,6 +27,10 @@ class Curl {
     private $curl;
 
     public function __construct() {
+
+        if (!function_exists('\curl_init'))
+            throw new LibraryNotFoundException('php-curl');
+
         $this->curl = curl_init();
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
