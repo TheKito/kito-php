@@ -14,12 +14,26 @@
  *
  */
 
-namespace Kito\Interfaces\Storage;
+namespace Kito\KV\Storage;
 
 /**
+ * Proxy class for access Memcache or Memcached common functions 
  *
- * @author TheKito < blankitoracing@gmail.com >
+ * @author TheKito
  */
-class Exception extends \Kito\Interfaces\Exception {
-    
+interface KeyValueInterface {
+
+    public function get(string $key): ?string;
+
+    public function set(string $key, $var): bool;
+
+    public function delete(string $key): bool;
+
+    public function exists(string $key): bool;
+
+    public function add(string $key, $var): bool;
+
+    public function decrement(string $key, int $initial_value = 0): int;
+
+    public function increment(string $key, int $initial_value = 0): int;
 }

@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Interfaces;
+namespace Kito\KV;
 
 /**
  *
