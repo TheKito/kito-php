@@ -9,7 +9,8 @@ php:
 services:
   - memcached
 
-#before_install:
+before_install:
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
   #- export PHPCOMPAT_DIR=/tmp/PHPCompatibility
 #  - export PHPSTAN_DIR=/tmp/PHPSTAN
