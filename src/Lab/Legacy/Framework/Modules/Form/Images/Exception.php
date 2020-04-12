@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\Modules\Form\Images;
+namespace Kito\Lab\Legacy\Framework\Modules\Form\Images;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Modules\Form\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\Form\Exception {
     
 }

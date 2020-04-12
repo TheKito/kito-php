@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\Modules\Rss\Images;
+namespace Kito\Lab\Legacy\Framework\Modules\Rss\Images;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Modules\Rss\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\Rss\Exception {
     
 }

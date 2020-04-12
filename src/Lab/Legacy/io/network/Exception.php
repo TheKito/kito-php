@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\io\network;
+namespace Kito\Lab\Legacy\io\network;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\io\Exception {
+class Exception extends \Kito\Lab\Legacy\io\Exception {
     
 }

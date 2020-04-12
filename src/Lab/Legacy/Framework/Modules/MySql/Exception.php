@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\Modules\MySql;
+namespace Kito\Lab\Legacy\Framework\Modules\MySql;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Modules\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\Exception {
     
 }

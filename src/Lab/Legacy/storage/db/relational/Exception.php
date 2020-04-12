@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\storage\db\relational;
+namespace Kito\Lab\Legacy\storage\db\relational;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\storage\db\Exception {
+class Exception extends \Kito\Lab\Legacy\storage\db\Exception {
     
 }

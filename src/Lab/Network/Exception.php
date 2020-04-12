@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Network;
+namespace Kito\Lab\Network;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Exception {
+class Exception extends \Kito\Lab\Exception {
     
 }

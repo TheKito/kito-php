@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\HTML\Tag;
+namespace Kito\Lab\HTML\Tag;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\HTML\Exception {
+class Exception extends \Kito\Lab\HTML\Exception {
     
 }

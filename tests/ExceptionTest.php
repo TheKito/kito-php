@@ -99,30 +99,6 @@ class ExceptionTest extends TestCase
         throw new Kito\FileSystem\NotIsWritableException("Test");
     }
 
-    public function testKitoHTMLException()
-    {        
-        $this->expectException(Kito\HTML\Exception::class);
-        throw new Kito\HTML\Exception("Test");
-    }
-
-    public function testKitoHTMLTagException()
-    {        
-        $this->expectException(Kito\HTML\Tag\Exception::class);
-        throw new Kito\HTML\Tag\Exception("Test");
-    }
-
-    public function testKitoHTTPException()
-    {        
-        $this->expectException(Kito\HTTP\Exception::class);
-        throw new Kito\HTTP\Exception("Test");
-    }
-
-    public function testKitoHTTPSessionException()
-    {        
-        $this->expectException(Kito\HTTP\Session\Exception::class);
-        throw new Kito\HTTP\Session\Exception("Test");
-    }
-
     public function testKitoKeyValueException()
     {        
         $this->expectException(Kito\KeyValue\Exception::class);
@@ -135,208 +111,340 @@ class ExceptionTest extends TestCase
         throw new Kito\Lab\Exception("Test");
     }
 
-    public function testKitoLegacyException()
+    public function testKitoLabHTMLException()
     {        
-        $this->expectException(Kito\Legacy\Exception::class);
-        throw new Kito\Legacy\Exception("Test");
+        $this->expectException(Kito\Lab\HTML\Exception::class);
+        throw new Kito\Lab\HTML\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkException()
+    public function testKitoLabHTMLTagException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Exception::class);
-        throw new Kito\Legacy\Framework\Exception("Test");
+        $this->expectException(Kito\Lab\HTML\Tag\Exception::class);
+        throw new Kito\Lab\HTML\Tag\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesDataBaseException()
+    public function testKitoLabHTTPException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\DataBase\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\DataBase\Exception("Test");
+        $this->expectException(Kito\Lab\HTTP\Exception::class);
+        throw new Kito\Lab\HTTP\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesDataBaseImagesException()
+    public function testKitoLabHTTPSessionException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\DataBase\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\DataBase\Images\Exception("Test");
+        $this->expectException(Kito\Lab\HTTP\Session\Exception::class);
+        throw new Kito\Lab\HTTP\Session\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesEditorException()
+    public function testKitoLabLegacyException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Editor\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Editor\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Exception::class);
+        throw new Kito\Lab\Legacy\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesEditorScriptsException()
+    public function testKitoLabLegacyFrameworkException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Editor\Scripts\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Editor\Scripts\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesException()
+    public function testKitoLabLegacyFrameworkModulesDataBaseException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\DataBase\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\DataBase\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesFormException()
+    public function testKitoLabLegacyFrameworkModulesDataBaseImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Form\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Form\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\DataBase\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\DataBase\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesFormImagesException()
+    public function testKitoLabLegacyFrameworkModulesEditorException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Form\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Form\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Editor\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Editor\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesFormScriptsException()
+    public function testKitoLabLegacyFrameworkModulesEditorScriptsException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Form\Scripts\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Form\Scripts\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Editor\Scripts\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Editor\Scripts\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesHTMLDefaultTemplateException()
+    public function testKitoLabLegacyFrameworkModulesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\HTML\DefaultTemplate\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\HTML\DefaultTemplate\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesHTMLException()
+    public function testKitoLabLegacyFrameworkModulesFormException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\HTML\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\HTML\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Form\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Form\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesHTMLImagesException()
+    public function testKitoLabLegacyFrameworkModulesFormImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\HTML\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\HTML\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Form\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Form\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesHTMLScriptsException()
+    public function testKitoLabLegacyFrameworkModulesFormScriptsException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\HTML\Scripts\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\HTML\Scripts\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Form\Scripts\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Form\Scripts\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesIDEException()
+    public function testKitoLabLegacyFrameworkModulesHTMLDefaultTemplateException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\IDE\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\IDE\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\HTML\DefaultTemplate\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\HTML\DefaultTemplate\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesIDEImagesException()
+    public function testKitoLabLegacyFrameworkModulesHTMLException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\IDE\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\IDE\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\HTML\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\HTML\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesLoggerException()
+    public function testKitoLabLegacyFrameworkModulesHTMLImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Logger\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Logger\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\HTML\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\HTML\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesLoggerImagesException()
+    public function testKitoLabLegacyFrameworkModulesHTMLScriptsException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Logger\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Logger\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\HTML\Scripts\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\HTML\Scripts\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesMapException()
+    public function testKitoLabLegacyFrameworkModulesIDEException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Map\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Map\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\IDE\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\IDE\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesMapScriptsException()
+    public function testKitoLabLegacyFrameworkModulesIDEImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Map\Scripts\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Map\Scripts\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\IDE\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\IDE\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesMySqlException()
+    public function testKitoLabLegacyFrameworkModulesLoggerException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\MySql\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\MySql\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Logger\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Logger\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesMySqlImagesException()
+    public function testKitoLabLegacyFrameworkModulesLoggerImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\MySql\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\MySql\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Logger\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Logger\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesRssException()
+    public function testKitoLabLegacyFrameworkModulesMapException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Rss\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Rss\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Map\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Map\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesRssImagesException()
+    public function testKitoLabLegacyFrameworkModulesMapScriptsException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Rss\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Rss\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Map\Scripts\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Map\Scripts\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesZonesException()
+    public function testKitoLabLegacyFrameworkModulesMySqlException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Zones\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Zones\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\MySql\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\MySql\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkModulesZonesImagesException()
+    public function testKitoLabLegacyFrameworkModulesMySqlImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\Modules\Zones\Images\Exception::class);
-        throw new Kito\Legacy\Framework\Modules\Zones\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\MySql\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\MySql\Images\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkSystemException()
+    public function testKitoLabLegacyFrameworkModulesRssException()
     {        
-        $this->expectException(Kito\Legacy\Framework\System\Exception::class);
-        throw new Kito\Legacy\Framework\System\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Rss\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Rss\Exception("Test");
     }
 
-    public function testKitoLegacyFrameworkSystemImagesException()
+    public function testKitoLabLegacyFrameworkModulesRssImagesException()
     {        
-        $this->expectException(Kito\Legacy\Framework\System\Images\Exception::class);
-        throw new Kito\Legacy\Framework\System\Images\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Rss\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Rss\Images\Exception("Test");
     }
 
-    public function testKitoLegacyioException()
+    public function testKitoLabLegacyFrameworkModulesZonesException()
     {        
-        $this->expectException(Kito\Legacy\io\Exception::class);
-        throw new Kito\Legacy\io\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Zones\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Zones\Exception("Test");
     }
 
-    public function testKitoLegacyionetworkException()
+    public function testKitoLabLegacyFrameworkModulesZonesImagesException()
     {        
-        $this->expectException(Kito\Legacy\io\network\Exception::class);
-        throw new Kito\Legacy\io\network\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\Modules\Zones\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\Modules\Zones\Images\Exception("Test");
     }
 
-    public function testKitoLegacyionetworkhttpException()
+    public function testKitoLabLegacyFrameworkSystemException()
     {        
-        $this->expectException(Kito\Legacy\io\network\http\Exception::class);
-        throw new Kito\Legacy\io\network\http\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\System\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\System\Exception("Test");
     }
 
-    public function testKitoLegacystorageException()
+    public function testKitoLabLegacyFrameworkSystemImagesException()
     {        
-        $this->expectException(Kito\Legacy\storage\Exception::class);
-        throw new Kito\Legacy\storage\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\Framework\System\Images\Exception::class);
+        throw new Kito\Lab\Legacy\Framework\System\Images\Exception("Test");
     }
 
-    public function testKitoLegacystoragedbException()
+    public function testKitoLabLegacyioException()
     {        
-        $this->expectException(Kito\Legacy\storage\db\Exception::class);
-        throw new Kito\Legacy\storage\db\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\io\Exception::class);
+        throw new Kito\Lab\Legacy\io\Exception("Test");
     }
 
-    public function testKitoLegacystoragedbrelationalException()
+    public function testKitoLabLegacyionetworkException()
     {        
-        $this->expectException(Kito\Legacy\storage\db\relational\Exception::class);
-        throw new Kito\Legacy\storage\db\relational\Exception("Test");
+        $this->expectException(Kito\Lab\Legacy\io\network\Exception::class);
+        throw new Kito\Lab\Legacy\io\network\Exception("Test");
+    }
+
+    public function testKitoLabLegacyionetworkhttpException()
+    {        
+        $this->expectException(Kito\Lab\Legacy\io\network\http\Exception::class);
+        throw new Kito\Lab\Legacy\io\network\http\Exception("Test");
+    }
+
+    public function testKitoLabLegacystorageException()
+    {        
+        $this->expectException(Kito\Lab\Legacy\storage\Exception::class);
+        throw new Kito\Lab\Legacy\storage\Exception("Test");
+    }
+
+    public function testKitoLabLegacystoragedbException()
+    {        
+        $this->expectException(Kito\Lab\Legacy\storage\db\Exception::class);
+        throw new Kito\Lab\Legacy\storage\db\Exception("Test");
+    }
+
+    public function testKitoLabLegacystoragedbrelationalException()
+    {        
+        $this->expectException(Kito\Lab\Legacy\storage\db\relational\Exception::class);
+        throw new Kito\Lab\Legacy\storage\db\relational\Exception("Test");
+    }
+
+    public function testKitoLabNetworkException()
+    {        
+        $this->expectException(Kito\Lab\Network\Exception::class);
+        throw new Kito\Lab\Network\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemDataNException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\DataN\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\DataN\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemQueueException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Queue\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Queue\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemQueueKeyValueException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Queue\KeyValue\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Queue\KeyValue\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeCommonException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Common\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Common\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeNodeException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Node\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Node\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeStandardAddressException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Address\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Address\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeStandardException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeStandardMessagesException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Messages\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Messages\Exception("Test");
+    }
+
+    public function testKitoLabStorageDataBaseSubSystemTreeZoneException()
+    {        
+        $this->expectException(Kito\Lab\Storage\DataBase\SubSystem\Tree\Zone\Exception::class);
+        throw new Kito\Lab\Storage\DataBase\SubSystem\Tree\Zone\Exception("Test");
+    }
+
+    public function testKitoLabStorageException()
+    {        
+        $this->expectException(Kito\Lab\Storage\Exception::class);
+        throw new Kito\Lab\Storage\Exception("Test");
+    }
+
+    public function testKitoLabStorageFileSystemException()
+    {        
+        $this->expectException(Kito\Lab\Storage\FileSystem\Exception::class);
+        throw new Kito\Lab\Storage\FileSystem\Exception("Test");
+    }
+
+    public function testKitoLabStorageFileSystemFileException()
+    {        
+        $this->expectException(Kito\Lab\Storage\FileSystem\File\Exception::class);
+        throw new Kito\Lab\Storage\FileSystem\File\Exception("Test");
+    }
+
+    public function testKitoLabStringException()
+    {        
+        $this->expectException(Kito\Lab\String\Exception::class);
+        throw new Kito\Lab\String\Exception("Test");
+    }
+
+    public function testKitoLabSystemException()
+    {        
+        $this->expectException(Kito\Lab\System\Exception::class);
+        throw new Kito\Lab\System\Exception("Test");
     }
 
     public function testKitoLibraryNotFoundException()
@@ -355,12 +463,6 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Math\Exception::class);
         throw new Kito\Math\Exception("Test");
-    }
-
-    public function testKitoNetworkException()
-    {        
-        $this->expectException(Kito\Network\Exception::class);
-        throw new Kito\Network\Exception("Test");
     }
 
     public function testKitoNotImplementedException()
@@ -463,108 +565,6 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\SQL\UpdateException::class);
         throw new Kito\SQL\UpdateException("Test");
-    }
-
-    public function testKitoStorageDataBaseException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\Exception::class);
-        throw new Kito\Storage\DataBase\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemDataNException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\DataN\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\DataN\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemQueueException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Queue\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Queue\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemQueueKeyValueException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Queue\KeyValue\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Queue\KeyValue\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeCommonException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Common\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Common\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeNodeException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Node\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Node\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeStandardAddressException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Standard\Address\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Standard\Address\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeStandardException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Standard\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Standard\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeStandardMessagesException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Standard\Messages\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Standard\Messages\Exception("Test");
-    }
-
-    public function testKitoStorageDataBaseSubSystemTreeZoneException()
-    {        
-        $this->expectException(Kito\Storage\DataBase\SubSystem\Tree\Zone\Exception::class);
-        throw new Kito\Storage\DataBase\SubSystem\Tree\Zone\Exception("Test");
-    }
-
-    public function testKitoStorageException()
-    {        
-        $this->expectException(Kito\Storage\Exception::class);
-        throw new Kito\Storage\Exception("Test");
-    }
-
-    public function testKitoStorageFileSystemException()
-    {        
-        $this->expectException(Kito\Storage\FileSystem\Exception::class);
-        throw new Kito\Storage\FileSystem\Exception("Test");
-    }
-
-    public function testKitoStorageFileSystemFileException()
-    {        
-        $this->expectException(Kito\Storage\FileSystem\File\Exception::class);
-        throw new Kito\Storage\FileSystem\File\Exception("Test");
-    }
-
-    public function testKitoStringException()
-    {        
-        $this->expectException(Kito\String\Exception::class);
-        throw new Kito\String\Exception("Test");
-    }
-
-    public function testKitoSystemException()
-    {        
-        $this->expectException(Kito\System\Exception::class);
-        throw new Kito\System\Exception("Test");
     }
 
     public function testKitoTypeException()

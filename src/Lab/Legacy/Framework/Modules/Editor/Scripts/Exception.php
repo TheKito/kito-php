@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\Modules\Editor\Scripts;
+namespace Kito\Lab\Legacy\Framework\Modules\Editor\Scripts;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Modules\Editor\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\Editor\Exception {
     
 }

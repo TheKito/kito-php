@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SubSystem\Tree;
+namespace Kito\Lab\Storage\DataBase\SubSystem\Tree;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Storage\DataBase\SubSystem\Exception {
+class Exception extends \Kito\Lab\Storage\DataBase\SubSystem\Exception {
     
 }

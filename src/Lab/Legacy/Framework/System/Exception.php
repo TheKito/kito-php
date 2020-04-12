@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\System;
+namespace Kito\Lab\Legacy\Framework\System;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Exception {
     
 }

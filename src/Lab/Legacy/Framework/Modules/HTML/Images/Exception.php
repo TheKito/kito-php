@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Legacy\Framework\Modules\HTML\Images;
+namespace Kito\Lab\Legacy\Framework\Modules\HTML\Images;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Legacy\Framework\Modules\HTML\Exception {
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\HTML\Exception {
     
 }
