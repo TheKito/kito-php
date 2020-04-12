@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Kito\KeyValue;
 
-use Kito\LibraryNotFoundException;
+use \Kito\LibraryNotFoundException;
 use \Psr\Container\ContainerInterface;
 
 /**
