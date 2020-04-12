@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Storage\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class ConnectionClosedException extends Exception
-{
+class ConnectException extends Exception {
     //put your code here
 }

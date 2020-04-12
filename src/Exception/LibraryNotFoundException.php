@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Exception;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CommandException extends Exception
-{
+class LibraryNotFoundException extends Exception {
     //put your code here
 }

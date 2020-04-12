@@ -14,19 +14,20 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Storage;
 
-use Kito\DataBase\SQL\Exception\ConnectException;
-use Kito\DataBase\SQL\Exception\SelectDBException;
-use Kito\DataBase\SQL\Exception\ConnectionClosedException;
-use Kito\DataBase\SQL\Exception\CommandException;
-use Kito\DataBase\SQL\Exception\GetResultSetException;
-use Kito\DataBase\SQL\Exception\SelectException;
-use Kito\DataBase\SQL\Exception\InsertException;
-use Kito\DataBase\SQL\Exception\UpdateException;
-use Kito\DataBase\SQL\Exception\DeleteException;
-use Kito\DataBase\SQL\Exception\TooManyRowsException;
-use Kito\Exception\NotImplementedException;
+use Kito\Storage\SQL\Driver;
+use Kito\Storage\SQL\ConnectException;
+use Kito\Storage\SQL\SelectDBException;
+use Kito\Storage\SQL\ConnectionClosedException;
+use Kito\Storage\SQL\CommandException;
+use Kito\Storage\SQL\GetResultSetException;
+use Kito\Storage\SQL\SelectException;
+use Kito\Storage\SQL\InsertException;
+use Kito\Storage\SQL\UpdateException;
+use Kito\Storage\SQL\DeleteException;
+use Kito\Storage\SQL\TooManyRowsException;
+use Kito\NotImplementedException;
 
 /**
  *

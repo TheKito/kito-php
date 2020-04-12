@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Storage\SQL;
 
 /**
  *

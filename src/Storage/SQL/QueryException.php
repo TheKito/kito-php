@@ -14,13 +14,13 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Storage\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MaxException extends Exception
+class QueryException extends Exception
 {
     //put your code here
 }

@@ -14,12 +14,13 @@
  *
  */
 
-namespace Kito;
+namespace Kito\Storage\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class LibraryNotFoundException extends Exception {
-    //put your code here
+class Exception extends \Kito\DataBase\Exception
+{
+    
 }
