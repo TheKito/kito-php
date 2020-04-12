@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Cryptography;
+namespace Kito\Cryptography\Hash;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class InvalidHashValueException extends Exception {
+class Exception extends \Kito\Cryptography\Exception {
     
 }

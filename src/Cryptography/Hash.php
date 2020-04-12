@@ -16,9 +16,9 @@
 
 namespace Kito\Cryptography;
 
-use Kito\Exceptions\Cryptography\HashAlgorithmNotFoundException;
-use Kito\Exceptions\Cryptography\HashAlgorithmCalcException;
-use Kito\Exceptions\Cryptography\InvalidHashValueException;
+use Kito\Cryptography\Hash\HashAlgorithmNotFoundException;
+use Kito\Cryptography\Hash\HashAlgorithmCalcException;
+use Kito\Cryptography\Hash\InvalidHashValueException;
 
 /**
  *
