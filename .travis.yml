@@ -6,6 +6,9 @@ php:
   - 7.4
   - nightly
 
+services:
+  - memcached
+
 #before_install:
 
   #- export PHPCOMPAT_DIR=/tmp/PHPCompatibility
