@@ -9,19 +9,9 @@ class MemcacheTest extends TestCase
     }
     public function testInstanceMemcache($keyPrefix = null)
     {          
-        try
-        {
+
             new Kito\Storage\Memcache($keyPrefix);
-            $this->assertSame(true,true);
-        }
-        catch (\Throwable $t)
-        {
-            $this->assertSame($t->getMessage(),true);
-        }
-        catch (\Exception $e)
-        {
-            $this->assertSame($e->getMessage(),true);
-        }
+
     }
     public function testInstanceMemcacheKeyPrefix()            
     {
