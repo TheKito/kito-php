@@ -27,7 +27,7 @@ use Kito\Storage\SQL\InsertException;
 use Kito\Storage\SQL\UpdateException;
 use Kito\Storage\SQL\DeleteException;
 use Kito\Storage\SQL\TooManyRowsException;
-use Kito\NotImplementedException;
+use Kito\Exceptions\NotImplementedException;
 
 /**
  *
