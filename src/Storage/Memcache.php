@@ -35,7 +35,7 @@ class Memcache implements KeyValueInterface {
         } elseif (class_exists('\Memcache', false)) {
             $this->proxy = new \Memcache();
         } else {
-            throw new LibraryNotFoundException('Memecache');
+            throw new LibraryNotFoundException('Memcache|Memcached');
         }
 
         $this->keyPrefix = $keyPrefix;
