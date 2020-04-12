@@ -3,6 +3,12 @@ use PHPUnit\Framework\TestCase;
 
 class ExceptionTest extends TestCase
 {
+    public function testKitoCryptographyException()
+    {        
+        $this->expectException(Kito\Cryptography\Exception::class);
+        throw new Kito\Cryptography\Exception("Test");
+    }
+
     public function testKitoException()
     {        
         $this->expectException(Kito\Exception::class);
