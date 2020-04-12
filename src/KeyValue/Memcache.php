@@ -18,13 +18,14 @@ declare(strict_types=1);
 namespace Kito\KeyValue;
 
 use Kito\LibraryNotFoundException;
+use \Psr\Container\ContainerInterface;
 
 /**
  * Proxy class for access Memcache or Memcached common functions 
  *
  * @author TheKito
  */
-class Memcache implements KeyValueInterface {
+class Memcache implements KeyValueInterface, Psr\Container\ContainerInterface{
 
     private $proxy = null;
     private $keyPrefix = null;
