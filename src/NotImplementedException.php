@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions;
+namespace Kito;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class IOException extends Exception {
+class NotImplementedException extends Exception {
     //put your code here
 }

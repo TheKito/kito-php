@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito;
+namespace Kito\System;
 
 /**
  *

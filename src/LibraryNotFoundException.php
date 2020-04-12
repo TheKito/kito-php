@@ -14,7 +14,7 @@
  *
  */
 
-namespace Kito\Exceptions;
+namespace Kito;
 
 /**
  *

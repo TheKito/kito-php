@@ -585,6 +585,12 @@ class ExceptionTest extends TestCase
         throw new Kito\String\Exception("Test");
     }
 
+    public function testKitoSystemException()
+    {        
+        $this->expectException(Kito\System\Exception::class);
+        throw new Kito\System\Exception("Test");
+    }
+
     public function testKitoTypeException()
     {        
         $this->expectException(Kito\Type\Exception::class);

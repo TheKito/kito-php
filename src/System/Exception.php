@@ -14,12 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions;
+namespace Kito\System;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotImplementedException extends Exception {
-    //put your code here
+class Exception extends \Kito\Exception {
+    
 }
