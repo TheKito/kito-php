@@ -20,6 +20,7 @@ namespace Kito\Exceptions;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Exception {
+class Exception extends \Exception//\Kito\Exception 
+{
     
 }
