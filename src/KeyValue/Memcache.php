@@ -25,7 +25,7 @@ use \Psr\Container\ContainerInterface;
  *
  * @author TheKito
  */
-class Memcache implements KeyValueInterface, Psr\Container\ContainerInterface{
+class Memcache implements KeyValueInterface, ContainerInterface{
 
     private $proxy = null;
     private $keyPrefix = null;
