@@ -1,6 +1,6 @@
 <?php
-
-define('baseDir', __DIR__ . DIRECTORY_SEPARATOR . 'src');
+define('base', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+define('baseDir', base . 'src');
 define('baseVendor', 'Kito');
 
 
@@ -14,8 +14,8 @@ class ExceptionTest extends TestCase
 scan(baseDir . DIRECTORY_SEPARATOR);
 
 $out.='}';
-
-file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'tests' .DIRECTORY_SEPARATOR .'ExceptionTest.php', $out);
+var_dump($out);
+file_put_contents(base . 'tests' .DIRECTORY_SEPARATOR .'ExceptionTest.php', $out);
 function scan($path) {
     foreach (scandir($path) as $name) {
         if ($name == '.')
