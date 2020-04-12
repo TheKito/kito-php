@@ -14,13 +14,13 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\Exceptions\Storage\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CountException extends Exception
+class TooManyRowsException extends Exception
 {
     //put your code here
 }

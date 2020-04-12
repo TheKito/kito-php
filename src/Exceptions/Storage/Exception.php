@@ -14,13 +14,13 @@
  *
  */
 
-namespace Kito\Storage\SQL;
+namespace Kito\Exceptions\Storage;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class InsertException extends Exception
+class Exception extends \Kito\Exceptions\Exception
 {
-    //put your code here
+    
 }
