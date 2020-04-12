@@ -33,6 +33,12 @@ class ExceptionTest extends TestCase
         throw new Kito\Exception("Test");
     }
 
+    public function testKitoExtensionsException()
+    {        
+        $this->expectException(Kito\Extensions\Exception::class);
+        throw new Kito\Extensions\Exception("Test");
+    }
+
     public function testKitoFileSystemCopyFileException()
     {        
         $this->expectException(Kito\FileSystem\CopyFileException::class);
@@ -99,6 +105,18 @@ class ExceptionTest extends TestCase
         throw new Kito\FileSystem\NotIsWritableException("Test");
     }
 
+    public function testKitoHTTPClientException()
+    {        
+        $this->expectException(Kito\HTTP\Client\Exception::class);
+        throw new Kito\HTTP\Client\Exception("Test");
+    }
+
+    public function testKitoHTTPException()
+    {        
+        $this->expectException(Kito\HTTP\Exception::class);
+        throw new Kito\HTTP\Exception("Test");
+    }
+
     public function testKitoKeyValueException()
     {        
         $this->expectException(Kito\KeyValue\Exception::class);
@@ -127,6 +145,12 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Lab\HTTP\Exception::class);
         throw new Kito\Lab\HTTP\Exception("Test");
+    }
+
+    public function testKitoLabHTTPHTTPException()
+    {        
+        $this->expectException(Kito\Lab\HTTP\HTTPException::class);
+        throw new Kito\Lab\HTTP\HTTPException("Test");
     }
 
     public function testKitoLabHTTPSessionException()

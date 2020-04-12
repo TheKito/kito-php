@@ -14,13 +14,13 @@
  *
  */
 
-namespace Kito\Lab;
+namespace Kito\HTTP\Client;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CURL {
+class Curl {
 
     private $curl;
 
@@ -56,19 +56,28 @@ class CURL {
         curl_setopt($this->curl, CURLOPT_COOKIEFILE, $path);
     }
 
-    public function makeRequest(string $url, string $proxyType = 'socks5', string $proxyHost = '127.0.0.1:9050') {
+    private function setHeaders(array $headers = array()) {
+        $h = array();
+        foreach ($headers as $name => $values)
+            if (is_array($values))
+                foreach ($values as $value)
+                    $h[] = $name . ': ' . $value;
+            else
+                $h[] = $name . ': ' . $values;
 
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $h);
+    }
 
+    public function basicRequest(string $url, string $method = 'GET', array $headers = array(), string $payload = null) {
+        curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($this->curl, CURLOPT_URL, ltrim($url, '/'));
-        $data = curl_exec($this->curl);
+        $this->setHeaders($headers);
+        curl_setopt($this->curl, CURLOPT_POSTFIELDS, $payload);
 
-        if (curl_getinfo($this->curl, CURLINFO_HTTP_CODE) < 300) {
-            return array(
-                'content' => $data,
-                'location' => curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL),
-                curl_getinfo($this->curl)
-            );
-        }
+        if (curl_getinfo($this->curl, CURLINFO_HTTP_CODE) > 399)
+            throw new Exception('HTTP ' . curl_getinfo($this->curl, CURLINFO_HTTP_CODE));
+
+        return curl_exec($this->curl);
     }
 
 }
