@@ -33,126 +33,6 @@ class ExceptionTest extends TestCase
         throw new Kito\Exception("Test");
     }
 
-    public function testKitoExceptionsException()
-    {        
-        $this->expectException(Kito\Exceptions\Exception::class);
-        throw new Kito\Exceptions\Exception("Test");
-    }
-
-    public function testKitoExceptionsIOException()
-    {        
-        $this->expectException(Kito\Exceptions\IOException::class);
-        throw new Kito\Exceptions\IOException("Test");
-    }
-
-    public function testKitoExceptionsLibraryNotFoundException()
-    {        
-        $this->expectException(Kito\Exceptions\LibraryNotFoundException::class);
-        throw new Kito\Exceptions\LibraryNotFoundException("Test");
-    }
-
-    public function testKitoExceptionsNotImplementedException()
-    {        
-        $this->expectException(Kito\Exceptions\NotImplementedException::class);
-        throw new Kito\Exceptions\NotImplementedException("Test");
-    }
-
-    public function testKitoExceptionsStorageException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\Exception::class);
-        throw new Kito\Exceptions\Storage\Exception("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLCommandException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\CommandException::class);
-        throw new Kito\Exceptions\Storage\SQL\CommandException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLConnectException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\ConnectException::class);
-        throw new Kito\Exceptions\Storage\SQL\ConnectException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLConnectionClosedException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\ConnectionClosedException::class);
-        throw new Kito\Exceptions\Storage\SQL\ConnectionClosedException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLCountException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\CountException::class);
-        throw new Kito\Exceptions\Storage\SQL\CountException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLDeleteException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\DeleteException::class);
-        throw new Kito\Exceptions\Storage\SQL\DeleteException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\Exception::class);
-        throw new Kito\Exceptions\Storage\SQL\Exception("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLGetResultSetException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\GetResultSetException::class);
-        throw new Kito\Exceptions\Storage\SQL\GetResultSetException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLInsertException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\InsertException::class);
-        throw new Kito\Exceptions\Storage\SQL\InsertException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLMaxException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\MaxException::class);
-        throw new Kito\Exceptions\Storage\SQL\MaxException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLMinException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\MinException::class);
-        throw new Kito\Exceptions\Storage\SQL\MinException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLQueryException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\QueryException::class);
-        throw new Kito\Exceptions\Storage\SQL\QueryException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLSelectDBException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\SelectDBException::class);
-        throw new Kito\Exceptions\Storage\SQL\SelectDBException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLSelectException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\SelectException::class);
-        throw new Kito\Exceptions\Storage\SQL\SelectException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLTooManyRowsException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\TooManyRowsException::class);
-        throw new Kito\Exceptions\Storage\SQL\TooManyRowsException("Test");
-    }
-
-    public function testKitoExceptionsStorageSQLUpdateException()
-    {        
-        $this->expectException(Kito\Exceptions\Storage\SQL\UpdateException::class);
-        throw new Kito\Exceptions\Storage\SQL\UpdateException("Test");
-    }
-
     public function testKitoFileSystemCopyFileException()
     {        
         $this->expectException(Kito\FileSystem\CopyFileException::class);
@@ -465,6 +345,12 @@ class ExceptionTest extends TestCase
         throw new Kito\Legacy\storage\db\relational\Exception("Test");
     }
 
+    public function testKitoLibraryNotFoundException()
+    {        
+        $this->expectException(Kito\LibraryNotFoundException::class);
+        throw new Kito\LibraryNotFoundException("Test");
+    }
+
     public function testKitoLoaderException()
     {        
         $this->expectException(Kito\Loader\Exception::class);
@@ -483,10 +369,106 @@ class ExceptionTest extends TestCase
         throw new Kito\Network\Exception("Test");
     }
 
+    public function testKitoNotImplementedException()
+    {        
+        $this->expectException(Kito\NotImplementedException::class);
+        throw new Kito\NotImplementedException("Test");
+    }
+
     public function testKitoRouterException()
     {        
         $this->expectException(Kito\Router\Exception::class);
         throw new Kito\Router\Exception("Test");
+    }
+
+    public function testKitoSQLCommandException()
+    {        
+        $this->expectException(Kito\SQL\CommandException::class);
+        throw new Kito\SQL\CommandException("Test");
+    }
+
+    public function testKitoSQLConnectException()
+    {        
+        $this->expectException(Kito\SQL\ConnectException::class);
+        throw new Kito\SQL\ConnectException("Test");
+    }
+
+    public function testKitoSQLConnectionClosedException()
+    {        
+        $this->expectException(Kito\SQL\ConnectionClosedException::class);
+        throw new Kito\SQL\ConnectionClosedException("Test");
+    }
+
+    public function testKitoSQLCountException()
+    {        
+        $this->expectException(Kito\SQL\CountException::class);
+        throw new Kito\SQL\CountException("Test");
+    }
+
+    public function testKitoSQLDeleteException()
+    {        
+        $this->expectException(Kito\SQL\DeleteException::class);
+        throw new Kito\SQL\DeleteException("Test");
+    }
+
+    public function testKitoSQLException()
+    {        
+        $this->expectException(Kito\SQL\Exception::class);
+        throw new Kito\SQL\Exception("Test");
+    }
+
+    public function testKitoSQLGetResultSetException()
+    {        
+        $this->expectException(Kito\SQL\GetResultSetException::class);
+        throw new Kito\SQL\GetResultSetException("Test");
+    }
+
+    public function testKitoSQLInsertException()
+    {        
+        $this->expectException(Kito\SQL\InsertException::class);
+        throw new Kito\SQL\InsertException("Test");
+    }
+
+    public function testKitoSQLMaxException()
+    {        
+        $this->expectException(Kito\SQL\MaxException::class);
+        throw new Kito\SQL\MaxException("Test");
+    }
+
+    public function testKitoSQLMinException()
+    {        
+        $this->expectException(Kito\SQL\MinException::class);
+        throw new Kito\SQL\MinException("Test");
+    }
+
+    public function testKitoSQLQueryException()
+    {        
+        $this->expectException(Kito\SQL\QueryException::class);
+        throw new Kito\SQL\QueryException("Test");
+    }
+
+    public function testKitoSQLSelectDBException()
+    {        
+        $this->expectException(Kito\SQL\SelectDBException::class);
+        throw new Kito\SQL\SelectDBException("Test");
+    }
+
+    public function testKitoSQLSelectException()
+    {        
+        $this->expectException(Kito\SQL\SelectException::class);
+        throw new Kito\SQL\SelectException("Test");
+    }
+
+    public function testKitoSQLTooManyRowsException()
+    {        
+        $this->expectException(Kito\SQL\TooManyRowsException::class);
+        throw new Kito\SQL\TooManyRowsException("Test");
+    }
+
+    public function testKitoSQLUpdateException()
+    {        
+        $this->expectException(Kito\SQL\UpdateException::class);
+        throw new Kito\SQL\UpdateException("Test");
     }
 
     public function testKitoStorageDataBaseException()
