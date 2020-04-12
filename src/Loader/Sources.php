@@ -28,7 +28,7 @@ class Sources {
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-factory/master/src');
         $loader->addRepository('/Psr/Http/Server', 'https://raw.githubusercontent.com/php-fig/http-server-handler/master/src');
         $loader->addRepository('/Psr/Http/Server', 'https://raw.githubusercontent.com/php-fig/http-server-middleware/master/src/');
-
+        $loader->addRepository('/Psr/Container', 'https://raw.githubusercontent.com/php-fig/container/master/src/');
         
         $loader->addRepository('/Fig/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message-util/master/src/');
 
