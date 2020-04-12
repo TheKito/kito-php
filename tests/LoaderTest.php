@@ -5,10 +5,10 @@ class LoaderTest extends TestCase
 {
     public function testLoader()
     {        
-        $this->assertSame(class_exists('Kito\Loader\Loader'), true);
+        $this->assertTrue(class_exists('Kito\Loader\Loader'));
     }
     public function testLoaderSources()
     {        
-        $this->assertSame(class_exists('Kito\Loader\Sources'), true);
+        $this->assertTrue(class_exists('Kito\Loader\Sources'));
     }
 }
