@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Kito\Storage;
 
 use Kito\Exceptions\LibraryNotFoundException;
+use Kito\Interfaces\Storage\KeyValueInterface;
 
 /**
  * Proxy class for access Memcache or Memcached common functions 
