@@ -16,25 +16,24 @@
 
 namespace Kito\Storage;
 
-use \Kito\Interfaces\Storage\SQLInterface;
-use Kito\Storage\SQL\Driver;
-use Kito\Storage\SQL\ConnectException;
-use Kito\Storage\SQL\SelectDBException;
-use Kito\Storage\SQL\ConnectionClosedException;
-use Kito\Storage\SQL\CommandException;
-use Kito\Storage\SQL\GetResultSetException;
-use Kito\Storage\SQL\SelectException;
-use Kito\Storage\SQL\InsertException;
-use Kito\Storage\SQL\UpdateException;
-use Kito\Storage\SQL\DeleteException;
-use Kito\Storage\SQL\TooManyRowsException;
+use Kito\Interfaces\Storage\SQLInterface;
+use Kito\Exceptions\Storage\SQL\ConnectException;
+use Kito\Exceptions\Storage\SQL\SelectDBException;
+use Kito\Exceptions\Storage\SQL\ConnectionClosedException;
+use Kito\Exceptions\Storage\SQL\CommandException;
+use Kito\Exceptions\Storage\SQL\GetResultSetException;
+use Kito\Exceptions\Storage\SQL\SelectException;
+use Kito\Exceptions\Storage\SQL\InsertException;
+use Kito\Exceptions\Storage\SQL\UpdateException;
+use Kito\Exceptions\Storage\SQL\DeleteException;
+use Kito\Exceptions\Storage\SQL\TooManyRowsException;
 use Kito\Exceptions\NotImplementedException;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MsSQL extends Driver implements SQLInterface {
+class MsSQL extends SQL implements SQLInterface {
 
     private $server;
     private $user;
