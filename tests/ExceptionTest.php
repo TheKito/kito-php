@@ -39,6 +39,12 @@ class ExceptionTest extends TestCase
         throw new Kito\Exceptions\Exception("Test");
     }
 
+    public function testKitoExceptionsIOException()
+    {        
+        $this->expectException(Kito\Exceptions\IOException::class);
+        throw new Kito\Exceptions\IOException("Test");
+    }
+
     public function testKitoExceptionsLibraryNotFoundException()
     {        
         $this->expectException(Kito\Exceptions\LibraryNotFoundException::class);
@@ -235,12 +241,6 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Storage\Exception::class);
         throw new Kito\Storage\Exception("Test");
-    }
-
-    public function testKitoStorageFileSystemFileException()
-    {        
-        $this->expectException(Kito\Storage\FileSystem\File\Exception::class);
-        throw new Kito\Storage\FileSystem\File\Exception("Test");
     }
 
     public function testKitoStringException()
