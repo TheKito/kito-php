@@ -16,7 +16,7 @@
 
 namespace Kito\Storage\FileSystem;
 
-use Kito\Type\Path;
+use \Kito\Type\Path;
 
 /**
  *
