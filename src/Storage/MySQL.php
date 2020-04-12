@@ -17,13 +17,19 @@
 namespace Kito\Storage\DataBase\SQL;
 
 use \Kito\Interfaces\Storage\SQLInterface;
+use \Kito\Exceptions\Storage\SQL\ConnectException;
+use \Kito\Exceptions\Storage\SQL\CommandException;
+use \Kito\Exceptions\Storage\SQL\SelectException;
+use \Kito\Exceptions\Storage\SQL\InsertException;
+use \Kito\Exceptions\Storage\SQL\UpdateException;
+use \Kito\Exceptions\Storage\SQL\DeleteException;
 use \mysqli;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MySQL extends Driver implements SQLInterface {
+class MySQL extends SQL implements SQLInterface {
 
     public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
     {
