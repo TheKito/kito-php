@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\SQL;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class TooManyRowsException extends Exception
-{
+class MinException extends SelectException {
     //put your code here
 }

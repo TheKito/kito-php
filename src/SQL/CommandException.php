@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\SQL;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MinException extends Exception
-{
+class CommandException extends Exception {
     //put your code here
 }

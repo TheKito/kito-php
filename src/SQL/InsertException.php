@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\SQL;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class ConnectionClosedException extends Exception
-{
+class InsertException extends CommandException {
     //put your code here
 }

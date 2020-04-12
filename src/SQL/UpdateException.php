@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Exceptions\Exception
-{
-    
+class UpdateException extends CommandException {
+    //put your code here
 }

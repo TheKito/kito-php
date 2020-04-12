@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\SQL;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CommandException extends Exception
-{
+class GetResultSetException extends SelectException {
     //put your code here
 }

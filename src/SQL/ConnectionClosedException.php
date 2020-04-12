@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Exception 
-{
-    
+class ConnectionClosedException extends Exception {
+    //put your code here
 }

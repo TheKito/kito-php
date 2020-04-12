@@ -14,20 +14,9 @@
  *
  */
 
-namespace Kito\Storage;
+namespace Kito\SQL;
 
-use Kito\Interfaces\Storage\SQLInterface;
-use Kito\Exceptions\Storage\SQL\ConnectException;
-use Kito\Exceptions\Storage\SQL\SelectDBException;
-use Kito\Exceptions\Storage\SQL\ConnectionClosedException;
-use Kito\Exceptions\Storage\SQL\CommandException;
-use Kito\Exceptions\Storage\SQL\GetResultSetException;
-use Kito\Exceptions\Storage\SQL\SelectException;
-use Kito\Exceptions\Storage\SQL\InsertException;
-use Kito\Exceptions\Storage\SQL\UpdateException;
-use Kito\Exceptions\Storage\SQL\DeleteException;
-use Kito\Exceptions\Storage\SQL\TooManyRowsException;
-use Kito\Exceptions\NotImplementedException;
+use Kito\NotImplementedException;
 
 /**
  *

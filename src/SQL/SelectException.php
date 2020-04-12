@@ -14,13 +14,12 @@
  *
  */
 
-namespace Kito\Exceptions\Storage\SQL;
+namespace Kito\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class SelectDBException extends Exception
-{
+class SelectException extends Exception {
     //put your code here
 }

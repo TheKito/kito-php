@@ -14,22 +14,15 @@
  *
  */
 
-namespace Kito\Storage;
+namespace Kito\SQL;
 
-use Kito\Interfaces\Storage\SQLInterface;
-use Kito\Exceptions\Storage\SQL\TooManyRowsException;
-use Kito\Exceptions\Storage\SQL\InsertException;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-abstract class SQL implements SQLInterface
-{
+abstract class SQL implements SQLInterface {
 
-
-
-    public final function getArray($table, $column, $where = array()): array
-    {
+    public final function getArray($table, $column, $where = array()): array {
         $r = array();
 
         foreach ($this->select($table, array($column), $where) as $ROW) {
@@ -39,8 +32,7 @@ abstract class SQL implements SQLInterface
         return $r;
     }
 
-    public final function getHashMap($table, $columnKey, $columnValue, $where = array()): array
-    {
+    public final function getHashMap($table, $columnKey, $columnValue, $where = array()): array {
         $r = array();
 
         foreach ($this->select($table, array($columnKey, $columnValue), $where) as $ROW) {
@@ -50,8 +42,7 @@ abstract class SQL implements SQLInterface
         return $r;
     }
 
-    public final function getRow($table, $column = array(), $where = array()): array
-    {
+    public final function getRow($table, $column = array(), $where = array()): array {
         $RS = $this->select($table, $column, $where, 2);
 
         if (count($RS) > 1) {
@@ -65,8 +56,7 @@ abstract class SQL implements SQLInterface
         return $RS[0];
     }
 
-    public final function getText($table, $column, $where = array()): ?string
-    {
+    public final function getText($table, $column, $where = array()): ?string {
         $ROW = $this->getRow($table, array($column), $where);
 
         if ($ROW == null) {
@@ -76,8 +66,7 @@ abstract class SQL implements SQLInterface
         return $ROW[$column];
     }
 
-    public final function autoTable($table, $data, $column = array(), $create = true): array
-    {
+    public final function autoTable($table, $data, $column = array(), $create = true): array {
         $rs = $this->select($table, $column, $data, 1);
 
         if (count($rs) > 0) {
@@ -99,8 +88,7 @@ abstract class SQL implements SQLInterface
         }
     }
 
-    public final function autoUpdate($table, $data, $index): int
-    {
+    public final function autoUpdate($table, $data, $index): int {
         $UPDATES = 0;
 
         $ROW = $this->autoTable($table, $index);
@@ -125,8 +113,7 @@ abstract class SQL implements SQLInterface
         return $UPDATES;
     }
 
-    public final function autoInsert($table, $data): bool
-    {
+    public final function autoInsert($table, $data): bool {
         $rs = $this->select($table, array(), $data, 1);
 
         if (count($rs) > 0) {
@@ -140,8 +127,7 @@ abstract class SQL implements SQLInterface
         return false;
     }
 
-    public function getTablesWithPrefix($prefix): array
-    {
+    public function getTablesWithPrefix($prefix): array {
         $prefixLen = strlen($prefix);
 
         $_ = array();

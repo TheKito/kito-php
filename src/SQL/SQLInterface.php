@@ -6,13 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace Kito\Interfaces\Storage;
+namespace Kito\SQL;
 
 /**
  *
  * @author Instalacion
  */
 interface SQLInterface {
+
     public function isConnected(): bool;
 
     public function query($query): array;

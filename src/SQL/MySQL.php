@@ -14,15 +14,8 @@
  *
  */
 
-namespace Kito\Storage\DataBase\SQL;
+namespace Kito\SQL;
 
-use \Kito\Interfaces\Storage\SQLInterface;
-use \Kito\Exceptions\Storage\SQL\ConnectException;
-use \Kito\Exceptions\Storage\SQL\CommandException;
-use \Kito\Exceptions\Storage\SQL\SelectException;
-use \Kito\Exceptions\Storage\SQL\InsertException;
-use \Kito\Exceptions\Storage\SQL\UpdateException;
-use \Kito\Exceptions\Storage\SQL\DeleteException;
 use \mysqli;
 
 /**
@@ -31,8 +24,7 @@ use \mysqli;
  */
 class MySQL extends SQL implements SQLInterface {
 
-    public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
-    {
+    public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null) {
         static $CNNs = null;
 
         if ($CNNs === null) {
@@ -48,13 +40,11 @@ class MySQL extends SQL implements SQLInterface {
         return $CNNs[$KEY];
     }
 
-    public static function getSqlConnectionServerAccount($server, $database)
-    {
+    public static function getSqlConnectionServerAccount($server, $database) {
         return self::getMySqlConnection($server, $database, strtoupper(gethostname()), null);
     }
 
-    public static function getSqlConnectionLocalHost($database, $user, $password = null)
-    {
+    public static function getSqlConnectionLocalHost($database, $user, $password = null) {
         return self::getMySqlConnection('127.0.0.1', $database, $user, $password);
     }
 
@@ -65,13 +55,11 @@ class MySQL extends SQL implements SQLInterface {
     private $cnn = null;
     var $__DEBUG = false;
 
-    public function getId()
-    {
+    public function getId() {
         return md5($this->server . $this->user . $this->password . $this->database);
     }
 
-    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
-    {
+    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null) {
         $this->server = $server;
         $this->database = $database;
         $this->user = $user;
@@ -80,8 +68,7 @@ class MySQL extends SQL implements SQLInterface {
         $this->connect();
     }
 
-    public function isConnected()
-    {
+    public function isConnected() {
         if ($this->cnn === null) {
             return false;
         }
@@ -89,13 +76,11 @@ class MySQL extends SQL implements SQLInterface {
         return @$this->cnn->ping();
     }
 
-    public function __destruct()
-    {
+    public function __destruct() {
         $this->disconnect();
     }
 
-    public function connect()
-    {
+    public function connect() {
         if (!$this->isConnected()) {
             @$this->cnn = new mysqli($this->server, $this->user, $this->password, $this->database);
 
@@ -109,8 +94,7 @@ class MySQL extends SQL implements SQLInterface {
         return true;
     }
 
-    public function disconnect()
-    {
+    public function disconnect() {
         if ($this->isConnected()) {
             return @$this->cnn->close();
         }
@@ -118,8 +102,7 @@ class MySQL extends SQL implements SQLInterface {
         return true;
     }
 
-    private function doCall($sql)
-    {
+    private function doCall($sql) {
         $this->connect();
 
         if ($this->__DEBUG) {
@@ -150,8 +133,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function query($query)
-    {
+    public function query($query) {
         try {
 
             $t = microtime(true);
@@ -168,8 +150,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function command($command)
-    {
+    public function command($command) {
         try {
 
             $t = microtime(true);
@@ -186,8 +167,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function delete($table, $where = array(), $limit = 100)
-    {
+    public function delete($table, $where = array(), $limit = 100) {
         try {
             return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -195,8 +175,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function insert($table, $data = array())
-    {
+    public function insert($table, $data = array()) {
         try {
             return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
         } catch (Exception $ex) {
@@ -204,8 +183,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function update($table, $data, $where = array(), $limit = 0)
-    {
+    public function update($table, $data, $where = array(), $limit = 0) {
         try {
             return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -213,8 +191,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false)
-    {
+    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false) {
         try {
             if ($rand) {
                 return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . ' ORDER BY RAND() ' . self::getLimit($limit));
@@ -226,8 +203,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function count($table, $where = array())
-    {
+    public function count($table, $where = array()) {
         try {
             $rs = $this->query("SELECT COUNT(*) as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -237,8 +213,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function max($table, $column, $where = array())
-    {
+    public function max($table, $column, $where = array()) {
         try {
             $rs = $this->query("SELECT MAX(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -248,8 +223,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function min($table, $column, $where = array())
-    {
+    public function min($table, $column, $where = array()) {
         try {
             $rs = $this->query("SELECT MIN(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -259,8 +233,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    protected static function getLimit($limit)
-    {
+    protected static function getLimit($limit) {
         if (is_numeric($limit) && $limit > 0) {
             return " LIMIT " . $limit . ";";
         } else {
@@ -268,8 +241,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function getTables()
-    {
+    public function getTables() {
         $tables = array();
 
         foreach ($this->query("SHOW TABLES;") as $ROW) {
@@ -282,13 +254,11 @@ class MySQL extends SQL implements SQLInterface {
         return $tables;
     }
 
-    public function getDatabase()
-    {
+    public function getDatabase() {
         return $this->database;
     }
 
-    public function getRows($table, $count)
-    {
+    public function getRows($table, $count) {
         static $pos = null;
 
         if ($pos === null) {
@@ -319,8 +289,7 @@ class MySQL extends SQL implements SQLInterface {
         return $rs;
     }
 
-    protected function arrayToWhere($data)
-    {
+    protected function arrayToWhere($data) {
         $t = $this->arrayToEqual($data);
         if ($t != "") {
             return " where " . $t;
@@ -329,8 +298,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    protected function arrayToEqual($data, $and = "and", $null_case = "is null")
-    {
+    protected function arrayToEqual($data, $and = "and", $null_case = "is null") {
         $t = "";
         foreach ($data as $key => $value) {
             if ($t != "") {
@@ -351,8 +319,7 @@ class MySQL extends SQL implements SQLInterface {
         return $t;
     }
 
-    protected static function arrayToSelect($data)
-    {
+    protected static function arrayToSelect($data) {
         $t = "";
         foreach ($data as $value) {
             if ($t != "") {
@@ -368,8 +335,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    protected function arrayToInsert($data)
-    {
+    protected function arrayToInsert($data) {
         $t0 = "";
         $t1 = "";
         foreach ($data as $key => $value) {
@@ -393,33 +359,27 @@ class MySQL extends SQL implements SQLInterface {
         return "(" . $t0 . ") VALUES (" . $t1 . ")";
     }
 
-    function insertUnique($table, $data)
-    {
+    function insertUnique($table, $data) {
         return $this->autoInsert($table, $data);
     }
 
-    function upgradeTable($table, $data, $index)
-    {
+    function upgradeTable($table, $data, $index) {
         return $this->autoUpdate($table, $data, $index);
     }
 
-    function existsRow($table, $where = array())
-    {
+    function existsRow($table, $where = array()) {
         return $this->exists($table, $where);
     }
 
-    function exists($table, $where = array())
-    {
+    function exists($table, $where = array()) {
         return $this->count($table, $where) > 0;
     }
 
-    function copyTable($sourceTable, $destinationTable)
-    {
+    function copyTable($sourceTable, $destinationTable) {
         return $this->command('CREATE TABLE IF NOT EXISTS ' . $destinationTable . ' LIKE ' . $sourceTable . ';');
     }
 
-    public function getDatabases()
-    {
+    public function getDatabases() {
         $rs = $this->query('show databases;');
 
         foreach ($rs as $index => $row) {
