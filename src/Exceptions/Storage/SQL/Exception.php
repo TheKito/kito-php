@@ -20,7 +20,7 @@ namespace Kito\Exceptions\Storage\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends Kito\Exceptions\Storage\Exception
+class Exception extends \Kito\Exceptions\Storage\Exception
 {
     
 }
