@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-class TestLoader extends TestCase
+class LoaderTest extends TestCase
 {
     public function testLoaderSources()
     {        
