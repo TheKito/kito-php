@@ -17,6 +17,7 @@
 namespace Kito\HTTP;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  *
@@ -36,6 +37,10 @@ class Server {
         );
 
         return $creator->fromGlobals();
+    }
+
+    public static function sendResponse(ResponseInterface $responseInterface) {
+        
     }
 
 }
