@@ -86,7 +86,14 @@ class Loader {
     private $repositories = array();
 
     public function addRepository(string $nameSpace, string $url): self {
-        $this->repositories[self::pathToHash(self::pathFromString($nameSpace))] = $url;
+        $index = self::pathToHash(self::pathFromString($nameSpace));
+
+        if (!isset($this->repositories[$index])) {
+            $this->repositories[$index] = array();
+        }
+
+        array_push($this->repositories[$index], $url);
+
         return $this;
     }
 
@@ -118,14 +125,15 @@ class Loader {
         while (count($classPath) > 0) {
             $key = self::pathToHash($classPath);
             if (isset($this->repositories[$key])) {
-                $repositoryFile = $this->repositories[$key] . '/' . implode('/', array_reverse($middlePath)) . '/' . $className . '.php';
+                foreach ($this->repositories[$key] as $repository) {
+                    $repositoryFile = $repository . '/' . implode('/', array_reverse($middlePath)) . '/' . $className . '.php';
+                    $data = file_get_contents($repositoryFile);
 
-                $data = file_get_contents($repositoryFile);
-
-                if ($data !== false) {
-                    self::createDirectories(self::pathFromString(dirname($classFile)));
-                    if (file_put_contents($classFile, $data) !== false) {
-                        break;
+                    if ($data !== false) {
+                        self::createDirectories(self::pathFromString(dirname($classFile)));
+                        if (file_put_contents($classFile, $data) !== false) {
+                            break;
+                        }
                     }
                 }
             }
