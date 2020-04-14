@@ -32,15 +32,13 @@ class Sources {
         
         $loader->addRepository('/Fig/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message-util/master/src/');
 
-
+        $loader->addRepository('/Nyholm/Psr7', 'https://raw.githubusercontent.com/Nyholm/psr7/master/src/');
+        $loader->addRepository('/Nyholm/Psr7Server', 'https://raw.githubusercontent.com/Nyholm/psr7-server/master/src/');
+        
         $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');        
-        
-        
-        $loader->addRepository('/GeoIp2', 'https://raw.githubusercontent.com/maxmind/GeoIP2-php/master/src/');        
-        
+                
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/nikic/FastRoute/master/src/');
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/TheKito/FastRoute/master/src/');
-
 
         $loader->addRepository('/Slim', 'https://raw.githubusercontent.com/TheKito/Slim/4.x/Slim/');
         $loader->addRepository('/Slim/Psr7', 'https://raw.githubusercontent.com/slimphp/Slim-Psr7/master/src/');
@@ -48,6 +46,8 @@ class Sources {
 
 
 
+        
+        $loader->addRepository('/GeoIp2', 'https://raw.githubusercontent.com/maxmind/GeoIP2-php/master/src/');        
 
         $loader->addRepository('/Guzzle/Http', 'https://raw.githubusercontent.com/thekito/guzzle/master/src');
 
