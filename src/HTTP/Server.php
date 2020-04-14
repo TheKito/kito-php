@@ -26,21 +26,12 @@ use Psr\Http\Message\ResponseInterface;
 class Server {
 
     public static function getRequest(): ServerRequestInterface {
-        // Instanciate ANY PSR-17 factory implementations
-        $psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
-
-        $creator = new \Nyholm\Psr7Server\ServerRequestCreator(
-                $psr17Factory, // ServerRequestFactory
-                $psr17Factory, // UriFactory
-                $psr17Factory, // UploadedFileFactory
-                $psr17Factory  // StreamFactory
-        );
-
-        return $creator->fromGlobals();
+        return (new \Jasny\HttpMessage\ServerRequest())->withGlobalEnvironment();
     }
 
-    public static function sendResponse(ResponseInterface $responseInterface) {
-        
+    public static function sendResponse(ResponseInterface $response) {
+        $emitter = new \Jasny\HttpMessage\Emitter();
+        $emitter->emit($response);
     }
 
 }
