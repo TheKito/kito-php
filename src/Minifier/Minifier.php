@@ -53,9 +53,12 @@ abstract class Minifier {
         return $_;
     }
 
-    public function parseFromFile(string $filePathSource, ?string $filePathMinified = null): void {
+    public function parseFromFile(string $filePathSource, ?string $filePathMinified = null, bool $forceReWrite = false): void {
         if ($filePathMinified === null)
             $filePathMinified = pathinfo($filePathSource, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($filePathSource, PATHINFO_FILENAME) . '.min.' . pathinfo($filePathSource, PATHINFO_EXTENSION);
+
+        if (file_exists($filePathMinified) && filemtime($filePathMinified) >= filemtime($filePathSource) && $forceReWrite == false)
+            return;
 
         $sourceFileDescriptor = fopen($filePathSource, "r");
         $destinationFileDescriptor = fopen($filePathMinified, "w");
