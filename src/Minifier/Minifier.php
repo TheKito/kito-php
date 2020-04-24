@@ -53,13 +53,13 @@ abstract class Minifier {
         return $_;
     }
 
-    public function parseFromFile(string $filePath, ?string $filePathMin = null): void {
-        if ($filePathMin === null)
-            $filePathMin = pathinfo($filePath, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($filePath, PATHINFO_FILENAME) . '.min.' . pathinfo($filePath, PATHINFO_EXTENSION);        
-        
-        $sourceFileDescriptor = fopen($filePath, "r");
-        $destinationFileDescriptor = fopen($filePathMin, "w");
-        
+    public function parseFromFile(string $filePathSource, ?string $filePathMinified = null): void {
+        if ($filePathMinified === null)
+            $filePathMinified = pathinfo($filePathSource, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($filePathSource, PATHINFO_FILENAME) . '.min.' . pathinfo($filePathSource, PATHINFO_EXTENSION);
+
+        $sourceFileDescriptor = fopen($filePathSource, "r");
+        $destinationFileDescriptor = fopen($filePathMinified, "w");
+
         foreach (fgets($sourceFileDescriptor, $this->maxLineSize) as $codeLine) {
             $codeLine = trim($codeLine);
 
