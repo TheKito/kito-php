@@ -117,6 +117,12 @@ class ExceptionTest extends TestCase
         throw new Kito\HTTP\Exception("Test");
     }
 
+    public function testKitoHTTPServerException()
+    {        
+        $this->expectException(Kito\HTTP\Server\Exception::class);
+        throw new Kito\HTTP\Server\Exception("Test");
+    }
+
     public function testKitoKeyValueException()
     {        
         $this->expectException(Kito\KeyValue\Exception::class);
@@ -487,6 +493,12 @@ class ExceptionTest extends TestCase
     {        
         $this->expectException(Kito\Math\Exception::class);
         throw new Kito\Math\Exception("Test");
+    }
+
+    public function testKitoMinifierException()
+    {        
+        $this->expectException(Kito\Minifier\Exception::class);
+        throw new Kito\Minifier\Exception("Test");
     }
 
     public function testKitoNotImplementedException()
