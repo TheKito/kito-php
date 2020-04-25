@@ -71,6 +71,12 @@ class Path {
         return end($this->pathElements);
     }
 
+    public function setName(string $name): Path {
+        array_pop($this->pathElements);
+        $this->pathElements[] = $name;                
+        return $this;
+    }
+    
     public function getChild(string $name): Path {
         return new Path(array_merge($this->pathElements, array($name)), $this->directorySeparator);
     }
