@@ -16,6 +16,8 @@
 
 namespace Kito\Router;
 
+use Kito\Type\Path;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -23,42 +25,61 @@ namespace Kito\Router;
 class ProxyRouter {
 
     public static function getFromGlobals() {
-        return new ProxyRouter($_SERVER['DOCUMENT_ROOT'], $_SERVER['REQUEST_URI']);
+        return new ProxyRouter(
+                Path::getFromString($_SERVER['DOCUMENT_ROOT']),
+                Path::getFromString($_SERVER['REQUEST_URI']),
+                Path::getFromString('index.php'),
+        );
     }
 
     private $documentROOT;
     private $requestURI;
+    private $routerPath;
 
-    public function __construct(string $documentROOT, string $requestURI) {
-        $this->documentROOT = $documentROOT;
-        $this->requestURI = $requestURI;
+    public function __construct(Path $documentROOT, Path $requestURI, Path $routerPath) {
+        $this->setDocumentROOT($documentROOT);
+        $this->setRequestURI($requestURI);
+        $this->setRouterPath($routerPath);
     }
 
-    public function getDocumentROOT() {
+    public function getDocumentROOT(): Path {
         return $this->documentROOT;
     }
 
-    public function getRequestURI() {
+    public function getRequestURI(): Path {
         return $this->requestURI;
     }
 
-    public function setDocumentROOT($documentROOT): void {
+    public function setDocumentROOT(Path $documentROOT): void {
         $this->documentROOT = $documentROOT;
     }
 
-    public function setRequestURI($requestURI): void {
+    public function setRequestURI(Path $requestURI): void {
+        $intPos = strpos($requestURI->getName(), '?');
+
+        if ($intPos !== false)
+            $requestURI->setName(substr($requestURI->getName(), 0, $intPos));
+
         $this->requestURI = $requestURI;
     }
 
-    public function getPath(): string {
-        $path = explode('?', $this->documentROOT . $this->getRequestURI(), 2);
-        return $path[0];
+    public function getPath(): Path {
+        return $this->documentROOT->combine($this->requestURI);
+    }
+
+    public function getRouterPath(): Path {
+        return $this->routerPath;
+    }
+
+    public function setRouterPath(Path $routerPath): void {
+        $this->routerPath = $routerPath;
     }
 
     public function route() {
         $path = $this->getPath();
-        while (strlen($path) > strlen($this->documentROOT) + 1) {
-            $routerPath = $path . '/index.php';
+
+        while ($path->getDeep() > $this->documentROOT->getDeep()) {
+            $routerPath = $path->combine($this->routerPath);
 
             if (file_exists($routerPath)) {
                 require_once ($routerPath);
