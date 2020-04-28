@@ -66,8 +66,8 @@ class Loader {
 
             $__ = self::pathToString($_);
 
-            if (!is_dir($__)) {
-                mkdir($__);
+            if (!@is_dir($__)) {
+                @mkdir($__);
             }
         }
     }
