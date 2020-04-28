@@ -86,7 +86,7 @@ class ProxyRouter {
                 return;
             }
 
-            $path = dirname($path);
+            $path = $path->getParent();
         }
     }
 
