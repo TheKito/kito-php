@@ -39,14 +39,21 @@ class Sources {
         
         $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');        
         
+        $loader->addRepository('/Monolog', 'https://raw.githubusercontent.com/Seldaek/monolog/master/src/Monolog');        
+        
         $loader->addRepository('/Pecee', 'https://raw.githubusercontent.com/skipperbent/simple-php-router/master/src/Pecee/');        
                 
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/nikic/FastRoute/master/src/');
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/TheKito/FastRoute/master/src/');
 
+        $loader->addRepository('/Twig', 'https://raw.githubusercontent.com/twigphp/Twig/3.x/src/');
+        
+        $loader->addRepository('/DI', 'https://raw.githubusercontent.com/PHP-DI/PHP-DI/master/src/');
+        
         $loader->addRepository('/Slim', 'https://raw.githubusercontent.com/TheKito/Slim/4.x/Slim/');
         $loader->addRepository('/Slim/Psr7', 'https://raw.githubusercontent.com/slimphp/Slim-Psr7/master/src/');
         $loader->addRepository('/Slim/Http', 'https://raw.githubusercontent.com/slimphp/Slim-Http/master/src/');
+        $loader->addRepository('/Slim/Views', 'https://raw.githubusercontent.com/slimphp/Twig-View/3.x/src/');
 
 
 
@@ -57,7 +64,12 @@ class Sources {
 
         $loader->addRepository('/Symfony', 'https://raw.githubusercontent.com/symfony/symfony/master/src/Symfony');
 
-        $loader->addRepository('/Illuminate', 'https://raw.githubusercontent.com/laravel/framework/6.x/src');
+        $loader->addRepository('/PhpOption', 'https://raw.githubusercontent.com/schmittjoh/php-option/master/src/PhpOption');
+            
+        $loader->addRepository('/Dotenv', 'https://raw.githubusercontent.com/vlucas/phpdotenv/master/src/');
+                
+        $loader->addRepository('/App', 'https://raw.githubusercontent.com/laravel/laravel/master/app/');
+        $loader->addRepository('/Illuminate', 'https://raw.githubusercontent.com/laravel/framework/master/src/Illuminate');
 
 
         $loader->addRepository('/Datto/JsonRpc', 'https://github.com/datto/php-json-rpc/blob/master/src');
