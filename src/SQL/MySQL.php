@@ -68,7 +68,7 @@ class MySQL extends SQL implements SQLInterface {
         $this->connect();
     }
 
-    public function isConnected() {
+    public function isConnected(): bool {
         if ($this->cnn === null) {
             return false;
         }
@@ -133,7 +133,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function query($query) {
+    public function query($query): array {
         try {
 
             $t = microtime(true);
@@ -150,7 +150,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function command($command) {
+    public function command($command): bool {
         try {
 
             $t = microtime(true);
@@ -167,7 +167,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function delete($table, $where = array(), $limit = 100) {
+    public function delete($table, $where = array(), $limit = 100): bool {
         try {
             return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -175,7 +175,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function insert($table, $data = array()) {
+    public function insert($table, $data = array()): bool {
         try {
             return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
         } catch (Exception $ex) {
@@ -183,7 +183,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function update($table, $data, $where = array(), $limit = 0) {
+    public function update($table, $data, $where = array(), $limit = 0): bool {
         try {
             return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where) . self::getLimit($limit));
         } catch (Exception $ex) {
@@ -191,7 +191,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false) {
+    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false): array {
         try {
             if ($rand) {
                 return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . ' ORDER BY RAND() ' . self::getLimit($limit));
@@ -203,7 +203,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function count($table, $where = array()) {
+    public function count($table, $where = array()): int {
         try {
             $rs = $this->query("SELECT COUNT(*) as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -213,7 +213,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function max($table, $column, $where = array()) {
+    public function max($table, $column, $where = array()): int {
         try {
             $rs = $this->query("SELECT MAX(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -223,7 +223,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function min($table, $column, $where = array()) {
+    public function min($table, $column, $where = array()): int {
         try {
             $rs = $this->query("SELECT MIN(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
             $rs = $rs[0];
@@ -241,7 +241,7 @@ class MySQL extends SQL implements SQLInterface {
         }
     }
 
-    public function getTables() {
+    public function getTables(): array {
         $tables = array();
 
         foreach ($this->query("SHOW TABLES;") as $ROW) {
@@ -254,7 +254,7 @@ class MySQL extends SQL implements SQLInterface {
         return $tables;
     }
 
-    public function getDatabase() {
+    public function getDatabase(): string {
         return $this->database;
     }
 
@@ -375,11 +375,11 @@ class MySQL extends SQL implements SQLInterface {
         return $this->count($table, $where) > 0;
     }
 
-    function copyTable($sourceTable, $destinationTable) {
+    public function copyTable($sourceTable, $destinationTable): bool {
         return $this->command('CREATE TABLE IF NOT EXISTS ' . $destinationTable . ' LIKE ' . $sourceTable . ';');
     }
 
-    public function getDatabases() {
+    public function getDatabases(): array {
         $rs = $this->query('show databases;');
 
         foreach ($rs as $index => $row) {
