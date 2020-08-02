@@ -18,8 +18,8 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class Zone extends DataThree {
-
+class Zone extends DataThree
+{
     private static $tableName = "BLK_ZONE";
     private static $tablePk = "ZONE_ID";
     private static $tableValue0 = "ZONE_PARENT_ID";
@@ -28,26 +28,31 @@ class Zone extends DataThree {
     private $zn;
     private $zl;
 
-    public function __construct($cnn) {
+    public function __construct($cnn)
+    {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
         $this->az = new AttributeZone($cnn);
         $this->zn = new Name($cnn);
         $this->zl = new ZoneLink($cnn);
     }
 
-    public function getId($pid, $name) {
+    public function getId($pid, $name)
+    {
         return parent::getId($pid, $this->zn->getId($name));
     }
 
-    public function getName($id) {
+    public function getName($id)
+    {
         return $this->zn->getValue(parent::getValue1($id));
     }
 
-    public function getPid($id) {
+    public function getPid($id)
+    {
         return parent::getValue0($id);
     }
 
-    public function delete($id, $recursive = true) {
+    public function delete($id, $recursive = true)
+    {
         $znid = parent::getValue1($id);
 
         if ($recursive) {
@@ -83,7 +88,8 @@ class Zone extends DataThree {
         return true;
     }
 
-    public function getZoneIds($id) {
+    public function getZoneIds($id)
+    {
         $t = array();
         $rs = parent::getCnn()->select(self::$tableName, array(self::$tablePk), array(self::$tableValue0 => $id), 0);
         foreach ($rs as $row) {
@@ -93,14 +99,13 @@ class Zone extends DataThree {
         return $t;
     }
 
-    public function getAZ() {
+    public function getAZ()
+    {
         return $this->az;
     }
 
-    public function getZL() {
+    public function getZL()
+    {
         return $this->zl;
     }
-
 }
-
-?>

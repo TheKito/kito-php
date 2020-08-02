@@ -14,7 +14,7 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -24,11 +24,11 @@ class FormSelect extends HTMLElement
     //    var $array=array();
     //    var $use_index=false;
 
-    var $title;
-    var $name;
-    var $value;
-    var $base_name;
-    function __construct($title,$name,$value)
+    public $title;
+    public $name;
+    public $value;
+    public $base_name;
+    public function __construct($title, $name, $value)
     {
         $this->base_name=$name;
 
@@ -47,14 +47,13 @@ class FormSelect extends HTMLElement
 
         $this->setAttr("onchange", "blk_form_change(this); return blk_element_change(this);");
     }
-    public function setList($array,$use_index=false)
+    public function setList($array, $use_index=false)
     {
         //$this->array=$array;
         //$this->use_index=$use_index;
 
-        foreach ($array as $key => $value)
-        {
-            if($use_index===false) {
+        foreach ($array as $key => $value) {
+            if ($use_index===false) {
                 $html="<option value='".$value."' ".($value==$this->value?"selected":"").">$value</option>";
             } else {
                 $html="<option value='".$key."' ".($key==$this->value?"selected":"").">$value</option>";
@@ -63,7 +62,7 @@ class FormSelect extends HTMLElement
             $this->addChild($html);
         }
     }
-    public  function getHTML()
+    public function getHTML()
     {
         //$html="";
         //$html.="<select name='$this->name' id='".$this->id."' onchange='blk_form_change(this); return blk_element_change(this);'>";
@@ -75,4 +74,3 @@ class FormSelect extends HTMLElement
         return $this->toHtml();
     }
 }
-?>

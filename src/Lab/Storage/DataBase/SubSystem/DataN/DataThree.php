@@ -20,39 +20,42 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class DataThree extends DataN {
-
+class DataThree extends DataN
+{
     private $tableCol0;
     private $tableCol1;
 
-    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1) {
+    public function __construct(&$driver, $tableName, $tablePK, $tableCol0, $tableCol1)
+    {
         parent::__construct($driver, $tableName, $tablePK);
         $this->tableCol0 = $tableCol0;
         $this->tableCol1 = $tableCol1;
     }
 
-    public function getId($value0, $value1, $create = true) {
+    public function getId($value0, $value1, $create = true)
+    {
         return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1), $create);
     }
 
-    public function getValue0($id) {
+    public function getValue0($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol0];
     }
 
-    public function getValue1($id) {
+    public function getValue1($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol1];
     }
 
-    public function getIdsByValue0($value) {
+    public function getIdsByValue0($value)
+    {
         return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol0 => $value), 100);
     }
 
-    public function getIdsByValue1($value) {
+    public function getIdsByValue1($value)
+    {
         return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol1 => $value), 100);
     }
-
 }
-
-?>

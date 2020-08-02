@@ -22,9 +22,10 @@ use \Kito\Type\Path;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Directory extends FileSystem {
-
-    public function __construct(Path $path) {
+class Directory extends FileSystem
+{
+    public function __construct(Path $path)
+    {
         parent::__construct($path);
 
         if (parent::exists() && !parent::isDirectory()) {
@@ -36,21 +37,23 @@ class Directory extends FileSystem {
         }
     }
 
-    public function getChild($name) {
+    public function getChild($name)
+    {
         $_ = parent::getChild($name);
 
         if (!self::pathExists($_)) {
             return new FileSystem($_, parent::getDirectorySeparator());
         } elseif (self::pathIsDirectory($_)) {
             return new Directory($_, parent::getDirectorySeparator());
-        } else if (self::pathIsFile($_)) {
+        } elseif (self::pathIsFile($_)) {
             return new File($_, parent::getDirectorySeparator());
         } else {
             return new FileSystem($_, parent::getDirectorySeparator());
         }
     }
 
-    public function getChildren() {
+    public function getChildren()
+    {
         $_ = array();
         foreach (self::getSubPaths($this) as $subPath) {
             $_ = $this->getChild($subPath->getName());
@@ -58,7 +61,8 @@ class Directory extends FileSystem {
         return $_;
     }
 
-    public final function create() {
+    final public function create()
+    {
         if (parent::exists()) {
             return;
         }
@@ -71,5 +75,4 @@ class Directory extends FileSystem {
             throw new CreateDirectoryException($this->__toString());
         }
     }
-
 }

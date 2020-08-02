@@ -20,48 +20,44 @@
  */
 class item
 {
-    var $category=array();
-    var $params=array();
-    var $images=array();
-    var $keys;
-    function __construct($item,&$keys)
+    public $category=array();
+    public $params=array();
+    public $images=array();
+    public $keys;
+    public function __construct($item, &$keys)
     {
         $this->keys=&$keys;
-        foreach ($item->childNodes as $element)
-        {
+        foreach ($item->childNodes as $element) {
             if (!isset($element->tagName) || $element->tagName=="") {
-            }
-            else if ($element->tagName=="category") {
+            } elseif ($element->tagName=="category") {
                 array_push($this->category, $element->textContent);
-            } else if ($element->tagName=="content:encoded") {
+            } elseif ($element->tagName=="content:encoded") {
                 $this->images=$this->getImages($element->textContent);
             } else {
                 $this->params[$element->tagName]=$element->textContent;
             }
         }
     }
-    function getImages($xml)
+    public function getImages($xml)
     {
         $list=array();
         $xml_dom  = new DOMDocument();
         $xml_dom->loadHTML($xml);
         //$xml_dom->loadHTML(str_ireplace($xml, "&amp;", "&"));
-        foreach ($this->explore($xml_dom->getElementsByTagName("*"), "img") as $lop)
-        {
+        foreach ($this->explore($xml_dom->getElementsByTagName("*"), "img") as $lop) {
             $url=$lop->getAttribute("src");
-            if(!isset($this->keys["url_filter"]) || stripos($url, $this->keys["url_filter"])!==false) {
+            if (!isset($this->keys["url_filter"]) || stripos($url, $this->keys["url_filter"])!==false) {
                 array_push($list, $url);
             }
         }
         return $list;
     }
 
-    function explore($list_elements,$to_find)
+    public function explore($list_elements, $to_find)
     {
         $list=array();
-        foreach ($list_elements as $element)
-        {
-            if(strtolower($element->tagName)==strtolower($to_find)) {
+        foreach ($list_elements as $element) {
+            if (strtolower($element->tagName)==strtolower($to_find)) {
                 array_push($list, $element);
             }
             //  foreach ($this->explore($element->getElementsByTagName("*"),$to_find) as $elementos)
@@ -70,24 +66,23 @@ class item
         return $list;
     }
 
-    function toHTML()
+    public function toHTML()
     {
-        if(!loadModule("Gui")) {
+        if (!loadModule("Gui")) {
             trigger_error("Gui module not found", E_USER_ERROR);
             return "";
         }
         
         $html="<p class=blk_rss_post>";
-        $html.=callFunction("Gui", "A", array($this->params[$this->keys["link"]],array($this->params[$this->keys["title"]]),array("class" => "blk_rss_post_title")));       
+        $html.=callFunction("Gui", "A", array($this->params[$this->keys["link"]],array($this->params[$this->keys["title"]]),array("class" => "blk_rss_post_title")));
         $html.="<br>";
 
         $alt=false;
-        foreach ($this->images as $image)
-        {
+        foreach ($this->images as $image) {
             $alt=!$alt;
             $class=$alt ? "blk_rss_post_image_a" : "blk_rss_post_image_b";
 
-            $html.=callFunction("Gui", "Img", array($image,array("class" => $class)));                        
+            $html.=callFunction("Gui", "Img", array($image,array("class" => $class)));
         }
 
         $html.=callFunction("Gui", "Font", array(array($this->params[$this->keys["head"]]),array("class" => "blk_rss_post_header")));
@@ -96,7 +91,7 @@ class item
         $html.="</p>";
         return $html;
     }
-    function toXML()
+    public function toXML()
     {
         $html="";
         $html.="<item>";
@@ -115,29 +110,28 @@ class item
         $html.="</item>";
         return $html;
     }
-
 }
 
 class channel
 {
-    var $keys;
-    var $name=null;
-    var $items=null;
-    function __construct($name,$items,&$keys)
+    public $keys;
+    public $name=null;
+    public $items=null;
+    public function __construct($name, $items, &$keys)
     {
         $this->keys=&$keys;
         $this->name=$name;
         $this->items=$this->getItems($items);
     }
-    function getItems($items_)
+    public function getItems($items_)
     {
         $items = array();
-        foreach($items_ as $ite) {
+        foreach ($items_ as $ite) {
             array_push($items, new item($ite, $this->keys));
         }
         return $items;
     }
-    function toHTML()
+    public function toHTML()
     {
         $HTML="";
         foreach ($this->items as $chn) {
@@ -145,43 +139,41 @@ class channel
         }
         return $HTML;
     }
-    function toXML()
+    public function toXML()
     {
         $HTML="<channel><title>".$this->name."</title>";
         foreach ($this->items as $chn) {
             $HTML.=$chn->toXML();
         }
         return $HTML."</channel>";
-
     }
 }
 class rssfile
 {
-    var $keys;
-    var $xml=null;
-    var $channels=null;
-    function __construct()
+    public $keys;
+    public $xml=null;
+    public $channels=null;
+    public function __construct()
     {
         $this->xml  = new DOMDocument();
     }
-    function load($url)
+    public function load($url)
     {
-
         $r=$this->xml->load($url);
         $this->channels=$this->getChannels();
         return $r;
     }
-    function getChannels()
+    public function getChannels()
     {
         $channels=array();
         $chns = $this->xml->getElementsByTagName("channel");
-        foreach($chns as $chn) {
+        foreach ($chns as $chn) {
             array_push($channels, new channel($chn->getElementsByTagName("title")->item(0)->textContent, $chn->getElementsByTagName("item"), $this->keys));
         }
         return $channels;
     }
 
-    function toHTML()
+    public function toHTML()
     {
         $HTML="";
         foreach ($this->channels as $chn) {
@@ -189,7 +181,7 @@ class rssfile
         }
         return $HTML;
     }
-    function toXML()
+    public function toXML()
     {
         $HTML="<xml version='1.0' encoding='utf-8'?><rss version='2.0'>";
         foreach ($this->channels as $chn) {
@@ -198,4 +190,3 @@ class rssfile
         return $HTML."</rss>";
     }
 }
-?>

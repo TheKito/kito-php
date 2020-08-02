@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class A extends Element
 {
-
-    function __construct($href, $element)
+    public function __construct($href, $element)
     {
         $this->closeMode = 3; // </a>
         $this->setAttr("href", $href);
@@ -38,5 +37,4 @@ class A extends Element
     {
         return $this->toHtml();
     }
-
 }

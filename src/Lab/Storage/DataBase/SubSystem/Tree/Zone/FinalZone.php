@@ -18,29 +18,34 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class FinalZone {
-
+class FinalZone
+{
     private $z;
     private $id;
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    private function __construct(&$z, $id) {
+    private function __construct(&$z, $id)
+    {
         $this->z = $z;
         $this->id = $id;
     }
 
-    public static function getRoot($cnn) {
+    public static function getRoot($cnn)
+    {
         return new FinalZone(new Zone($cnn), null);
     }
 
-    public function get($name) {
+    public function get($name)
+    {
         return new FinalZone($this->z, $this->z->getId($this->id, $name));
     }
 
-    public static function getGlobalMant($parent) {
+    public static function getGlobalMant($parent)
+    {
         if ($parent === false) {
             return false;
         }
@@ -64,7 +69,8 @@ class FinalZone {
         return $last;
     }
 
-    public function getMant() {
+    public function getMant()
+    {
         $t = $this->getZones();
 
         $lzone = false;
@@ -86,7 +92,8 @@ class FinalZone {
         return $lzone;
     }
 
-    public function getParent() {
+    public function getParent()
+    {
         if ($this->id == null) {
             return null;
         }
@@ -94,7 +101,8 @@ class FinalZone {
         return new FinalZone($this->z, $this->z->getPid($this->id));
     }
 
-    public function getName() {
+    public function getName()
+    {
         if ($this->id == null) {
             return null;
         }
@@ -102,7 +110,8 @@ class FinalZone {
         return $this->z->getName($this->id);
     }
 
-    public function getZones($limit = null) {
+    public function getZones($limit = null)
+    {
         $t = array();
 
         foreach ($this->z->getZoneIds($this->id) as $sid) {
@@ -117,7 +126,8 @@ class FinalZone {
         return $t;
     }
 
-    public function delete($recursive = true) {
+    public function delete($recursive = true)
+    {
         if ($this->id == null) {
             return false;
         }
@@ -125,7 +135,8 @@ class FinalZone {
         return $this->z->delete($this->id, $recursive);
     }
 
-    public function getAttribute($name) {
+    public function getAttribute($name)
+    {
         if ($this->id == null) {
             return null;
         }
@@ -133,7 +144,8 @@ class FinalZone {
         return new FinalAttribute($this->z->getAZ(), $this->id, $name);
     }
 
-    public function getAttributes($limit = null) {
+    public function getAttributes($limit = null)
+    {
         if ($this->id == null) {
             return array();
         }
@@ -141,7 +153,8 @@ class FinalZone {
         return $this->z->getAZ()->getAttributes($this->id, $limit);
     }
 
-    public function link($other_zone) {
+    public function link($other_zone)
+    {
         if ($this->id == null) {
             return false;
         }
@@ -149,7 +162,8 @@ class FinalZone {
         return $this->z->getZL()->set($this->id, $other_zone->id) != 0;
     }
 
-    public function unLink($other_zone) {
+    public function unLink($other_zone)
+    {
         if ($this->id == null) {
             return false;
         }
@@ -157,7 +171,8 @@ class FinalZone {
         return $this->z->getZL()->delete($this->id, $other_zone->id);
     }
 
-    public function getLinks() {
+    public function getLinks()
+    {
         $t = array();
 
         if ($this->id == null) {
@@ -168,7 +183,4 @@ class FinalZone {
 
         return $t;
     }
-
 }
-
-?>

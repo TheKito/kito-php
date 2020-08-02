@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class InsertException extends CommandException {
+class InsertException extends CommandException
+{
     //put your code here
 }

@@ -12,7 +12,6 @@
  */
 class Address
 {
-
     private $zone0;
     private $root_zone;
 
@@ -47,7 +46,4 @@ class Address
 
         return $list;
     }
-
 }
-
-?>

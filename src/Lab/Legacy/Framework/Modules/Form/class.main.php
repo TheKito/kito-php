@@ -20,12 +20,10 @@
  */
 class Form extends Module
 {
-        
-
     public function __construct()
     {
         getModule("HTML");
-        include_once 'class.form.php';            
+        include_once 'class.form.php';
         include_once 'class.hidden.php';
         include_once 'class.text.php';
         include_once 'class.submit.php';
@@ -34,9 +32,9 @@ class Form extends Module
     public function __destruct()
     {
     }
-    public function __load() 
+    public function __load()
     {
-        if(getParam("Module")=="Form" && getParam("Tag")=="IForm") {
+        if (getParam("Module")=="Form" && getParam("Tag")=="IForm") {
             $z=Form::getFormZone(getParam("token"));
 
             $module=$z->get("Module", "");
@@ -46,16 +44,15 @@ class Form extends Module
             $warn=array();
             global $FORM_PARAMS;
             foreach ($FORM_PARAMS as $name => $value) {
-                if(!strEndsWith($name, "_BASE")) {
-                    if(isset($FORM_PARAMS[$name."_BASE"])) {
-                        if($FORM_PARAMS[$name."_BASE"]!=$value) {
+                if (!strEndsWith($name, "_BASE")) {
+                    if (isset($FORM_PARAMS[$name."_BASE"])) {
+                        if ($FORM_PARAMS[$name."_BASE"]!=$value) {
                             $res=callFunction($module, "Form_Check", array(substr($name, 9),$value));
-                            if($res===true) {
+                            if ($res===true) {
                                 $valids[$name]=$value;
-                            } else if($res===false) {
+                            } elseif ($res===false) {
                                 $no_valids[$name]=$FORM_PARAMS[$name."_BASE"];
-                            } else
-                            {
+                            } else {
                                 $no_valids[$name]=$FORM_PARAMS[$name."_BASE"];
                                 $warn[$name]=$res;
                             }
@@ -66,23 +63,22 @@ class Form extends Module
 
                                 
                             
-                $params=array();
+            $params=array();
             foreach ($valids as $name => $value) {
                 $params[substr($name, 9)]=$value;
             }
 
 
-                $n_token=Form::getToken();
-                Form::setModule($n_token, $module);
-                $zh=Form::getFormHiddenZone(getParam("token"));
+            $n_token=Form::getToken();
+            Form::setModule($n_token, $module);
+            $zh=Form::getFormHiddenZone(getParam("token"));
 
-            foreach ($zh->getAttributes() as $attr)
-                {
+            foreach ($zh->getAttributes() as $attr) {
                 $params[substr($attr, 9)]=$zh->get($attr, "");
                 Form::setHidden($n_token, $attr, $zh->get($attr, ""));
             }
 
-            if(!callFunction($module, "Form_Save", array($params))) {
+            if (!callFunction($module, "Form_Save", array($params))) {
                 foreach ($valids as $name => $value) {
                     $no_valids[$name]=$FORM_PARAMS[$name."_BASE"];
                 }
@@ -90,29 +86,27 @@ class Form extends Module
                 $valids=array();
             }
 
-                write("<script language=javascript>");
+            write("<script language=javascript>");
 
             foreach ($valids as $name => $value) {
                 write("update_form_element('".getParam("Target")."','".getParam("token")."','".$name."','".$value."','Y');");
             }
 
-            foreach ($no_valids as $name => $value)
-                {
+            foreach ($no_valids as $name => $value) {
                 $res="N";
-                if(isset($warn[$name])) {
+                if (isset($warn[$name])) {
                     $res=$warn[$name];
                 }
                     
                 write("update_form_element('".getParam("Target")."','".getParam("token")."','".$name."','".$value."','".$res."');");
             }
 
-                write("update_form_element('".getParam("Target")."','".getParam("token")."','"."blk_form_token"."','".$n_token."','');");
+            write("update_form_element('".getParam("Target")."','".getParam("token")."','"."blk_form_token"."','".$n_token."','');");
 
-                write("</script>");
+            write("</script>");
                 
-                $z->delete(true);
+            $z->delete(true);
         }
-            
     }
 
 
@@ -135,20 +129,18 @@ class Form extends Module
         $t=timeGetTime(true).$c;
         return $t;
     }
-    public static function setHidden($token,$name,$value)
+    public static function setHidden($token, $name, $value)
     {
         $z=Form::getFormHiddenZone($token);
         return $z->set($name, $value);
     }
-    public static function setModule($token,$module)
+    public static function setModule($token, $module)
     {
         $z=Form::getFormZone($token);
         return $z->set("Module", $module);
-
     }
 
     public function __unload()
     {
     }
 }
-?>

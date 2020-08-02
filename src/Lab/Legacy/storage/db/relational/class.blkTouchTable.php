@@ -18,13 +18,14 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class BLKTouchTable {
-
+class BLKTouchTable
+{
     private $SQLConnection = null;
     private $table = null;
     private $time = null;
 
-    function __construct($SQLConnection, $table) {
+    public function __construct($SQLConnection, $table)
+    {
         if (!$SQLConnection instanceof MySql) {
             throw new Exception('Invalid MySql Object');
         }
@@ -33,7 +34,8 @@ class BLKTouchTable {
         $this->table = $table;
     }
 
-    public function getGCTime() {
+    public function getGCTime()
+    {
         if ($this->time === null) {
             $this->time = time();
         }
@@ -41,16 +43,17 @@ class BLKTouchTable {
         return $this->time;
     }
 
-    public function touch($data) {
+    public function touch($data)
+    {
         $this->SQLConnection->autoUpdate($this->table, array('gc' => $this->getGCTime()), $data);
         $data['created'] = null;
         $this->SQLConnection->update($this->table, array('created' => time()), $data);
     }
 
-    public function purge($filter = array()) {
+    public function purge($filter = array())
+    {
         $filter['!gc'] = $this->getGCTime();
         $this->SQLConnection->delete($this->table, $filter);
         $this->time = null;
     }
-
 }

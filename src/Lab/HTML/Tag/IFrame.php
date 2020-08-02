@@ -23,13 +23,11 @@ namespace Kito\HTML\Tag;
  */
 class IFrame extends Element
 {
-
-    function __construct($src)
+    public function __construct($src)
     {
         $this->closeMode = 0;
         $this->setAttr("src", $src);
         $this->setStyleAttr("width", "100%");
         $this->setStyleAttr("height", "100%");
     }
-
 }

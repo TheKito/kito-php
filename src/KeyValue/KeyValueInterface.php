@@ -17,12 +17,12 @@
 namespace Kito\KeyValue;
 
 /**
- * Proxy class for access Memcache or Memcached common functions 
+ * Proxy class for access Memcache or Memcached common functions
  *
  * @author TheKito
  */
-interface KeyValueInterface {
-
+interface KeyValueInterface
+{
     public function get(string $key): ?string;
 
     public function set(string $key, $var): bool;

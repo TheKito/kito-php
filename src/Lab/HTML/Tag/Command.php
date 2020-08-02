@@ -23,11 +23,9 @@ namespace Kito\HTML\Tag;
  */
 class Command extends Element
 {
-
-    function __construct($type)
+    public function __construct($type)
     {
         $this->closeMode = 3;
         $this->setAttr("type", $type);
     }
-
 }

@@ -20,6 +20,7 @@ namespace Kito;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class LibraryNotFoundException extends Exception {
+class LibraryNotFoundException extends Exception
+{
     //put your code here
 }

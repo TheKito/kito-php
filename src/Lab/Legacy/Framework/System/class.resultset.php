@@ -28,35 +28,35 @@ interface IResultSet
      *
      * @return boolean
      */
-    function next();
+    public function next();
 
     /**
      * last element in resultset
      *
      * @return boolean
      */
-    function last();
+    public function last();
 
     /**
      * previous element in resultset
      *
      * @return boolean
      */
-    function prev();
+    public function prev();
 
     /**
      * first element in resultset
      *
      * @return boolean
      */
-    function first();
+    public function first();
 
     /**
      * move to $pos eleent in resultset
      *
      * @return boolean
      */
-    function move($pos);
+    public function move($pos);
 
 
     //Read
@@ -66,14 +66,14 @@ interface IResultSet
      *
      * @return Array<String,mixed>
      */
-    function get();
+    public function get();
 
     /**
      * get total elements in resultset
      *
      * @return Integer
      */
-    function count();
+    public function count();
 
     //Other
 
@@ -82,8 +82,5 @@ interface IResultSet
      *
      * @return boolean
      */
-    function flush();
-
+    public function flush();
 }
-
-?>

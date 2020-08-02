@@ -21,12 +21,12 @@
 
 class ElementsList
 {
-    var $zone=false;
-    var $name=false;
-    var $list=array();
-    var $attr= false;
+    public $zone=false;
+    public $name=false;
+    public $list=array();
+    public $attr= false;
 
-    public static function getList($name,$zone)
+    public static function getList($name, $zone)
     {
         static $cache=array();
         $cache_key=$zone->id.$name;
@@ -40,7 +40,7 @@ class ElementsList
         return $cache[$cache_key];
     }
 
-    private function __construct($zone,$name)
+    private function __construct($zone, $name)
     {
         $this->zone=$zone;
         $this->name=$name;
@@ -49,68 +49,65 @@ class ElementsList
 
         $rs=$this->zone->driver->query("select BLK_ZONE_LIST_VALUE from BLK_ZONE_LIST where BLK_ZONE_LIST_ATTR_ID='".$this->attr->id."' and BLK_ZONE_LIST_ZONE_ID='".$this->zone->id."';");
 
-        if($rs===false) {
+        if ($rs===false) {
             return false;
         }
 
-        if($rs->first()) {
-            while(true)
-            {
+        if ($rs->first()) {
+            while (true) {
                 $row=$rs->get();
                 array_push($this->list, $row["BLK_ZONE_LIST_VALUE"]);
-                if(!$rs->next()) { break;
+                if (!$rs->next()) {
+                    break;
                 }
             }
         }
     }
-    function add($value)
+    public function add($value)
     {
         foreach ($this->list as $key => $value_) {
-            if($value==$value_) {
+            if ($value==$value_) {
                 return true;
             }
         }
 
-        if(!$this->zone->driver->command("insert into BLK_ZONE_LIST (BLK_ZONE_LIST_ATTR_ID,BLK_ZONE_LIST_ZONE_ID,BLK_ZONE_LIST_VALUE) values ('".$this->attr->id."','".$this->zone->id."','".$value."');")) {
+        if (!$this->zone->driver->command("insert into BLK_ZONE_LIST (BLK_ZONE_LIST_ATTR_ID,BLK_ZONE_LIST_ZONE_ID,BLK_ZONE_LIST_VALUE) values ('".$this->attr->id."','".$this->zone->id."','".$value."');")) {
             return false;
         }
 
         array_push($this->list, $value);
         return true;
     }
-    function remove($value)
+    public function remove($value)
     {
-        if(!$this->zone->driver->command("delete from BLK_ZONE_LIST where BLK_ZONE_LIST_ATTR_ID='".$this->attr->id."' and BLK_ZONE_LIST_ZONE_ID='".$this->zone->id."' and BLK_ZONE_LIST_VALUE='".$value."');")) {
+        if (!$this->zone->driver->command("delete from BLK_ZONE_LIST where BLK_ZONE_LIST_ATTR_ID='".$this->attr->id."' and BLK_ZONE_LIST_ZONE_ID='".$this->zone->id."' and BLK_ZONE_LIST_VALUE='".$value."');")) {
             return false;
         }
 
         foreach ($this->list as $key => $value_) {
-            if($value==$value_) {
+            if ($value==$value_) {
                 unset($this->list[$key]);
             }
         }
 
         return true;
     }
-    function get()
+    public function get()
     {
         return $this->list;
     }
     private $cont=-1;
-    function getNext()
+    public function getNext()
     {
         $this->cont++;
-        if(!isset($this->list[$this->cont])) {
+        if (!isset($this->list[$this->cont])) {
             $this->cont=0;
         }
 
-        if(!isset($this->list[$this->cont])) {
+        if (!isset($this->list[$this->cont])) {
             return false;
         }
 
         return $this->list[$this->cont];
-
     }
-
 }
-?>

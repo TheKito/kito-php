@@ -20,6 +20,7 @@ namespace Kito\FileSystem;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotIsFileException extends Exception {
+class NotIsFileException extends Exception
+{
     //put your code here
 }

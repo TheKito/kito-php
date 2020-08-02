@@ -20,10 +20,8 @@
  */
 class BLKHTTP
 {
-
     public static function rel2abs($rel, $base)
     {
-
         $base_data = parse_url($base);
 
         if ($rel === null || $rel == '') {
@@ -84,15 +82,15 @@ class BLKHTTP
 
     //    private function makeCookieFile()
     //    {
-    //        $PATH = dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'COOKIES';            
+    //        $PATH = dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'COOKIES';
     //        @mkdir($PATH,0777,true);
     //
     //        $PATH.=DIRECTORY_SEPARATOR.uniqid();
-    //                
+    //
     //        $this->cookies[] = $PATH;
-    //        
+    //
     //        return $PATH;
-    //    }        
+    //    }
     private function clearCookies()
     {
         foreach ($this->cookies as $PATH) {
@@ -110,14 +108,14 @@ class BLKHTTP
             $sessionName = 'tmp.' . uniqid();
         }
 
-        //        if($sessionName===null)        
-        //            $PATH = $this->makeCookieFile();        
+        //        if($sessionName===null)
+        //            $PATH = $this->makeCookieFile();
         //        else
         //        {
         $PATH = $this->workDir . DIRECTORY_SEPARATOR . 'COOKIES';
         @mkdir($PATH, 0777, true);
         $PATH .= DIRECTORY_SEPARATOR . $sessionName . '.cookie';
-        //        }            
+        //        }
 
         $this->setCURLOption(CURLOPT_COOKIEJAR, $PATH);
         $this->setCURLOption(CURLOPT_COOKIEFILE, $PATH);
@@ -140,7 +138,7 @@ class BLKHTTP
         $this->setCURLOption(CURLOPT_SSL_VERIFYPEER, false);
         $this->setCURLOption(CURLOPT_FOLLOWLOCATION, false);
         $this->setCURLOption(CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
-        //        $this->setCURLOption(CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');        
+        //        $this->setCURLOption(CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');
 
         $this->startSession($sessionName);
     }
@@ -303,12 +301,12 @@ class BLKHTTP
         return $this->lastResponse['httpCode'];
     }
 
-    function getLastURL()
+    public function getLastURL()
     {
         return $this->lastURL;
     }
 
-    function debug()
+    public function debug()
     {
         print_r(array($this->lastURL, $this->lastResponse));
     }
@@ -401,12 +399,10 @@ class BLKHTTP
             return null;
         }
     }
-
 }
 
 class HTTPException extends Exception
 {
-
     public function __construct($message, $code, $previous = null)
     {
         if (!$previous instanceof Exception) {
@@ -420,5 +416,4 @@ class HTTPException extends Exception
     {
         throw new HTTPException(BLKHTTP::getHTTPResponseMessage($code), $code);
     }
-
 }

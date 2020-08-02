@@ -14,7 +14,7 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -45,19 +45,18 @@ function getDataLinkZone($name)
 function loadDataBase()
 {
     if (defined("SYSTEM_DATABASE_MASTER_DRIVER") && defined("SYSTEM_DATABASE_MASTER_DRIVER_PARAMS")) {
-        if(getDBDriver("System", SYSTEM_DATABASE_MASTER_DRIVER, unserialize(SYSTEM_DATABASE_MASTER_DRIVER_PARAMS))===false) {
-               trigger_error("SYSTEM_DATABASE_MASTER_DRIVER error to load driver", E_USER_ERROR);
+        if (getDBDriver("System", SYSTEM_DATABASE_MASTER_DRIVER, unserialize(SYSTEM_DATABASE_MASTER_DRIVER_PARAMS))===false) {
+            trigger_error("SYSTEM_DATABASE_MASTER_DRIVER error to load driver", E_USER_ERROR);
         }
-    }
-    else {
+    } else {
         trigger_error("SYSTEM_DATABASE_MASTER_DRIVER not found", E_USER_ERROR);
     }
 }
-function getDBDriver($name,$driver_module=null,$params=null)
+function getDBDriver($name, $driver_module=null, $params=null)
 {
     static $databases  = array(); //Internal DB Name -> IDriver;
 
-    if(isset($databases[$name])) {
+    if (isset($databases[$name])) {
         return $databases[$name];
     }
 
@@ -67,23 +66,21 @@ function getDBDriver($name,$driver_module=null,$params=null)
         if ($zone!=false) {
             //            foreach ($zone->getAttributes() as $attr)
             //                echo $attr;
-
         }
     }
 
-    if($driver_module==null) {
+    if ($driver_module==null) {
         return false;
     }
 
     $databases[$name]=getModule($driver_module)->getDriver($params);
     
-    if($databases[$name]!==false) {
+    if ($databases[$name]!==false) {
         $databases[$name]->zone=getDataSourceZone($name);
         $databases[$name]->zone->set("Module", $driver_module);
         foreach ($params as $key => $value) {
             $databases[$name]->zone->set($key, $value);
         }
-
     }
 
 
@@ -93,4 +90,3 @@ function getDBDriver($name,$driver_module=null,$params=null)
 
 
 loadDataBase();
-?>

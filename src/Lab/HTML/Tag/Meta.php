@@ -23,11 +23,9 @@ namespace Kito\HTML\Tag;
  */
 class Meta extends Element
 {
-
-    function __construct($content)
+    public function __construct($content)
     {
         $this->closeMode = 2;
         $this->setAttr("content", $content);
     }
-
 }

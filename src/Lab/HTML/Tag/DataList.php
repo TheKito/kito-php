@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class DataList extends Element
 {
-
-    function __construct($name)
+    public function __construct($name)
     {
         $this->closeMode = 3;
         $this->setAttr("name", $name);
@@ -47,5 +46,4 @@ class DataList extends Element
         }
         return $sl;
     }
-
 }

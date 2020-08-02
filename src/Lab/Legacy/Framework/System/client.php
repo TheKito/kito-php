@@ -16,14 +16,14 @@
 
 /**
  *
- * @author TheKito <blankitoracing@gmail.com> 
+ * @author TheKito <blankitoracing@gmail.com>
  */
 function getParam($key)
 {
     global $FORM_PARAMS;
-    if(isset($FORM_PARAMS[$key])) {
+    if (isset($FORM_PARAMS[$key])) {
         return $FORM_PARAMS[$key];
-    } else if(isset($FORM_PARAMS["blk_form_$key"])) {
+    } elseif (isset($FORM_PARAMS["blk_form_$key"])) {
         return $FORM_PARAMS["blk_form_$key"];
     } else {
         return false;
@@ -35,16 +35,14 @@ function write($data)
     static $STROUT=array();
     global $output;
         
-    if($data!=null) {
-        if(isset($output) && is_object($output)) {
+    if ($data!=null) {
+        if (isset($output) && is_object($output)) {
             return $output->write($data);
         } else {
             array_push($STROUT, $data);
         }
-    }
-    else
-    {
-        foreach ($STROUT as  $key => $value) {       
+    } else {
+        foreach ($STROUT as  $key => $value) {
             echo $value.(DEBUG?"\n":"");
         }
         $STROUT=array();
@@ -54,13 +52,14 @@ function write($data)
 
 function getlocation()
 {
-    $URL=$_SERVER["REQUEST_URI"];return getDomain().substr($URL, 1, strpos($URL, "/", 1));
+    $URL=$_SERVER["REQUEST_URI"];
+    return getDomain().substr($URL, 1, strpos($URL, "/", 1));
 }
 function getCookieName($Name)
 {
     return "BLK_".md5($Name.crc32(GetValue("Title", "BLK Application")));
 }
-function putCookie($Name,$Value)
+function putCookie($Name, $Value)
 {
     return setcookie(getCookieName($Name), $Value, 0, "/");
 }
@@ -76,15 +75,15 @@ function getCookie($Name)
 
 function getIP()
 {
-    if(array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '' ) {
+    if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '') {
         $client_ip =
-          ( !empty($_SERVER['REMOTE_ADDR']) ) ?
+          (!empty($_SERVER['REMOTE_ADDR'])) ?
              $_SERVER['REMOTE_ADDR']
              :
-             ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
+             ((!empty($_ENV['REMOTE_ADDR'])) ?
                 $_ENV['REMOTE_ADDR']
                 :
-                "unknown" );
+                "unknown");
 
         // los proxys van añadiendo al final de esta cabecera
         // las direcciones ip que van "ocultando". Para localizar la ip real
@@ -95,10 +94,9 @@ function getIP()
         $entries = split('[, ]', $_SERVER['HTTP_X_FORWARDED_FOR']);
 
         reset($entries);
-        while (list(, $entry) = each($entries))
-        {
+        while (list(, $entry) = each($entries)) {
             $entry = trim($entry);
-            if (preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $entry, $ip_list) ) {
+            if (preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $entry, $ip_list)) {
                 // http://www.faqs.org/rfcs/rfc1918.html
                 $private_ip = array(
                       '/^0\./',
@@ -115,25 +113,23 @@ function getIP()
                 }
             }
         }
-    }
-    else
-       {
+    } else {
         $client_ip =
-          ( !empty($_SERVER['REMOTE_ADDR']) ) ?
+          (!empty($_SERVER['REMOTE_ADDR'])) ?
              $_SERVER['REMOTE_ADDR']
              :
-             ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
+             ((!empty($_ENV['REMOTE_ADDR'])) ?
                 $_ENV['REMOTE_ADDR']
                 :
-                "unknown" );
+                "unknown");
     }
 
-       return $client_ip;
+    return $client_ip;
 }
 
 function getBrowser()
 {
-    return (isset($_SERVER['HTTP_USER_AGENT']) ) ? strtolower($_SERVER['HTTP_USER_AGENT']) : false;
+    return (isset($_SERVER['HTTP_USER_AGENT'])) ? strtolower($_SERVER['HTTP_USER_AGENT']) : false;
 }
 function isIE()
 {
@@ -142,20 +138,19 @@ function isIE()
 
 function isGoogleBot()
 {
-    if(eregi("googlebot", Client_GetBrowser())) {
+    if (eregi("googlebot", Client_GetBrowser())) {
         // it says it's the lovely google
         $ip = getIP();
         $name = gethostbyaddr($ip);
         // Now we have the name, look up the corresponding IP address.
         $host = gethostbyname($name);
-        if(eregi("googlebot", strtolower($name)) && $host == $ip) {
-                return true;
+        if (eregi("googlebot", strtolower($name)) && $host == $ip) {
+            return true;
         }
-
     }
 
 
-        return false;
+    return false;
 }
         
     
@@ -164,14 +159,13 @@ function getDomain()
     $HOST_        =$_SERVER["HTTP_HOST"];
     $PROTOCOL_    =$_SERVER["HTTPS"];
 
-    if($PROTOCOL_!="") {
-        if($PROTOCOL_=="off") {
+    if ($PROTOCOL_!="") {
+        if ($PROTOCOL_=="off") {
             $PROTOCOL_="http";
         } else {
             $PROTOCOL_="https";
         }
-    }
-    else {
+    } else {
         $PROTOCOL_="http";
     }
 
@@ -185,7 +179,7 @@ function proxyScript($module)
 
     if (file_exists($path) && is_dir($path) && $handle = opendir($path)) {
         while (false !== ($file = readdir($handle))) {
-            if($file!="." && $file!="..") {
+            if ($file!="." && $file!="..") {
                 echo file_get_contents($path.$file);
             }
         }
@@ -194,23 +188,21 @@ function proxyScript($module)
         closedir($handle);
     }
 }
-function proxyImage($module,$image)
+function proxyImage($module, $image)
 {
     //ATAQUES DE ../
 
-    if($module!="System") {
+    if ($module!="System") {
         $path = getModule($module)->path."Images/".$image;
-    } else {        
+    } else {
         $path = dirname(__FILE__)."/Images/".$image;
     }
             
         
     if (file_exists($path) && is_file($path)) {
-        
         $ext = substr($image, -3);
         // set the MIME type
-        switch ($ext)
-        {
+        switch ($ext) {
         case 'jpg':
             $mime = 'image/jpeg';
             break;
@@ -224,8 +216,8 @@ function proxyImage($module,$image)
             $mime = false;
         }
 
-            // if a valid MIME type exists, display the image
-            // by sending appropriate headers and streaming the file
+        // if a valid MIME type exists, display the image
+        // by sending appropriate headers and streaming the file
         if ($mime) {
             header('Content-type: '.$mime);
             header('Content-length: '.filesize($path));
@@ -235,12 +227,7 @@ function proxyImage($module,$image)
                 exit;
             }
         }
-    }
-    else if(!($module=="System" && $image=="default.png")) {
+    } elseif (!($module=="System" && $image=="default.png")) {
         return proxyImage("System", "default.png");
     }
-        
 }
-
-
-?>

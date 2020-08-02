@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class Video extends Element
 {
-
-    function __construct($src, $controls = true)
+    public function __construct($src, $controls = true)
     {
         $this->closeMode = 3;
 
@@ -35,5 +34,4 @@ class Video extends Element
             $this->setAttr("controls", "controls");
         }
     }
-
 }

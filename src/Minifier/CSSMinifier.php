@@ -20,11 +20,11 @@ namespace Kito\Minifier;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class CSSMinifier extends Minifier {
-
-    protected function minifyLine($codeLine) {
+class CSSMinifier extends Minifier
+{
+    protected function minifyLine($codeLine)
+    {
         $codeLine = str_replace(': ', ':', $codeLine);
         return preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $codeLine);
     }
-
 }

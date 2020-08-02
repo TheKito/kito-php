@@ -27,23 +27,21 @@ class Zones extends Module
         $form=new ZoneForm($item);
         return $form->getHTML();
     }
-    public function getIDEMenu($zone=false,$max_level=false)
+    public function getIDEMenu($zone=false, $max_level=false)
     {
         $a=array();
 
-        if(is_numeric($max_level)) {
+        if (is_numeric($max_level)) {
             $max_level--;
         }
 
-        if(!is_numeric($max_level) || $max_level>0) {
-            if($zone===false) {
+        if (!is_numeric($max_level) || $max_level>0) {
+            if ($zone===false) {
                 foreach (getRootZones() as $zone_) {
                     array_push($a, $this->getIDEMenu($zone_, $max_level));
-                } 
-            } else
-            {
-
-                if($zone->system) {
+                }
+            } else {
+                if ($zone->system) {
                     $a[$zone->id]="<i><b>".$zone->name."</b></i>";
                 } else {
                     $a[$zone->id]=$zone->name;
@@ -65,14 +63,14 @@ class Zones extends Module
     public function __destruct()
     {
     }
-    public function __construct() 
+    public function __construct()
     {
         getModule("Form");
         //            $HTML=getModule("HTML5");
         //            if(getParam("Module")=="Zones")
         //            $this->zoneGui(getParam("Tag"));
     }
-    public function Form_Check($name,$value)
+    public function Form_Check($name, $value)
     {
         return true;
         return $name!="parent_id";
@@ -81,25 +79,23 @@ class Zones extends Module
     {
         $zone=Zone::getZone($params["id"], getDBDriver("System"));
 
-        foreach ($params as $key => $value)
-        if($key=="attttr") {
-            if($zone->set($value, "")===false) {
-            }
+        foreach ($params as $key => $value) {
+            if ($key=="attttr") {
+                if ($zone->set($value, "")===false) {
+                }
                 return false;
-        }
-        elseif($key=="parent_id") {
-            if(!$zone->setParent(Zone::getZone($value, $zone->driver))) {
-                return false;
-            }
-        }
-        elseif($key=="zzzzz") {
-            if(getZone($zone->driver, $value, $zone)===false) {
-                return false;
-            }
-        }
-        else if($key!="id") {
-            if(!$zone->set($key, $value)) {
-                return false;
+            } elseif ($key=="parent_id") {
+                if (!$zone->setParent(Zone::getZone($value, $zone->driver))) {
+                    return false;
+                }
+            } elseif ($key=="zzzzz") {
+                if (getZone($zone->driver, $value, $zone)===false) {
+                    return false;
+                }
+            } elseif ($key!="id") {
+                if (!$zone->set($key, $value)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -158,7 +154,7 @@ class Zones extends Module
     //
     //}
 
-    public function __load() 
+    public function __load()
     {
         $zone=getViewZone();
 
@@ -170,19 +166,17 @@ class Zones extends Module
         //        $html->write("<br>");$html->write("<br>");
 
         $this->getChild($html->container);
-        
-
     }
 
     public function getNav($container)
-    {        
+    {
         $zone=getViewZone();
         $a=array();
         $sub=new Repeater("Navigation");
         $this->doParents($a, $zone);
         $sub->doRepeat($a, $container);
     }
-    private function doParents(&$parents,$zone)
+    private function doParents(&$parents, $zone)
     {
         if ($zone===false) {
             return;
@@ -198,21 +192,20 @@ class Zones extends Module
         $a=array();
         $sub=new Repeater("Articles");
         $sub->setTableMode(0);
-        foreach($zone->getChild() as $s)
-        {
-            $az=array();            
+        foreach ($zone->getChild() as $s) {
+            $az=array();
             $az["blktext"]=$s->getText();
             $az["blktitle"]=new HTMLa("?Module=Zones&Zone=".$s->id, $s->name);
             $az["blkimage"]=new HTMLimg("?Module=".getParam("Object")."&Tag=Image&Image=$key");
             array_push($a, $az);
-        }        
+        }
         $container->addChild($sub->doRepeat($a));
     }
     public function __unload()
     {
     }
 
-    function setup()
+    public function setup()
     {
         $nav=new Repeater("Navigation");
         $nav->setTableMode(0);
@@ -221,4 +214,3 @@ class Zones extends Module
         $nav->setTableMode(0);
     }
 }
-?>

@@ -22,10 +22,10 @@ class User
 {
     private $zone=false;
     private $groups_name=array();
-    var $id=false;
-    private static function calcHash($value,$mode)
+    public $id=false;
+    private static function calcHash($value, $mode)
     {
-        if($mode===false || $mode=="") {
+        if ($mode===false || $mode=="") {
             return $value;
         } else {
             return eval("return ".$mode."('".$value."');");
@@ -35,29 +35,28 @@ class User
     {
         $z=Zone::getZone($id);
 
-        if(!($z instanceof zone)) {
+        if (!($z instanceof zone)) {
             return false;
         }
         
-        if(!$z->getParent()->equals(getUsersZone())) {
+        if (!$z->getParent()->equals(getUsersZone())) {
             return false;
         }
         
         return new User($z);
-
     }
-    private static function getByName($name,$domain,$create=true)
+    private static function getByName($name, $domain, $create=true)
     {
         $z=User::getZone($name, $domain, $create);
-        if($z===false) {
+        if ($z===false) {
             return false;
         } else {
             return new User($z);
         }
     }
-    private static function getZone($name,$domain,$create=true)
+    private static function getZone($name, $domain, $create=true)
     {
-        if($name=="root" || $name=="admin" || $name=="webmaster") {
+        if ($name=="root" || $name=="admin" || $name=="webmaster") {
             $system=true;
         } else {
             $system=false;
@@ -113,30 +112,28 @@ class User
         }
     }
 
-    public static function auth($name,$domain,$password,$authModule=false)
+    public static function auth($name, $domain, $password, $authModule=false)
     {
-        if($authModule!==false) {
-            if(getModule($authModule)->authUser($name, $domain, $password)) {
+        if ($authModule!==false) {
+            if (getModule($authModule)->authUser($name, $domain, $password)) {
                 $u=User::getByName($name, $domain, true);
             } else {
                 return false;
             }
 
             $u->setAuthMethod($authModule);
-        }
-        else
-        {
+        } else {
             $u=User::getByName($name, $domain, false);
             if ($u===false) {
                 return false;
             }
 
-            if(!$u->validLocalPassword($password)) {
+            if (!$u->validLocalPassword($password)) {
                 return false;
             }
         }
 
-        if(function_exists("setSessionValue")) {
+        if (function_exists("setSessionValue")) {
             setSessionValue("AuthID", $u->id);
             setSessionValue("AuthName", $name);
             setSessionValue("AuthDomain", $domain);
@@ -145,38 +142,34 @@ class User
 
         return $u;
     }
-    public static function exist($name,$domain)
+    public static function exist($name, $domain)
     {
         return User::getByName($name, $domain, false)!==false;
     }
     public static function get()
     {
-        if(!function_exists("getSessionValue")) {
+        if (!function_exists("getSessionValue")) {
             return false;
         }
 
         return User::getById(getSessionValue("AuthID", 0));
     }
-    public static function changePassword($name,$domain,$password,$newpassword,$authModule=false)
+    public static function changePassword($name, $domain, $password, $newpassword, $authModule=false)
     {
         if ($authModule!==false) {
             return getModule($authModule)->changeUserPassword($name, $domain, $password, $newpassword);
-        } else
-        {
+        } else {
             $u=User::getByName($name, $domain, false);
             
-            if($u===false) {
+            if ($u===false) {
                 return false;
             }
             
-            if(!$u->validLocalPassword($password)) {
+            if (!$u->validLocalPassword($password)) {
                 return false;
             }
             
             return $u->changeLocalPassword($password);
-            
         }
     }
-
 }
-?>

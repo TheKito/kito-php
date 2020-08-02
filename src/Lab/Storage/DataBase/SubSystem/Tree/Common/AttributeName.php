@@ -20,7 +20,6 @@
  */
 class AttributeName extends DataPair64
 {
-
     public static $tableName = "BLK_ATTRIBUTE_NAME";
     public static $tablePk = "ATTRIBUTE_NAME_ID";
     private static $tableValue = "ATTRIBUTE_NAME_VALUE";
@@ -39,7 +38,4 @@ class AttributeName extends DataPair64
     {
         return strtoupper(parent::getValue($id));
     }
-
 }
-
-?>

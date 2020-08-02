@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class ConnectionClosedException extends Exception {
+class ConnectionClosedException extends Exception
+{
     //put your code here
 }

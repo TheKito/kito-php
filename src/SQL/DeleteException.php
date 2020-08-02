@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class DeleteException extends CommandException {
+class DeleteException extends CommandException
+{
     //put your code here
 }

@@ -26,9 +26,3 @@
 
 $r=Repeater::getRepeater("Articles");
 $r->setContainer(Structure::getStructure("Article"));
-
-
-
-
-
-?>

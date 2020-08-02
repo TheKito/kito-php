@@ -14,5 +14,3 @@ class FinalNode extends ZoneName
 {
     //put your code here
 }
-
-?>

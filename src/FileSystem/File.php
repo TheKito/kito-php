@@ -22,14 +22,16 @@ use \Kito\Type\Path;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class File extends FileSystem {
-
-    public static function pathFileSize(Path $path) {
+class File extends FileSystem
+{
+    public static function pathFileSize(Path $path)
+    {
         self::pathValidateReadable($path);
         return filesize($path->__toString());
     }
 
-    public function __construct(Path $path) {
+    public function __construct(Path $path)
+    {
         parent::__construct($path);
 
         if (parent::exists() && !parent::isFile()) {
@@ -37,11 +39,13 @@ class File extends FileSystem {
         }
     }
 
-    public final function getSize() {
+    final public function getSize()
+    {
         return self::pathFileSize($this);
     }
 
-    public final function delete() {
+    final public function delete()
+    {
         if (!parent::exists()) {
             return;
         }
@@ -52,29 +56,34 @@ class File extends FileSystem {
         }
     }
 
-    public final function copyTo(File $destination) {
+    final public function copyTo(File $destination)
+    {
         if (copy($this->__toString(), $destination->__toString()) === false) {
             throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());
         }
     }
 
-    public function getContent() {
+    public function getContent()
+    {
         parent::validateReadable();
         return file_get_contents($this->__toString());
     }
 
-    public function setContent($content) {
+    public function setContent($content)
+    {
         parent::validateWritable();
         return file_put_contents($this->__toString(), $content);
     }
 
-    public function touch() {
+    public function touch()
+    {
         parent::validateExistence();
         parent::validateWritable();
         touch($this->__toString());
     }
 
-    public final function create() {
+    final public function create()
+    {
         if (parent::exists()) {
             return;
         }
@@ -87,5 +96,4 @@ class File extends FileSystem {
             throw new CreateFileException($this->__toString());
         }
     }
-
 }

@@ -20,6 +20,7 @@ namespace Kito;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class NotImplementedException extends Exception {
+class NotImplementedException extends Exception
+{
     //put your code here
 }

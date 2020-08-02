@@ -20,6 +20,6 @@ namespace Kito\Lab\Legacy\Framework\Modules\IDE;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Legacy\Framework\Modules\Exception {
-    
+class Exception extends \Kito\Lab\Legacy\Framework\Modules\Exception
+{
 }

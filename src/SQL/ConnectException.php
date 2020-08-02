@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class ConnectException extends Exception {
+class ConnectException extends Exception
+{
     //put your code here
 }

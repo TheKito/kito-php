@@ -18,20 +18,19 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class StreetNumber extends CityStreet {
-
+class StreetNumber extends CityStreet
+{
     private $zone5;
 
-    public function __construct($root_zone, $contry_code, $state_code, $city_code, $street_code, $number) {
+    public function __construct($root_zone, $contry_code, $state_code, $city_code, $street_code, $number)
+    {
         parent::__construct($root_zone, $contry_code, $state_code, $city_code, $street_code);
         $this->zone5 = parent::getParentZone()->get($number);
         $this->zone5->getAttribute("Type")->set("Number");
     }
 
-    protected function getParentZone() {
+    protected function getParentZone()
+    {
         return $this->zone5;
     }
-
 }
-
-?>

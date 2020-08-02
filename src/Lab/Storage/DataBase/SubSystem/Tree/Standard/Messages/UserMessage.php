@@ -12,7 +12,6 @@
  */
 class UserMessage extends Message
 {
-
     public static function newMessage($user_context)
     {
         return parent::newMessage($user_context);
@@ -24,7 +23,4 @@ class UserMessage extends Message
         $m->base_zone->link($user_context->get("Messages"));
         return $m;
     }
-
 }
-
-?>

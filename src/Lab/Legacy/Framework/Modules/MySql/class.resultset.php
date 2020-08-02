@@ -14,90 +14,85 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 
 class MySQLRS implements IResultSet
 {
-    var $rs;
-    var $pos;
-    function __construct($rs)
+    public $rs;
+    public $pos;
+    public function __construct($rs)
     {
         $this->rs=$rs;
         $this->first();
     }
 
-    function next()
+    public function next()
     {
-        if($this->pos<$this->count()) {
+        if ($this->pos<$this->count()) {
             return $this->move($this->pos+1);
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    function last()
+    public function last()
     {
         return $this->move($this->count()-1);
     }
 
-    function prev()
+    public function prev()
     {
-        if($this->pos>0) {
+        if ($this->pos>0) {
             return $this->move($this->pos-1);
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    function first()
+    public function first()
     {
         return $this->move(0);
     }
 
-    function get()
+    public function get()
     {
         return mysql_fetch_assoc($this->rs);
     }
 
-    function count()
+    public function count()
     {
         $r=@mysql_num_rows($this->rs);
-        if($r===false) {
+        if ($r===false) {
             $r=-1;
         }
 
         return $r;
     }
 
-    function flush()
+    public function flush()
     {
         return mysql_free_result($this->rs);
     }
 
-    function move($Pos)
+    public function move($Pos)
     {
         if ($Pos>=0 && $Pos<$this->count()) {
-            if(@mysql_data_seek($this->rs, $Pos)) {
+            if (@mysql_data_seek($this->rs, $Pos)) {
                 $this->pos=$Pos;
                 return true;
-            }
-            else {
+            } else {
                 return false;
-            } 
+            }
         } else {
             return false;
         }
-
     }
 
-    function __destruct()
+    public function __destruct()
     {
         $this->flush();
     }
 }
-?>

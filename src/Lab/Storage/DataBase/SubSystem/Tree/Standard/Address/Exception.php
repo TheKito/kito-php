@@ -20,6 +20,6 @@ namespace Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Address;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Exception {
-    
+class Exception extends \Kito\Lab\Storage\DataBase\SubSystem\Tree\Standard\Exception
+{
 }

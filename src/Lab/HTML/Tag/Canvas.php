@@ -23,13 +23,11 @@ namespace Kito\HTML\Tag;
  */
 class Canvas extends Element
 {
-
-    function __construct($name)
+    public function __construct($name)
     {
         $this->closeMode = 3;
 
         $this->addChild("Your browser does not support HTML5 canvas element.");
         $this->setAttr("name", $name);
     }
-
 }

@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class Audio extends Element
 {
-
-    function __construct($src, $background = false)
+    public function __construct($src, $background = false)
     {
         $this->closeMode = 3;
 
@@ -37,5 +36,4 @@ class Audio extends Element
             $this->setAttr("controls", "controls");
         }
     }
-
 }

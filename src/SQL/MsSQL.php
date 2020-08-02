@@ -22,15 +22,16 @@ use Kito\NotImplementedException;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MsSQL extends SQL implements SQLInterface {
-
+class MsSQL extends SQL implements SQLInterface
+{
     private $server;
     private $user;
     private $password;
     private $scheme;
     private $cnn = null;
 
-    function __construct($server, $user, $password, $scheme) {
+    public function __construct($server, $user, $password, $scheme)
+    {
         $this->server = $server;
         $this->user = $user;
         $this->password = $password;
@@ -39,7 +40,8 @@ class MsSQL extends SQL implements SQLInterface {
         $this->connect();
     }
 
-    public function connect() {
+    public function connect()
+    {
         if ($this->isConnected()) {
             $this->close();
         }
@@ -59,7 +61,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public function close() {
+    public function close()
+    {
         if (!$this->isConnected()) {
             return;
         }
@@ -68,17 +71,20 @@ class MsSQL extends SQL implements SQLInterface {
         $this->cnn = null;
     }
 
-    public function isConnected() {
+    public function isConnected()
+    {
         return $this->cnn !== null;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         if ($this->isConnected()) {
             $this->close();
         }
     }
 
-    private function sendCommand($sql) {
+    private function sendCommand($sql)
+    {
         if (!$this->isConnected()) {
             throw new ConnectionClosedException();
         }
@@ -92,7 +98,8 @@ class MsSQL extends SQL implements SQLInterface {
         return $RS;
     }
 
-    public function query($sql) {
+    public function query($sql)
+    {
         $RS = $this->sendCommand($sql);
 
         if ($RS === true) {
@@ -115,7 +122,8 @@ class MsSQL extends SQL implements SQLInterface {
         return $RS2;
     }
 
-    public function command($sql) {
+    public function command($sql)
+    {
         $RS = $this->sendCommand($sql);
 
         if ($RS !== true) {
@@ -125,7 +133,8 @@ class MsSQL extends SQL implements SQLInterface {
         return true;
     }
 
-    private function arrayToEqual($data, $and = "and", $null_case = "is null") {
+    private function arrayToEqual($data, $and = "and", $null_case = "is null")
+    {
         $t = "";
         foreach ($data as $key => $value) {
             if ($t != "") {
@@ -146,7 +155,8 @@ class MsSQL extends SQL implements SQLInterface {
         return $t;
     }
 
-    private function arrayToWhere($data) {
+    private function arrayToWhere($data)
+    {
         $t = $this->arrayToEqual($data);
         if ($t != "") {
             return " where " . $t;
@@ -155,8 +165,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    private static function mssql_escape($data) {
-
+    private static function mssql_escape($data)
+    {
         if (is_numeric($data)) {
             return $data;
         } else {
@@ -167,8 +177,8 @@ class MsSQL extends SQL implements SQLInterface {
         return '0x' . $unpacked['hex'];
     }
 
-    private static function arrayToSelect($data) {
-
+    private static function arrayToSelect($data)
+    {
         if (is_array($data) && count($data) > 0) {
             return '' . implode(',', $data) . '';
         } else {
@@ -176,7 +186,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    private function arrayToInsert($data) {
+    private function arrayToInsert($data)
+    {
         $t0 = "";
         $t1 = "";
         foreach ($data as $key => $value) {
@@ -200,7 +211,8 @@ class MsSQL extends SQL implements SQLInterface {
         return "(" . $t0 . ") VALUES (" . $t1 . ")";
     }
 
-    public function select($table, $col = array(), $where = array()) {
+    public function select($table, $col = array(), $where = array())
+    {
         try {
             return $this->query("SELECT " . self::arrayToSelect($col) . " FROM " . $table . $this->arrayToWhere($where));
         } catch (Exception $ex) {
@@ -208,7 +220,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public function delete($table, $where = array()) {
+    public function delete($table, $where = array())
+    {
         try {
             return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where));
         } catch (Exception $ex) {
@@ -216,7 +229,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public function insert($table, $data = array()) {
+    public function insert($table, $data = array())
+    {
         try {
             return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
         } catch (Exception $ex) {
@@ -224,7 +238,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public function update($table, $data, $where = array()) {
+    public function update($table, $data, $where = array())
+    {
         try {
             return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where));
         } catch (Exception $ex) {
@@ -232,7 +247,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public function selectRow($table, $col = array(), $where = array()) {
+    public function selectRow($table, $col = array(), $where = array())
+    {
         $RS = $this->select($table, $col, $where);
 
         if (count($RS) > 1) {
@@ -246,7 +262,8 @@ class MsSQL extends SQL implements SQLInterface {
         return $RS[0];
     }
 
-    public static function dateNormalizer($d) {
+    public static function dateNormalizer($d)
+    {
         if ($d == null) {
             return null;
         } elseif ($d instanceof DateTime) {
@@ -256,7 +273,8 @@ class MsSQL extends SQL implements SQLInterface {
         }
     }
 
-    public static function unixTime2SQL($time) {
+    public static function unixTime2SQL($time)
+    {
         if ($time === null) {
             return null;
         }
@@ -267,32 +285,37 @@ class MsSQL extends SQL implements SQLInterface {
         return $date->format("Y-m-d\TH:i:s");
     }
 
-    public function count($table, $where = array()) {
-        
+    public function count($table, $where = array())
+    {
     }
 
-    public function getDatabase() {
+    public function getDatabase()
+    {
         return $this->scheme;
     }
 
-    public function getDatabases() {
+    public function getDatabases()
+    {
         throw new NotImplementedException();
     }
 
-    public function getTables() {
+    public function getTables()
+    {
         throw new NotImplementedException();
     }
 
-    public function max($table, $column, $where = array()) {
+    public function max($table, $column, $where = array())
+    {
         throw new NotImplementedException();
     }
 
-    public function min($table, $column, $where = array()) {
+    public function min($table, $column, $where = array())
+    {
         throw new NotImplementedException();
     }
 
-    public function copyTable($sourceTable, $destinationTable) {
+    public function copyTable($sourceTable, $destinationTable)
+    {
         return $this->command('SELECT * INTO ' . $destinationTable . ' FROM ' . $sourceTable . ' WHERE 1=0;');
     }
-
 }

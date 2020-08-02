@@ -20,8 +20,8 @@
  */
 class Group
 {
-    var $id=false;
-    private $zone=false;    
+    public $id=false;
+    private $zone=false;
 
     public static function getGroup($name)
     {
@@ -36,18 +36,17 @@ class Group
 
     private function __construct($name)
     {
-        if($name=="Root" || $name=="Admin" || $name=="Designer" || $name=="Developer" ) {
+        if ($name=="Root" || $name=="Admin" || $name=="Designer" || $name=="Developer") {
             $system=true;
         } else {
             $system=false;
         }
 
         $this->zone=Zone::getZoneByName($name, getGroupsZone(), $system);
-        $this->id=$this->zone->id;                
+        $this->id=$this->zone->id;
     }
     public function getName()
     {
         return $this->zone->name;
     }
 }
-?>

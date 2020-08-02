@@ -20,29 +20,34 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class DataPair extends DataN {
-
+class DataPair extends DataN
+{
     private $tableCol;
 
-    public function __construct(&$driver, $tableName, $tablePK, $tableCol) {
+    public function __construct(&$driver, $tableName, $tablePK, $tableCol)
+    {
         parent::__construct($driver, $tableName, $tablePK);
         $this->tableCol = $tableCol;
     }
 
-    public function getId($value, $create = true) {
+    public function getId($value, $create = true)
+    {
         return parent::getId(array($this->tableCol => trim($value)), $create);
     }
 
-    public function exists($value) {
+    public function exists($value)
+    {
         return parent::exists(array($this->tableCol => trim($value)));
     }
 
-    public function getValue($id) {
+    public function getValue($id)
+    {
         $rs = parent::getValue($id);
         return $rs[$this->tableCol];
     }
 
-    public function getItems() {
+    public function getItems()
+    {
         $RS = parent::getDriver()->select(parent::getTableName(), array(parent::getTablePK(), $this->tableCol));
 
         $RESULT = array();
@@ -53,7 +58,4 @@ class DataPair extends DataN {
 
         return $RESULT;
     }
-
 }
-
-?>

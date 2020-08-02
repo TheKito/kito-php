@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class MinException extends SelectException {
+class MinException extends SelectException
+{
     //put your code here
 }

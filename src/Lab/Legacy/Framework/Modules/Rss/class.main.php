@@ -14,7 +14,7 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -26,16 +26,15 @@ function getRssChannelZone($channel)
 }
 class Rss extends Module
 {
-    
-    function getRssZone()
+    public function getRssZone()
     {
         return getModuleZone("Rss");
     }
-    function getRssSourcesZone()
+    public function getRssSourcesZone()
     {
         return getZone($this->getRssZone()->driver, "Sources", $this->getRssZone(), true);
     }
-    function getRssSourceZone($source)
+    public function getRssSourceZone($source)
     {
         return getZone($this->getRssSourcesZone()->driver, $source, $this->getRssSourcesZone(), false);
     }
@@ -47,16 +46,15 @@ class Rss extends Module
 
 
 
-    private function loadRss($url,$name=false)
+    private function loadRss($url, $name=false)
     {
-
-        if($name===false) {
+        if ($name===false) {
             $name=$url;
         }
 
         $zsur=$this->getRssSourceZone($name);
 
-        if(timeGetTime()-$zsur->get("Time", "0")<3600) {
+        if (timeGetTime()-$zsur->get("Time", "0")<3600) {
             return true;
         }
 
@@ -75,17 +73,15 @@ class Rss extends Module
 
         
         $zsur->set("url", $url);
-        if($obj->load($url)) {
-            $zsur->set("Time",  timeGetTime());
+        if ($obj->load($url)) {
+            $zsur->set("Time", timeGetTime());
             $zchans=getZone($zsur->driver, "Channels", $zsur, true);
-            foreach ($obj->getChannels() as $chn)
-            {
+            foreach ($obj->getChannels() as $chn) {
                 $zchn=getZone($zchans->driver, $chn->name, $zchans, false);
-                foreach ($chn->items as $item)
-                {
-                    $zit=getZone($zchn->driver, $item->params["title"], $zchn, false);                    
-                    if(count($zit->getAttributes(false))>=1) {
-                        $zit->set("Time",  timeGetTime());
+                foreach ($chn->items as $item) {
+                    $zit=getZone($zchn->driver, $item->params["title"], $zchn, false);
+                    if (count($zit->getAttributes(false))>=1) {
+                        $zit->set("Time", timeGetTime());
                         foreach ($item->params as $name => $value) {
                             $zit->set($name, $value);
                         }
@@ -105,11 +101,11 @@ class Rss extends Module
             return true;
         }
 
-            return false;
+        return false;
     }
 
 
-    public function addSource($name,$url)
+    public function addSource($name, $url)
     {
         return $this->loadRss($url, $name);
     }
@@ -135,17 +131,14 @@ class Rss extends Module
         foreach ($this->getRssSourcesZone()->getChild() as $chn) {
             $this->loadRss($chn->get("url", "?"));
         }
-        
     }
 
     public function __destruct()
     {
-
     }
 
     public function __load()
     {
-     
     }
 
     public function getIDEMenu()
@@ -162,4 +155,3 @@ class Rss extends Module
         return true;
     }
 }
-?>

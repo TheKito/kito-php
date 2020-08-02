@@ -20,11 +20,11 @@ namespace Kito\Minifier;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class JSMinifier extends Minifier {
-
-    protected function minifyLine($codeLine) {
-        $codeLine = preg_replace('!\s+!',' ',$codeLine);
-        return  str_replace(array(' {',' }','{ ','; '),array('{','}','{',';'),$codeLine);
+class JSMinifier extends Minifier
+{
+    protected function minifyLine($codeLine)
+    {
+        $codeLine = preg_replace('!\s+!', ' ', $codeLine);
+        return  str_replace(array(' {',' }','{ ','; '), array('{','}','{',';'), $codeLine);
     }
-
 }

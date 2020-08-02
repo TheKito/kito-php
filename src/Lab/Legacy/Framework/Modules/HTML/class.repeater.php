@@ -36,7 +36,7 @@ class Repeater
         return $cache[$name];
     }
 
-    function __construct($repeater_name)
+    public function __construct($repeater_name)
     {
         $repeater_name=strtoupper($repeater_name);
         
@@ -47,7 +47,6 @@ class Repeater
 
         $this->repeater_containers=$this->zone->getList("StructureContainers");
         $this->repeater_spacers=$this->zone->getList("StructureSpacers");
-
     }
 
 
@@ -56,30 +55,27 @@ class Repeater
         return $this->zone->set("TableMode", $mode);
     }
 
-    function doRepeat($list)
+    public function doRepeat($list)
     {
         $elements=array();
         $first=true;
-        foreach ($list as $element)
-        {
-            if($first===false && $this->zone->get("TableMode", "0")=="0") {
+        foreach ($list as $element) {
+            if ($first===false && $this->zone->get("TableMode", "0")=="0") {
                 $StrName=$this->repeater_spacers->getNext();
-                if($StrName!==false) {
+                if ($StrName!==false) {
                     array_push($elements, Structure::getStructure($StrName)->doStructure());
                 }
             }
 
             $StrName=$this->repeater_containers->getNext();
-            if($StrName===false) {
-                if(is_array($element)) {
+            if ($StrName===false) {
+                if (is_array($element)) {
                     array_push($elements, $element["blkmain"]);
                 } else {
                     array_push($elements, $element);
                 }
-            }
-            else
-            {
-                if(is_array($element)) {
+            } else {
+                if (is_array($element)) {
                     array_push($elements, Structure::getStructure($StrName)->doStructure($element));
                 } else {
                     array_push($elements, Structure::getStructure($StrName)->doStructure(array("blkmain" => $element)));
@@ -89,11 +85,11 @@ class Repeater
             $first=false;
         }
 
-        if($this->zone->get("TableMode", "0")=="0") {
+        if ($this->zone->get("TableMode", "0")=="0") {
             return $elements;
         } else {
             return HTMLtable::autoTable($elements, $this->zone->get("TableMode", "0"));
-        }  
+        }
     }
 
     public function setContainer($structure)
@@ -112,6 +108,4 @@ class Repeater
     {
         return $this->repeater_spacers->remove($structure->getName());
     }
-
 }
-?>

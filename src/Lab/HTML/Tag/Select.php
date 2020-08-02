@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class Select extends Element
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->closeMode = 0;
     }
@@ -58,5 +57,4 @@ class Select extends Element
         }
         return $sl;
     }
-
 }

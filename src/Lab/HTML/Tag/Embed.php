@@ -23,11 +23,9 @@ namespace Kito\HTML\Tag;
  */
 class Embed extends Element
 {
-
-    function __construct($src)
+    public function __construct($src)
     {
         $this->closeMode = 3;
         $this->setAttr("src", $src);
     }
-
 }

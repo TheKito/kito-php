@@ -17,13 +17,14 @@
 namespace Kito\DataBase\NoSQL\Queue\KeyValue;
 
 /**
- * Proxy class for access Memcache or Memcached common functions 
+ * Proxy class for access Memcache or Memcached common functions
  *
  * @author TheKito
  */
-class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
-
-    public function dequeue() {
+class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue
+{
+    public function dequeue()
+    {
         if ($this->isEmpty()) {
             return null;
         }
@@ -33,8 +34,8 @@ class LIFO extends \Kito\DataBase\NoSQL\Queue\KeyValue {
         return $this->backend->get($this->getKeyItem($id));
     }
 
-    public function isEmpty(): bool {
+    public function isEmpty(): bool
+    {
         return parent::count() == 0;
     }
-
 }

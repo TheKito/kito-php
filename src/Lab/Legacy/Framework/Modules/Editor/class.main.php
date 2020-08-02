@@ -39,10 +39,8 @@ class Editor extends Module
 </script>'
         );
         write("<form><textarea id=editor name=editor></textarea></form>");
-
     }
     public function __unload()
     {
     }
 }
-?>

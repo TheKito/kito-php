@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class Table extends Element
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->closeMode = 0;
         $this->setStyleAttr("width", "100%");
@@ -79,5 +78,4 @@ class Table extends Element
 
         return $tbl;
     }
-
 }

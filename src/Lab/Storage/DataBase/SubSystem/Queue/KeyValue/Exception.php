@@ -20,6 +20,6 @@ namespace Kito\Lab\Storage\DataBase\SubSystem\Queue\KeyValue;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Storage\DataBase\SubSystem\Queue\Exception {
-    
+class Exception extends \Kito\Lab\Storage\DataBase\SubSystem\Queue\Exception
+{
 }

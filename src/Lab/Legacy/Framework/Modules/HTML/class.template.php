@@ -186,6 +186,4 @@ class Template
     //
     //        return true;
     //    }
-
 }
-?>

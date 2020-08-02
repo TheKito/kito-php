@@ -21,14 +21,14 @@
 getModule("Form");
 class DataForm extends HForm
 {
-    var $driver;
-    var $table;
-    var $pk;
-    var $pk_name;
-    var $cols;
-    var $rs;
-    var $data=array();
-    function __construct($driver,$table,$pk)
+    public $driver;
+    public $table;
+    public $pk;
+    public $pk_name;
+    public $cols;
+    public $rs;
+    public $data=array();
+    public function __construct($driver, $table, $pk)
     {
         $this->driver=$driver;
         $this->table=$table;
@@ -37,11 +37,10 @@ class DataForm extends HForm
         $this->pk_name=$this->driver->getPrimaryKey($this->table);
         $this->cols=$this->driver->getTableCols($this->table);
 
-        if($this->pk!=0) {
+        if ($this->pk!=0) {
             $sql="";
-            foreach ($this->cols as $a => $b)
-            {
-                if($sql!="") {
+            foreach ($this->cols as $a => $b) {
+                if ($sql!="") {
                     $sql.=", ";
                 }
                 $sql.=$a;
@@ -63,11 +62,10 @@ class DataForm extends HForm
         array_push($r, new FormHidden(false, "table", $this->table));
         array_push($r, new FormHidden(false, "driver", $this->driver->zone->name));
 
-        if(count($this->data)>0) {
+        if (count($this->data)>0) {
             foreach ($this->data as $col => $val) {
                 array_push($r, new FormText($col, $col, $val));
-
-            } 
+            }
         } else {
             foreach ($this->cols as $col => $val) {
                 array_push($r, new FormText($col, $col, ""));
@@ -88,6 +86,4 @@ class DataForm extends HForm
     {
         return "DataBase";
     }
-
 }
-?>

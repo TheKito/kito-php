@@ -23,8 +23,7 @@ namespace Kito\HTML\Tag;
  */
 class Img extends Element
 {
-
-    function __construct($src, $alt = false)
+    public function __construct($src, $alt = false)
     {
         $this->closeMode = 2;
         $this->setAttr("src", $src);
@@ -32,5 +31,4 @@ class Img extends Element
             $this->setAttr("alt", $alt);
         }
     }
-
 }

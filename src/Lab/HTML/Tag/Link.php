@@ -23,13 +23,11 @@ namespace Kito\HTML\Tag;
  */
 class Link extends Element
 {
-
-    function __construct($rel, $type, $href)
+    public function __construct($rel, $type, $href)
     {
         $this->closeMode = 2;
         $this->setAttr("rel", $rel);
         $this->setAttr("type", $type);
         $this->setAttr("href", $href);
     }
-
 }

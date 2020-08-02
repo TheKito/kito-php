@@ -22,7 +22,6 @@ namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
  */
 class DataPair64 extends DataPair
 {
-
     private $tableSrchCol;
     private $maxId = 0;
 
@@ -45,7 +44,6 @@ class DataPair64 extends DataPair
                     $this->maxId = $id;
                 }
             } catch (SqlException $e) {
-                
             }
         }
 
@@ -56,7 +54,4 @@ class DataPair64 extends DataPair
     {
         return base64_decode(parent::getValue($id));
     }
-
 }
-
-?>

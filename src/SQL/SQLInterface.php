@@ -12,8 +12,8 @@ namespace Kito\SQL;
  *
  * @author Instalacion
  */
-interface SQLInterface {
-
+interface SQLInterface
+{
     public function isConnected(): bool;
 
     public function query($query): array;

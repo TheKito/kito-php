@@ -20,7 +20,6 @@
  */
 class NodeLink extends Link
 {
-
     private static $tableName = "BLK_NODE_LINK";
     private static $tablePk = "NODE_LINK_ID";
     private static $tableValue0 = "NODE_LINK_NAME_ID_A";
@@ -30,7 +29,4 @@ class NodeLink extends Link
     {
         parent::__construct($cnn, self::$tableName, self::$tablePk, self::$tableValue0, self::$tableValue1);
     }
-
 }
-
-?>

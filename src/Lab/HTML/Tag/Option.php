@@ -23,13 +23,11 @@ namespace Kito\HTML\Tag;
  */
 class Option extends Element
 {
-
-    function __construct($main = false)
+    public function __construct($main = false)
     {
         $this->closeMode = 0;
         if ($main) {
             $this->setAttr("selected", "");
         }
     }
-
 }

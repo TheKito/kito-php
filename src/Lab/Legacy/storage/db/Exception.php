@@ -20,6 +20,6 @@ namespace Kito\Lab\Legacy\storage\db;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Legacy\storage\Exception {
-    
+class Exception extends \Kito\Lab\Legacy\storage\Exception
+{
 }

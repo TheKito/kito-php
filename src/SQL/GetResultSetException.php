@@ -20,6 +20,7 @@ namespace Kito\SQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class GetResultSetException extends SelectException {
+class GetResultSetException extends SelectException
+{
     //put your code here
 }

@@ -14,7 +14,7 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -30,32 +30,32 @@ function getModuleZone($name)
 function getOutputModule()
 {
     $param=getParam("Module");
-    if($param!==false) {            
-        return getModule($param);    
+    if ($param!==false) {
+        return getModule($param);
     } else {
-        return getModule(getSessionValue("Module",  getApplicationZone()->get("Module", getValue("Module", "Zones"))));
+        return getModule(getSessionValue("Module", getApplicationZone()->get("Module", getValue("Module", "Zones"))));
     }
 }
 
 abstract class Module
 {
-    var $zone=false;
-    var $path=false;
-    var $name=false;
-    abstract function __destruct();
-    abstract function __construct();
-    abstract function __load();
-    abstract function __unload();
+    public $zone=false;
+    public $path=false;
+    public $name=false;
+    abstract public function __destruct();
+    abstract public function __construct();
+    abstract public function __load();
+    abstract public function __unload();
 }
-function getModule($name,$path=null)
+function getModule($name, $path=null)
 {
     static $modules=array();
 
-    if($name==null) {
+    if ($name==null) {
         return $modules;
     }
 
-    if(isset($modules[$name])) {
+    if (isset($modules[$name])) {
         return $modules[$name];
     }
 
@@ -66,14 +66,14 @@ function getModule($name,$path=null)
     $base_path=$path.$name."/";
     $path.=$name."/class.main.php";
 
-    if(!file_exists($path)) {
+    if (!file_exists($path)) {
         trigger_error("Module: ".$name." Not exist", E_USER_ERROR);
         return false;
     }
 
     include_once $path;
 
-    if(!class_exists($name)) {
+    if (!class_exists($name)) {
         trigger_error("Class $name not fount in ".$path, E_USER_ERROR);
         return false;
     }
@@ -93,9 +93,9 @@ function getModule($name,$path=null)
     $modules[$name]->__load();
     return $modules[$name];
 }
-function callFunction($mod_name,$function,$params)
+function callFunction($mod_name, $function, $params)
 {
-      $module=getModule($mod_name);
+    $module=getModule($mod_name);
 
     if ($module===false && !($mod_name=="Logger" && $function=="Log")) {
         trigger_error("Module $mod_name not exist", E_USER_WARNING);
@@ -103,11 +103,9 @@ function callFunction($mod_name,$function,$params)
 
 
     if (method_exists($module, $function)) {
-
         $params_str="";
         $arr_size=count($params);
-        for($i=0;$i<$arr_size;$i++)
-        {
+        for ($i=0;$i<$arr_size;$i++) {
             if ($params_str!="") {
                 $params_str.=",";
             }
@@ -117,21 +115,18 @@ function callFunction($mod_name,$function,$params)
         $command="return \$module->".$function."(".$params_str.");";
 
         return eval($command);
-
-    }
-    else {
+    } else {
         trigger_error("Function $function on module $mod_name not exist", E_USER_WARNING);
     }
 
 
-        return false;
+    return false;
 }
 function unloadModule($module)
 {
-    if($module->zone===false) {
+    if ($module->zone===false) {
         $module->zone=getModuleZone($module->name);
     }
 
     $module->__unload();
 }
-?>

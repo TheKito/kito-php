@@ -35,11 +35,10 @@ abstract class HForm extends HTMLElement
 
 
         $html.="<table>";
-        foreach ($this->getElements() as $element)
-        {
-            if($element instanceof FormHidden) {
+        foreach ($this->getElements() as $element) {
+            if ($element instanceof FormHidden) {
                 Form::setHidden($token, $element->name, $element->value);
-            } else {            
+            } else {
                 $html.=HForm::getHTMLElement($element);
             }
         }
@@ -51,7 +50,7 @@ abstract class HForm extends HTMLElement
     {
         $baseHTML="";
 
-        if(!($element instanceof FormSubmit) && !($element instanceof FormReset) && !($element instanceof FormHidden)) {
+        if (!($element instanceof FormSubmit) && !($element instanceof FormReset) && !($element instanceof FormHidden)) {
             $base=new FormHidden("", $element->base_name."_BASE", $element->value);
             $baseHTML=$base->toHtml();
         }
@@ -61,4 +60,3 @@ abstract class HForm extends HTMLElement
     abstract protected function getElements();
     abstract protected function getModule();
 }
-?>

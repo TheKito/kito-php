@@ -20,6 +20,6 @@ namespace Kito\Lab\HTTP;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Exception {
-    
+class Exception extends \Kito\Lab\Exception
+{
 }

@@ -15,13 +15,15 @@
  */
 
 namespace Kito\Network;
+
 /**
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class Tor {
-
-    public static function getNewTOR() {
+class Tor
+{
+    public static function getNewTOR()
+    {
         while (true) {
             try {
                 $port = self::getFreePort();
@@ -54,7 +56,8 @@ class Tor {
     private $r_lock = null;
     private $command = null;
 
-    public function check() {
+    public function check()
+    {
         while (!$this->isConnectionReady()) {
             try {
                 echo "ReStarting TOR on port #" . $this->port . "\n";
@@ -72,20 +75,23 @@ class Tor {
         }
     }
 
-    private static function makeDir($path) {
+    private static function makeDir($path)
+    {
         is_dir($path) || mkdir($path, 0700, true);
         chown($path, 'debian-tor');
         chgrp($path, 'debian-tor');
     }
 
-    private static function makeFile($path) {
+    private static function makeFile($path)
+    {
         is_file($path) || touch($path);
         chmod($path, 0700);
         chown($path, 'debian-tor');
         chgrp($path, 'debian-tor');
     }
 
-    public function __construct($port) {
+    public function __construct($port)
+    {
         $this->port = $port;
 
         $this->torPath = "/tmp/tor/";
@@ -112,7 +118,7 @@ class Tor {
         //        foreach(scandir('/var/lib/tor/') as $fname)
         //            if($fname!='.' && $fname!='..' && is_file('/var/lib/tor/'.$fname))// && stristr($fname, 'cached-microdescs')!==false)
         //            {
-        //                copy ('/var/lib/tor/'.$fname, $this->dataPath.$fname);    
+        //                copy ('/var/lib/tor/'.$fname, $this->dataPath.$fname);
         //                self::makeFile($this->dataPath.$fname);
         //            }
 
@@ -133,7 +139,8 @@ class Tor {
         $this->waitConnectionReady();
     }
 
-    private static function getFreePort() {
+    private static function getFreePort()
+    {
         while (true) {
             $port = rand(10000, 19999);
 
@@ -143,7 +150,8 @@ class Tor {
         }
     }
 
-    private static function isPortInUse($port) {
+    private static function isPortInUse($port)
+    {
         $connection = @fsockopen('127.0.0.1', $port);
 
         if (is_resource($connection)) {
@@ -154,7 +162,8 @@ class Tor {
         return false;
     }
 
-    private function waitPortReady() {
+    private function waitPortReady()
+    {
         $time = time();
         while (time() - $time < 1 * 60) {
             if (self::isPortInUse($this->port)) {
@@ -165,12 +174,13 @@ class Tor {
         throw new Exception('Port not ready');
     }
 
-    public function isConnectionReady() {
+    public function isConnectionReady()
+    {
         static $lt = 0;
 
         //        if(time()-$lt<10)
         //            return true;
-        //        
+        //
         //        sleep(1);
 
         $curlHandler = curl_init();
@@ -192,8 +202,8 @@ class Tor {
         return false;
     }
 
-    public function waitConnectionReady() {
-
+    public function waitConnectionReady()
+    {
         $time = time();
         while (time() - $time < 1 * 90) {
             if ($this->isConnectionReady()) {
@@ -209,16 +219,19 @@ class Tor {
         throw new Exception('Connection not ready');
     }
 
-    function getPort() {
+    public function getPort()
+    {
         return $this->port;
     }
 
-    function attachTor($curlHandler) {
+    public function attachTor($curlHandler)
+    {
         curl_setopt($curlHandler, CURLOPT_PROXY, '127.0.0.1:' . $this->port);
         curl_setopt($curlHandler, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
     }
 
-    private function gcGetPortsLocked() {
+    private function gcGetPortsLocked()
+    {
         $output = array();
 
         exec('/usr/bin/lslocks', $output);
@@ -250,7 +263,8 @@ class Tor {
         return $tmp;
     }
 
-    private function gc() {
+    private function gc()
+    {
         $portsLocked = $this->gcGetPortsLocked();
 
         foreach (scandir($this->torPath) as $port) {
@@ -263,5 +277,4 @@ class Tor {
             }
         }
     }
-
 }

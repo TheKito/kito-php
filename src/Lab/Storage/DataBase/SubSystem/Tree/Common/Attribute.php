@@ -20,7 +20,6 @@
  */
 class Attribute extends DataThree
 {
-
     private static $tableName = "BLK_ATTRIBUTE";
     private static $tablePk = "ATTRIBUTE_ID";
     private static $tableValue0 = "ATTRIBUTE_NAME_ID";
@@ -69,7 +68,4 @@ class Attribute extends DataThree
 
         return true;
     }
-
 }
-
-?>

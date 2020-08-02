@@ -20,7 +20,6 @@
  */
 class Link extends DataThree
 {
-
     private $tableName;
     private $tablePk;
     private $tableValue0;
@@ -76,7 +75,4 @@ class Link extends DataThree
             return false;
         }
     }
-
 }
-
-?>

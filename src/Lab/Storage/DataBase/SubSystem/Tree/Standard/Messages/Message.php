@@ -18,11 +18,12 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class Message {
-
+class Message
+{
     protected $base_zone;
 
-    private function __construct($container_zone, $message_id = null) {
+    private function __construct($container_zone, $message_id = null)
+    {
         $z = $container_zone->get("Messages");
 
         if ($message_id == null) {
@@ -41,38 +42,43 @@ class Message {
         $this->base_zone->getAttribute("Type")->set("Message");
     }
 
-    public function getText() {
+    public function getText()
+    {
         return $this->getData("Text");
     }
 
-    public function setText($text) {
+    public function setText($text)
+    {
         return $this->setData("Text", $text);
     }
 
-    public function getLink() {
+    public function getLink()
+    {
         return $this->getData("Link");
     }
 
-    public function setLink($link) {
+    public function setLink($link)
+    {
         return $this->setData("Link", $link);
     }
 
-    protected function setData($key, $value) {
+    protected function setData($key, $value)
+    {
         return $this->base_zone->getAttribute($key)->set($value);
     }
 
-    protected function getData($key) {
+    protected function getData($key)
+    {
         return $this->base_zone->getAttribute($key)->get();
     }
 
-    public function newResponse() {
+    public function newResponse()
+    {
         return new Message($this->z);
     }
 
-    public static function newMessage($container_zone) {
+    public static function newMessage($container_zone)
+    {
         return new Message($container_zone);
     }
-
 }
-
-?>

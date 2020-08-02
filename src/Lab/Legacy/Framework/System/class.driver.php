@@ -20,18 +20,18 @@
  */
 abstract class Driver
 {
-    var $zone=false;
-    function getTablesZone()
+    public $zone=false;
+    public function getTablesZone()
     {
-        return getZone(getDBDriver("System"), "Tables",  $this->zone, true);
+        return getZone(getDBDriver("System"), "Tables", $this->zone, true);
     }
-    function getColZone($table,$col)
+    public function getColZone($table, $col)
     {
         return getZone(getDBDriver("System"), $col, getTableZone($table), true);
     }
-    function getTableZone($table)
+    public function getTableZone($table)
     {
-        if(!$this->existTable($table)) {
+        if (!$this->existTable($table)) {
             return false;
         }
 
@@ -40,14 +40,13 @@ abstract class Driver
 
 
 
-    function autoTable($table,$cols,$create=true)
+    public function autoTable($table, $cols, $create=true)
     {
         $query="";
 
         $insert="";
         $insert2="";
-        foreach ($cols as $name => $value)
-        {
+        foreach ($cols as $name => $value) {
             if ($insert!="") {
                 $insert.=",";
             }
@@ -79,14 +78,13 @@ abstract class Driver
         }
 
 
-        if($create) {
+        if ($create) {
             if ($this->command($insert)) {
                 return $this->autoTable($table, $cols);
             } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -97,14 +95,14 @@ abstract class Driver
      *
      * @return boolean
      */
-    abstract function command($query);
+    abstract public function command($query);
 
     /**
      * execute quer
      *
      * @return IResultSet
      */
-    abstract function query($query);
+    abstract public function query($query);
 
 
     //Structure
@@ -114,14 +112,14 @@ abstract class Driver
      *
      * @return Array<String> tables name
      */
-    abstract function getTables();
+    abstract public function getTables();
 
     /**
      * List table cols
      *
      * @return Array<String,Array<String,String>> col name, {Attribute,Value}
      */
-    abstract function getTableCols($table);
+    abstract public function getTableCols($table);
 
     /**
      * Create/Update/Remove table
@@ -129,7 +127,7 @@ abstract class Driver
      * @param  tablename, array<String,array<Attribute,Value>> Cols
      * @return boolean
      */
-    abstract function alterTable($table,$cols);
+    abstract public function alterTable($table, $cols);
 
     /**
      * check if exist table
@@ -137,11 +135,9 @@ abstract class Driver
      * @param  tablename
      * @return boolean
      */
-    abstract function existTable($table);
+    abstract public function existTable($table);
 
-    abstract function getStats();
+    abstract public function getStats();
 
-    abstract function getPrimaryKey($table);
-
+    abstract public function getPrimaryKey($table);
 }
-?>

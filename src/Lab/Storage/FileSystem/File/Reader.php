@@ -23,11 +23,12 @@ use Kito\Storage\FileSystem\File;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Reader extends File {
-
+class Reader extends File
+{
     private $handle = false;
 
-    public function __construct(Path $path) {
+    public function __construct(Path $path)
+    {
         parent::validateExistence();
         parent::validateReadable();
 
@@ -38,7 +39,8 @@ class Reader extends File {
         }
     }
 
-    public function readLine($maxLength = null) {
+    public function readLine($maxLength = null)
+    {
         if ($this->eof()) {
             return null;
         }
@@ -52,7 +54,8 @@ class Reader extends File {
         return $line;
     }
 
-    public function read($length) {
+    public function read($length)
+    {
         if ($this->eof()) {
             return null;
         }
@@ -66,16 +69,17 @@ class Reader extends File {
         return $line;
     }
 
-    public function eof() {
+    public function eof()
+    {
         return feof($this->handle);
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         if ($this->handle !== false) {
             if (!fclose($this->handle)) {
                 throw new IOException($this->__toString());
             }
         }
     }
-
 }

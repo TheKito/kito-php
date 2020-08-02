@@ -23,15 +23,16 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Server {
-
-    public static function getRequest(): ServerRequestInterface {
+class Server
+{
+    public static function getRequest(): ServerRequestInterface
+    {
         return (new \Jasny\HttpMessage\ServerRequest())->withGlobalEnvironment();
     }
 
-    public static function sendResponse(ResponseInterface $response) {
+    public static function sendResponse(ResponseInterface $response)
+    {
         $emitter = new \Jasny\HttpMessage\Emitter();
         $emitter->emit($response);
     }
-
 }

@@ -23,11 +23,9 @@ namespace Kito\HTML\Tag;
  */
 class Title extends Element
 {
-
-    function __construct($title)
+    public function __construct($title)
     {
         $this->closeMode = 0;
         $this->addChild($title);
     }
-
 }

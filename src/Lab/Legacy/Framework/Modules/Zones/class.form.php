@@ -14,15 +14,15 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 
 class ZoneForm extends HForm
 {
-    var $zone;
-    function __construct($zone_id)
+    public $zone;
+    public function __construct($zone_id)
     {
         $this->zone= Zone::getZone($zone_id, getDBDriver("System"));
     }
@@ -36,8 +36,7 @@ class ZoneForm extends HForm
         $combo->setList($this->zone->getParents(), true);
         array_push($a, $combo);
 
-        foreach ($this->zone->getAttributes() as $name)
-        {
+        foreach ($this->zone->getAttributes() as $name) {
             array_push($a, new FormText($name, $name, $this->zone->get($name, "")));
         }
         
@@ -51,4 +50,3 @@ class ZoneForm extends HForm
         return "Zones";
     }
 }
-?>

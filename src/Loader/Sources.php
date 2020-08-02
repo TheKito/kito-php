@@ -20,9 +20,10 @@ namespace Kito\Loader;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Sources {
-
-    public static function attach(Loader $loader): void {
+class Sources
+{
+    public static function attach(Loader $loader): void
+    {
         $loader->addRepository('/Psr/Log', 'https://raw.githubusercontent.com/php-fig/log/master/Psr/Log');
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-message/master/src');
         $loader->addRepository('/Psr/Http/Message', 'https://raw.githubusercontent.com/php-fig/http-factory/master/src');
@@ -37,11 +38,11 @@ class Sources {
         $loader->addRepository('/Nyholm/Psr7', 'https://raw.githubusercontent.com/Nyholm/psr7/master/src/');
         $loader->addRepository('/Nyholm/Psr7Server', 'https://raw.githubusercontent.com/Nyholm/psr7-server/master/src/');
         
-        $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');        
+        $loader->addRepository('/PHPMailer/PHPMailer', 'https://raw.githubusercontent.com/PHPMailer/PHPMailer/master/src/');
         
-        $loader->addRepository('/Monolog', 'https://raw.githubusercontent.com/Seldaek/monolog/master/src/Monolog');        
+        $loader->addRepository('/Monolog', 'https://raw.githubusercontent.com/Seldaek/monolog/master/src/Monolog');
         
-        $loader->addRepository('/Pecee', 'https://raw.githubusercontent.com/skipperbent/simple-php-router/master/src/Pecee/');        
+        $loader->addRepository('/Pecee', 'https://raw.githubusercontent.com/skipperbent/simple-php-router/master/src/Pecee/');
                 
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/nikic/FastRoute/master/src/');
         $loader->addRepository('/FastRoute', 'https://raw.githubusercontent.com/TheKito/FastRoute/master/src/');
@@ -58,7 +59,7 @@ class Sources {
 
 
         
-        $loader->addRepository('/GeoIp2', 'https://raw.githubusercontent.com/maxmind/GeoIP2-php/master/src/');        
+        $loader->addRepository('/GeoIp2', 'https://raw.githubusercontent.com/maxmind/GeoIP2-php/master/src/');
 
         $loader->addRepository('/Guzzle/Http', 'https://raw.githubusercontent.com/thekito/guzzle/master/src');
 
@@ -80,5 +81,4 @@ class Sources {
 
         $loader->addRepository('/Kito/Proxy', 'https://raw.githubusercontent.com/TheKito/proxy/master/src');
     }
-
 }

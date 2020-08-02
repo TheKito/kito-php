@@ -14,18 +14,17 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormSubmit extends HTMLElement
 {
-
-    var $title;
-    var $name;
-    var $value;
-    var $base_name;
-    function __construct($title,$name,$value)
+    public $title;
+    public $name;
+    public $value;
+    public $base_name;
+    public function __construct($title, $name, $value)
     {
         $this->base_name=$name;
 
@@ -40,7 +39,7 @@ class FormSubmit extends HTMLElement
         $this->setAttr("value", $this->value);
     }
     
-    public  function getHTML()
+    public function getHTML()
     {
         $id=HTMLElement::getId("blk_submit");
 
@@ -49,8 +48,5 @@ class FormSubmit extends HTMLElement
         } else {
             return "<input value='".$this->title."' type=button onclick='blk_submit_form(blk_get_form(this));' id='".$id."' />".'<script language=javascript>document.getElementById("'.$id.'").style.display="none";</script>';
         }
-
-
     }
 }
-?>

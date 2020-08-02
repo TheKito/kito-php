@@ -20,33 +20,33 @@
  */
 class MySqlDriver extends Driver
 {
-    var $server="127.0.0.1";
-    var $database="test";
-    var $user="test";
-    var $password="";
-    var $cnn=false;
-    var $calls=0;
+    public $server="127.0.0.1";
+    public $database="test";
+    public $user="test";
+    public $password="";
+    public $cnn=false;
+    public $calls=0;
 
-    function getStats()
+    public function getStats()
     {
         return "Total Commands and Querys:".$this->calls;
     }
 
-    function __construct($params)
+    public function __construct($params)
     {
-        if(isset($params["Server"])) {
+        if (isset($params["Server"])) {
             $this->server=$params["Server"];
         }
 
-        if(isset($params["Database"])) {
+        if (isset($params["Database"])) {
             $this->database=$params["Database"];
         }
 
-        if(isset($params["User"])) {
+        if (isset($params["User"])) {
             $this->user=$params["User"];
         }
 
-        if(isset($params["Password"])) {
+        if (isset($params["Password"])) {
             $this->password=$params["Password"];
         }
 
@@ -54,18 +54,18 @@ class MySqlDriver extends Driver
         $this->connect();
     }
 
-    function isConnected()
+    public function isConnected()
     {
-        if($this->cnn===false) {
+        if ($this->cnn===false) {
             return false;
         } else {
             return mysql_ping($this->cnn);
         }
     }
 
-    function connect()
+    public function connect()
     {
-        if($this->isConnected()) {
+        if ($this->isConnected()) {
             $this->close();
         }
 
@@ -77,7 +77,7 @@ class MySqlDriver extends Driver
             return false;
         }
 
-        if(!mysql_select_db($this->database, $this->cnn)) {
+        if (!mysql_select_db($this->database, $this->cnn)) {
             trigger_error("DataBase Error ".$this->database." on ".$this->server, E_USER_WARNING);
             $this->close();
             return false;
@@ -86,7 +86,7 @@ class MySqlDriver extends Driver
     }
 
 
-    function close()
+    public function close()
     {
         if (!$this->isConnected()) {
             return true;
@@ -95,7 +95,7 @@ class MySqlDriver extends Driver
         return !(mysql_close($this->cnn)===false);
     }
 
-    function query($sql)
+    public function query($sql)
     {
         callFunction("Logger", "Log", array("DEBUG","MySql Query:".$sql));
         include_once 'class.resultset.php';
@@ -117,7 +117,7 @@ class MySqlDriver extends Driver
 
 
 
-    function gettext($Table_,$Row_,$Cond)
+    public function gettext($Table_, $Row_, $Cond)
     {
         $tmp=$this->query("select ".$Row_." from ".$Table_." where ".$Cond." limit 1;");
         if ($this->getRows($tmp)> 0) {
@@ -129,39 +129,36 @@ class MySqlDriver extends Driver
         return "";
     }
 
-    function command($SQL)
+    public function command($SQL)
     {
         callFunction("Logger", "Log", array("DEBUG","MySql Command:".$SQL));
         $this->calls++;
-            $Result=mysql_unbuffered_query($SQL, $this->cnn);
+        $Result=mysql_unbuffered_query($SQL, $this->cnn);
 
         if ($Result===false) {
             trigger_error("command Error;".mysql_error(), E_USER_WARNING);
             return false;
-        }
-        else
-        {
+        } else {
             callFunction("Logger", "Log", array("DEBUG","MySql Command OK->".$SQL));
             return true;
         }
     }
     //Structure
-    function getTables()
+    public function getTables()
     {
         //debug_print_backtrace();
         $r=array();
 
         $tmp=$this->query("SHOW TABLES FROM ".$this->database);
           
-        while ($tmp->next())
-        {
+        while ($tmp->next()) {
             $row=$tmp->get();
             array_push($r, $row["Tables_in_imo"]);
         }
 
         return $r;
     }
-    function __destruct()
+    public function __destruct()
     {
         $this->close();
     }
@@ -178,19 +175,18 @@ class MySqlDriver extends Driver
     //
     //        return $r;
     //    }
-    function getTableCols($table)
+    public function getTableCols($table)
     {
-
         $r=array();
 
         $tmp=$this->query("SHOW COLUMNS FROM ".$table);
         if ($tmp!==false && $tmp->first()) {
-            while (true)
-                {
+            while (true) {
                 $row=$tmp->get();
                 $r[$row["Field"]]=$row;
                     
-                if (!$tmp->next()) { break;
+                if (!$tmp->next()) {
+                    break;
                 }
             }
         }
@@ -199,30 +195,28 @@ class MySqlDriver extends Driver
         return $r;
     }
 
-    function existTable($table)
+    public function existTable($table)
     {
         return in_array(strtoupper($table), $this->getTables());
     }
-    function createTable($table,$cols)
+    public function createTable($table, $cols)
     {
-        $sql="CREATE TABLE ".$table."("; 
-        foreach (array_expression as $key => $value)
-        {
+        $sql="CREATE TABLE ".$table."(";
+        foreach (array_expression as $key => $value) {
             $sql.=$key." ".$value["Type"]." ".($value["Null"]=="NO"?"not null":"")." ".$value["Extra"].",";
         }
         $sql.=");";
     }
-    function editTable($table,$cols)
+    public function editTable($table, $cols)
     {
-        
     }
-    function alterTable($table,$cols)
+    public function alterTable($table, $cols)
     {
         $e=existTable($table);
         $table=strtoupper($table);
 
-        if($cols==null || !is_array($cols) || array_count_values($cols)==0) {
-            if($e) {
+        if ($cols==null || !is_array($cols) || array_count_values($cols)==0) {
+            if ($e) {
                 return $this->command("DROP TABLE IF EXISTS ".$table.";");
             } else {
                 return true;
@@ -241,7 +235,7 @@ class MySqlDriver extends Driver
 
     public function getPrimaryKey($table)
     {
-        foreach ($this->getTableCols($table) as $col => $data) {       
+        foreach ($this->getTableCols($table) as $col => $data) {
             foreach ($data as $key => $value) {
                 if ($key=="Key" && $value=="PRI") {
                     return $col;
@@ -251,4 +245,3 @@ class MySqlDriver extends Driver
         return false;
     }
 }
-?>

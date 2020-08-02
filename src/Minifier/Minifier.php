@@ -20,32 +20,37 @@ namespace Kito\Minifier;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-abstract class Minifier {
-
+abstract class Minifier
+{
     protected $maxLineSize = 8000;
 
-    public function __construct(int $maxLineSize = 8000) {
+    public function __construct(int $maxLineSize = 8000)
+    {
         $this->maxLineSize = $maxLineSize;
     }
 
-    public function getMaxLineSize(): int {
+    public function getMaxLineSize(): int
+    {
         return $this->maxLineSize;
     }
 
-    public function setMaxLineSize($maxLineSize): void {
+    public function setMaxLineSize($maxLineSize): void
+    {
         $this->maxLineSize = $maxLineSize;
     }
 
-    protected abstract function minifyLine($codeLine);
+    abstract protected function minifyLine($codeLine);
 
-    public function parseFromString(string $code): string {
+    public function parseFromString(string $code): string
+    {
         $_ = '';
 
         foreach (explode("\n", str_replace("\r", "\n", $code)) as $codeLine) {
             $codeLine = trim($codeLine);
 
-            if (empty($codeLine))
+            if (empty($codeLine)) {
                 continue;
+            }
 
             $_ .= $this->minifyLine($codeLine);
         }
@@ -53,12 +58,15 @@ abstract class Minifier {
         return $_;
     }
 
-    public function parseFromFile(string $filePathSource, ?string $filePathMinified = null, bool $forceReWrite = false): void {
-        if ($filePathMinified === null)
+    public function parseFromFile(string $filePathSource, ?string $filePathMinified = null, bool $forceReWrite = false): void
+    {
+        if ($filePathMinified === null) {
             $filePathMinified = pathinfo($filePathSource, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR . pathinfo($filePathSource, PATHINFO_FILENAME) . '.min.' . pathinfo($filePathSource, PATHINFO_EXTENSION);
+        }
 
-        if (file_exists($filePathMinified) && filemtime($filePathMinified) >= filemtime($filePathSource) && $forceReWrite == false)
+        if (file_exists($filePathMinified) && filemtime($filePathMinified) >= filemtime($filePathSource) && $forceReWrite == false) {
             return;
+        }
 
         $sourceFileDescriptor = fopen($filePathSource, "r");
         $destinationFileDescriptor = fopen($filePathMinified, "w");
@@ -66,8 +74,9 @@ abstract class Minifier {
         foreach (fgets($sourceFileDescriptor, $this->maxLineSize) as $codeLine) {
             $codeLine = trim($codeLine);
 
-            if (empty($codeLine))
+            if (empty($codeLine)) {
                 continue;
+            }
 
             fwrite($destinationFileDescriptor, $this->minifyLine($codeLine));
         }
@@ -75,5 +84,4 @@ abstract class Minifier {
         fclose($destinationFileDescriptor);
         fclose($sourceFileDescriptor);
     }
-
 }

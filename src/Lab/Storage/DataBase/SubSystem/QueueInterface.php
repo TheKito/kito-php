@@ -17,12 +17,12 @@
 namespace Kito\DataBase\NoSQL;
 
 /**
- * Proxy class for access Memcache or Memcached common functions 
+ * Proxy class for access Memcache or Memcached common functions
  *
  * @author TheKito
  */
-interface QueueInterface {
-
+interface QueueInterface
+{
     public function dequeue();
 
     public function enqueue($var): bool;

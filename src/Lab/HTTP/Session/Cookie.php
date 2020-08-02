@@ -25,7 +25,6 @@ use Kito\Cryptography\SecureID;
  */
 class Cookie
 {
-
     private $name;
     private $key;
     private $hash;
@@ -65,7 +64,7 @@ class Cookie
         setcookie($cB, strtoupper(sha1($hashKey . $SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
     }
 
-    function getSessio_nID($hashKey, $secure = false, $name = 'GSI')
+    public function getSessio_nID($hashKey, $secure = false, $name = 'GSI')
     {
         $name = strtoupper($name);
         $hashKey = strtoupper($hashKey);
@@ -101,5 +100,4 @@ class Cookie
         $cache[$cA] = $SID;
         return $SID;
     }
-
 }

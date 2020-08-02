@@ -20,6 +20,6 @@ namespace Kito\Cryptography;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class HashAlgorithmNotFoundException extends Exception {
-    
+class HashAlgorithmNotFoundException extends Exception
+{
 }

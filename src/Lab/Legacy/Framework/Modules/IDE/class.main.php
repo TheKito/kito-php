@@ -14,17 +14,16 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class IDE extends Module
 {
-
     public function __load()
     {
         getModule("HTML")->loadTemplate("IDE");
-        if(getParam("Tag")===false) {
+        if (getParam("Tag")===false) {
             $table=new HTMLtable();
             $table->setAttr("border", "1");
             $table->setAttr("cellpadding", "0");
@@ -57,12 +56,9 @@ class IDE extends Module
             $td_main->addChild("<iframe name=body frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=Body'></iframe>");
             $td_list->addChild("<iframe frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=List'></iframe>");
             write($table);
-
-        }
-        else if(getParam("Tag")=="Body") {
+        } elseif (getParam("Tag")=="Body") {
             $zm=getModulesZone();
-            foreach ($zm->getChild() as $zm1)
-            {
+            foreach ($zm->getChild() as $zm1) {
                 $a=new HTMLa("?Module=IDE&Tag=Module&Object=".$zm1->name."");
 
                 $a->addChild("<img border=0 style='width:40px;height:40px;' src='?Module=".$zm1->name."&Tag=Image&Image=icon.png'>");
@@ -74,54 +70,48 @@ class IDE extends Module
             include_once 'class.form.php';
             $a=new ModuleForm();
             write($a->getHTML());
-        }
-        else if(getParam("Tag")=="Module") {
-              write("<table style='width:100%;height:100%' border=0 cellpadding=0 cellspacing=0>");
-                write("<tr>");
-                    write("<td style='width:300px;'>");
-                        write("<iframe name=menu frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=Menu&Object=".getParam("Object")."'></iframe>");
-                    write("</td>");
-                    write("<td>");
-                        write("<table style='width:100%;height:100%' border=0 cellpadding=0 cellspacing=0>");
-                            write("<tr style='height:40px;'>");
-                                write("<td>");
-                                    write("<table style='width:100%;height:100%' border=0>");
-                                        write("<tr>");
-                                            write("<td style='width:40px;' valign=top>");
-                                                write(HTML::Link("?Module=IDE&Tag=Body", "", "<img border=0 style='width:40px;height:40px;' src='?Module=IDE&Tag=Image&Image=back.png'>"));
-                                            write("</td>");
-                                            write("<td class=title align=center>");
-                                                write("<img border=0 style='width:60px;height:60px;' src='?Module=".getParam("Object")."&Tag=Image&Image=icon.png'>&nbsp;".getParam("Object"));
-                                            write("</td>");
-                                            write("<td style='width:40px;'></td>");
-                                        write("</tr>");
-                                    write("</table>");
-                                write("</td>");
-                            write("</tr>");
-                            write("<tr>");
-                                write("<td>");
-                                    write("<iframe name=proxy frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=Proxy&Object=".getParam("Object")."'></iframe>");
-                                write("</td>");
-                            write("</tr>");
-                        write("</table>");
-                    write("</td>");
-                write("</tr>");
+        } elseif (getParam("Tag")=="Module") {
+            write("<table style='width:100%;height:100%' border=0 cellpadding=0 cellspacing=0>");
+            write("<tr>");
+            write("<td style='width:300px;'>");
+            write("<iframe name=menu frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=Menu&Object=".getParam("Object")."'></iframe>");
+            write("</td>");
+            write("<td>");
+            write("<table style='width:100%;height:100%' border=0 cellpadding=0 cellspacing=0>");
+            write("<tr style='height:40px;'>");
+            write("<td>");
+            write("<table style='width:100%;height:100%' border=0>");
+            write("<tr>");
+            write("<td style='width:40px;' valign=top>");
+            write(HTML::Link("?Module=IDE&Tag=Body", "", "<img border=0 style='width:40px;height:40px;' src='?Module=IDE&Tag=Image&Image=back.png'>"));
+            write("</td>");
+            write("<td class=title align=center>");
+            write("<img border=0 style='width:60px;height:60px;' src='?Module=".getParam("Object")."&Tag=Image&Image=icon.png'>&nbsp;".getParam("Object"));
+            write("</td>");
+            write("<td style='width:40px;'></td>");
+            write("</tr>");
             write("</table>");
-
-
-
-        }
-        else if(getParam("Tag")=="Proxy") {
+            write("</td>");
+            write("</tr>");
+            write("<tr>");
+            write("<td>");
+            write("<iframe name=proxy frameborder=0 style='width:100%;height:100%' src='?Module=IDE&Tag=Proxy&Object=".getParam("Object")."'></iframe>");
+            write("</td>");
+            write("</tr>");
+            write("</table>");
+            write("</td>");
+            write("</tr>");
+            write("</table>");
+        } elseif (getParam("Tag")=="Proxy") {
             $res=callFunction(getParam("Object"), "getIDEHtml", array(getParam("Item")));
-            if($res!==false) {
+            if ($res!==false) {
                 write($res);
             } else {
                 write("UPS! Error to get Module Panel (".getParam("Object").")");
             }
-        }
-        else if(getParam("Tag")=="Menu") {
+        } elseif (getParam("Tag")=="Menu") {
             $res=callFunction(getParam("Object"), "getIDEMenu", array(getParam("Item")));
-            if($res!==false) {
+            if ($res!==false) {
                 IDE::writeMenu($res);
             } else {
                 write("UPS! Error to get Module Menu (".getParam("Object").")");
@@ -132,24 +122,22 @@ class IDE extends Module
     private static function writeMenu($items)
     {
         write("<table style='width:100%;' border=0>");
-        foreach ($items as $key => $value)
-        {
+        foreach ($items as $key => $value) {
             write("<tr valign=top>");
-                write("<td style='width:20px;' valign=top>");
+            write("<td style='width:20px;' valign=top>");
             if (!is_array($value)) {
                 write("<img border=0 style='width:20px;height:20px;' src='?Module=".getParam("Object")."&Tag=Image&Image=$key'>");
             } else {
-                        write("");
+                write("");
             }
-                write("</td>");
-                write("<td valign=top>");
+            write("</td>");
+            write("<td valign=top>");
             if (is_array($value)) {
                 IDE::writeMenu($value);
-            } else
-                    {
+            } else {
                 write("<a target=proxy href='?Module=IDE&Tag=Proxy&Object=".getParam("Object")."&Item=$key'>".$value."</a>");
             }
-                write("</td>");
+            write("</td>");
             write("</tr>");
         }
         write("</table>");
@@ -158,16 +146,15 @@ class IDE extends Module
 
     public function __destruct()
     {
-
     }
     public function __construct()
     {
         getModule("Form");
         getModule("HTML");
     }
-    public function Form_Check($name,$value)
+    public function Form_Check($name, $value)
     {
-        if($name=="Module" || $name=="Module2") {
+        if ($name=="Module" || $name=="Module2") {
             return getModule($value)!==false;
         }
     }
@@ -175,7 +162,7 @@ class IDE extends Module
     {
         return true;
     }
-    function setup()
+    public function setup()
     {
         foreach (scandir(dirname(__FILE__)."/../") as $name) {
             if ($name!=".." && $name!="." && is_dir(dirname(__FILE__)."/../$name")) {
@@ -189,4 +176,3 @@ class IDE extends Module
     {
     }
 }
-?>

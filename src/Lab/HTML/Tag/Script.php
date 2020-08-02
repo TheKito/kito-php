@@ -23,11 +23,10 @@ namespace Kito\HTML\Tag;
  */
 class Script extends Element
 {
+    public $file = false;
+    public $lines = array();
 
-    var $file = false;
-    var $lines = array();
-
-    function __construct($path = false)
+    public function __construct($path = false)
     {
         $this->closeMode = 0;
         $this->setAttr("language", "'javascript'");
@@ -36,5 +35,4 @@ class Script extends Element
             $this->setAttr("src", "'" . $path . "'");
         }
     }
-
 }

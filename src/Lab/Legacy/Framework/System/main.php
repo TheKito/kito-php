@@ -14,40 +14,39 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 
-function getValue($key,$default)
+function getValue($key, $default)
 {
     return getSystemZone()->get($key, $default);
 }
-function setValue($key,$value)
+function setValue($key, $value)
 {
     return getSystemZone()->set($key, $value);
 }
 function timeGetTime($micro=true)
 {
     list($useg, $seg) = explode(" ", microtime());
-        return ((float)($micro?$useg:0) + (float)$seg);
+    return ((float)($micro?$useg:0) + (float)$seg);
 }
 
 function ErrorHandler($errno, $errstr, $errfile, $errline)
-{        
-    if(!callFunction("Logger", "Log", array(($errno!=8 && $errno!=2048 && $errno!=2)?"ALERT":"ERROR","$errno $errstr $errfile:$errline"))) {
+{
+    if (!callFunction("Logger", "Log", array(($errno!=8 && $errno!=2048 && $errno!=2)?"ALERT":"ERROR","$errno $errstr $errfile:$errline"))) {
         write("$errno $errstr $errfile:$errline<br>");
     }
 }
-function ArrayToTags($params,$equal="=",$sep=" ",$sep_ini=true,$non_com=true)
+function ArrayToTags($params, $equal="=", $sep=" ", $sep_ini=true, $non_com=true)
 {
     if (!is_array($params)) {
         return ($sep_ini?$sep:"").$params;
     }
 
     $out="";
-    foreach ($params as $key => $value)
-    {
+    foreach ($params as $key => $value) {
         $key=strtolower($key);
 
         if ($sep_ini) {
@@ -55,20 +54,18 @@ function ArrayToTags($params,$equal="=",$sep=" ",$sep_ini=true,$non_com=true)
         }
 
         if ($value!="" && !is_numeric($key)) {
-            if(strpos($value, " ") === false || $non_com===false) {
+            if (strpos($value, " ") === false || $non_com===false) {
                 $out.="$key$equal".$value;
             } else {
                 $out.=$key.$equal."'".$value."'";
             }
-        }
-        else {
+        } else {
             $out.=is_numeric($key)?$value:$key;
         }
 
         if (!$sep_ini) {
             $out.=$sep;
         }
-
     }
     return $out;
 }
@@ -88,22 +85,21 @@ function init()
 
     include_once "module.php";
     include_once "zone.php";
-    include_once "database.php";    
+    include_once "database.php";
     include_once "client.php";
     include_once "session.php";
     include_once "authentication.php";
 
-    if(getParam("Tag")=="Script" && getParam("Module")!==false) {
+    if (getParam("Tag")=="Script" && getParam("Module")!==false) {
         proxyScript(getParam("Module"));
         exit;
-    }
-    else if(getParam("Tag")=="Image" && getParam("Module")!==false && getParam("Image")!==false) {
+    } elseif (getParam("Tag")=="Image" && getParam("Module")!==false && getParam("Image")!==false) {
         proxyImage(getParam("Module"), getParam("Image"));
         exit;
     }
 
     
-    if(getSessionValue("Setup", "N")=="N") {
+    if (getSessionValue("Setup", "N")=="N") {
         include_once 'compatibility.php';
     } else {
         getOutputModule();
@@ -121,11 +117,11 @@ function init()
 }
 function strEndsWith($FullStr, $EndStr)
 {
-        // Get the length of the end string
+    // Get the length of the end string
     $StrLen = strlen($EndStr);
-        // Look at the end of FullStr for the substring the size of EndStr
+    // Look at the end of FullStr for the substring the size of EndStr
     $FullStrEnd = substr($FullStr, strlen($FullStr) - $StrLen);
-        // If it matches, it does end with EndStr
+    // If it matches, it does end with EndStr
     return $FullStrEnd == $EndStr;
 }
 function strStartsWith($FullStr, $StartStr)
@@ -147,5 +143,3 @@ function autoLoadClasses($path)
     }
 }
     init();
-   
-?>

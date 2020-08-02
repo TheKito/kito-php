@@ -23,10 +23,8 @@ namespace Kito\HTML\Tag;
  */
 class Progress extends Element
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->closeMode = 3;
     }
-
 }

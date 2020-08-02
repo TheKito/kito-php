@@ -23,10 +23,8 @@ namespace Kito\HTML\Tag;
  */
 class Form extends Element
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->closeMode = 0;
     }
-
 }

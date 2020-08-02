@@ -36,4 +36,3 @@ echo $o->get();
 
 
 echo tree($data);
-?>

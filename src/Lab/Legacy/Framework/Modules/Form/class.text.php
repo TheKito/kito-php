@@ -14,17 +14,16 @@
  */
 
 /**
- * 
+ *
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormText extends HTMLElement
 {
-
-    var $title;
-    var $value;
-    var $base_name;
-    function __construct($title,$name,$value)
+    public $title;
+    public $value;
+    public $base_name;
+    public function __construct($title, $name, $value)
     {
         $this->base_name=$name;
 
@@ -46,10 +45,9 @@ class FormText extends HTMLElement
         $this->setAttr("onchange", "return blk_element_change(this);");
     }
 
-    public  function getHTML()
+    public function getHTML()
     {
         return $this->toHtml();
         //return "<input type=text name='$this->name' onblur='return blk_form_change(this);' onchange='return blk_element_change(this);' value='".$this->value."' id='".$this->id."' />";
     }
 }
-?>

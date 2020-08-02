@@ -18,30 +18,31 @@
  *
  * @author The TheKito < blankitoracing@gmail.com >
  */
-class FinalAttribute {
-
+class FinalAttribute
+{
     private $idz;
     private $name;
     private $az;
 
-    public function __construct(&$az, $idz, $name) {
+    public function __construct(&$az, $idz, $name)
+    {
         $this->az = $az;
         $this->idz = $idz;
         $this->name = $name;
     }
 
-    public function set($value) {
+    public function set($value)
+    {
         return $this->az->set($this->idz, $this->name, $value);
     }
 
-    public function get($default = null) {
+    public function get($default = null)
+    {
         return $this->az->get($this->idz, $this->name, $default);
     }
 
-    public function delete() {
+    public function delete()
+    {
         return $this->az->delete($this->idz, $this->name);
     }
-
 }
-
-?>

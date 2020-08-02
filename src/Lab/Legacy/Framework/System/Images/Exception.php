@@ -20,6 +20,6 @@ namespace Kito\Lab\Legacy\Framework\System\Images;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
-class Exception extends \Kito\Lab\Legacy\Framework\System\Exception {
-    
+class Exception extends \Kito\Lab\Legacy\Framework\System\Exception
+{
 }

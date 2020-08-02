@@ -23,10 +23,8 @@ namespace Kito\HTML\Tag;
  */
 class Hr extends Element
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->closeMode = 2;
     }
-
 }
