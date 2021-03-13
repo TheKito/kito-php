@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class DataFour extends DataN
@@ -36,24 +33,27 @@ class DataFour extends DataN
 
     public function getId($value0, $value1, $value2, $create = true)
     {
-        return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1, $this->tableCol2 => $value2), $create);
+        return parent::getId([$this->tableCol0 => $value0, $this->tableCol1 => $value1, $this->tableCol2 => $value2], $create);
     }
 
     public function getValue0($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol0];
     }
 
     public function getValue1($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol1];
     }
 
     public function getValue2($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol2];
     }
 }

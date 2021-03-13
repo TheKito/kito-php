@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,40 +10,38 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\SQL;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 abstract class SQL implements SQLInterface
 {
-    final public function getArray($table, $column, $where = array()): array
+    final public function getArray($table, $column, $where = []): array
     {
-        $r = array();
+        $r = [];
 
-        foreach ($this->select($table, array($column), $where) as $ROW) {
+        foreach ($this->select($table, [$column], $where) as $ROW) {
             array_push($r, $ROW[$column]);
         }
 
         return $r;
     }
 
-    final public function getHashMap($table, $columnKey, $columnValue, $where = array()): array
+    final public function getHashMap($table, $columnKey, $columnValue, $where = []): array
     {
-        $r = array();
+        $r = [];
 
-        foreach ($this->select($table, array($columnKey, $columnValue), $where) as $ROW) {
+        foreach ($this->select($table, [$columnKey, $columnValue], $where) as $ROW) {
             $r[$ROW[$columnKey]] = $ROW[$columnValue];
         }
 
         return $r;
     }
 
-    final public function getRow($table, $column = array(), $where = array()): array
+    final public function getRow($table, $column = [], $where = []): array
     {
         $RS = $this->select($table, $column, $where, 2);
 
@@ -59,9 +56,9 @@ abstract class SQL implements SQLInterface
         return $RS[0];
     }
 
-    final public function getText($table, $column, $where = array()): ?string
+    final public function getText($table, $column, $where = []): ?string
     {
-        $ROW = $this->getRow($table, array($column), $where);
+        $ROW = $this->getRow($table, [$column], $where);
 
         if ($ROW == null) {
             return null;
@@ -70,7 +67,7 @@ abstract class SQL implements SQLInterface
         return $ROW[$column];
     }
 
-    final public function autoTable($table, $data, $column = array(), $create = true): array
+    final public function autoTable($table, $data, $column = [], $create = true): array
     {
         $rs = $this->select($table, $column, $data, 1);
 
@@ -83,10 +80,10 @@ abstract class SQL implements SQLInterface
                 if (count($rs) > 0) {
                     return $rs[0];
                 } else {
-                    throw new InsertException(print_r(array($table, $data), true));
+                    throw new InsertException(print_r([$table, $data], true));
                 }
             } else {
-                throw new InsertException(print_r(array($table, $data), true));
+                throw new InsertException(print_r([$table, $data], true));
             }
         } else {
             return null;
@@ -111,7 +108,7 @@ abstract class SQL implements SQLInterface
 
         foreach ($ROW as $KEY => $VALUE) {
             if (array_key_exists($KEY, $data) && $VALUE != $data[$KEY]) {
-                $this->update($table, array($KEY => $data[$KEY]), $index, 1);
+                $this->update($table, [$KEY => $data[$KEY]], $index, 1);
                 $UPDATES++;
             }
         }
@@ -121,7 +118,7 @@ abstract class SQL implements SQLInterface
 
     final public function autoInsert($table, $data): bool
     {
-        $rs = $this->select($table, array(), $data, 1);
+        $rs = $this->select($table, [], $data, 1);
 
         if (count($rs) > 0) {
             return true;
@@ -138,7 +135,7 @@ abstract class SQL implements SQLInterface
     {
         $prefixLen = strlen($prefix);
 
-        $_ = array();
+        $_ = [];
 
         foreach ($this->getTables() as $table) {
             if (substr($table, 0, $prefixLen) == $prefix) {

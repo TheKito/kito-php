@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of class
+ * Description of class.
  *
  * @author andresrg
  */
@@ -19,9 +19,9 @@ class Address
     {
         $this->root_zone = $root_zone;
         $z = $root_zone;
-        $z = $z->get("Standard");
-        $z = $z->get("Geographic");
-        $this->zone0 = $z->get("Addresses");
+        $z = $z->get('Standard');
+        $z = $z->get('Geographic');
+        $this->zone0 = $z->get('Addresses');
     }
 
     protected function getParentZone()
@@ -36,10 +36,10 @@ class Address
 
     public function getCountries()
     {
-        $list = array();
+        $list = [];
 
         foreach (self::getParentZone()->getZones() as $zone) {
-            if ($zone->getAttribute("Type")->get() == "Country") {
+            if ($zone->getAttribute('Type')->get() == 'Country') {
                 $list[$zone->getName()] = new AddressCountry($this->getRootZone(), $zone->getName());
             }
         }

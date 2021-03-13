@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  */
 
 namespace Kito\HTML\Tag;
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Img extends Element
@@ -26,9 +22,9 @@ class Img extends Element
     public function __construct($src, $alt = false)
     {
         $this->closeMode = 2;
-        $this->setAttr("src", $src);
+        $this->setAttr('src', $src);
         if ($alt !== false) {
-            $this->setAttr("alt", $alt);
+            $this->setAttr('alt', $alt);
         }
     }
 }

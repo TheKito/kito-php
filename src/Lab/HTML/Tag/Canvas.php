@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  */
 
 namespace Kito\HTML\Tag;
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Canvas extends Element
@@ -27,7 +23,7 @@ class Canvas extends Element
     {
         $this->closeMode = 3;
 
-        $this->addChild("Your browser does not support HTML5 canvas element.");
-        $this->setAttr("name", $name);
+        $this->addChild('Your browser does not support HTML5 canvas element.');
+        $this->setAttr('name', $name);
     }
 }

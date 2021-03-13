@@ -15,15 +15,14 @@
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class NodeLink extends Link
 {
-    private static $tableName = "BLK_NODE_LINK";
-    private static $tablePk = "NODE_LINK_ID";
-    private static $tableValue0 = "NODE_LINK_NAME_ID_A";
-    private static $tableValue1 = "NODE_LINK_NAME_ID_B";
+    private static $tableName = 'BLK_NODE_LINK';
+    private static $tablePk = 'NODE_LINK_ID';
+    private static $tableValue0 = 'NODE_LINK_NAME_ID_A';
+    private static $tableValue1 = 'NODE_LINK_NAME_ID_B';
 
     public function __construct($cnn)
     {

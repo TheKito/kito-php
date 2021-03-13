@@ -14,7 +14,7 @@
  */
 
 /**
- * main
+ * main.
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -23,11 +23,13 @@ class Editor extends Module
     //put your code here
     public function __construct()
     {
-        getModule("HTML");
+        getModule('HTML');
     }
+
     public function __destruct()
     {
     }
+
     public function __load()
     {
         write(
@@ -38,8 +40,9 @@ class Editor extends Module
 	});
 </script>'
         );
-        write("<form><textarea id=editor name=editor></textarea></form>");
+        write('<form><textarea id=editor name=editor></textarea></form>');
     }
+
     public function __unload()
     {
     }

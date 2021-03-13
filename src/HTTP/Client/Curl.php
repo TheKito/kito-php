@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,7 +10,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\HTTP\Client;
@@ -19,7 +17,6 @@ namespace Kito\HTTP\Client;
 use Kito\LibraryNotFoundException;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Curl
@@ -58,8 +55,8 @@ class Curl
     private function setProxy(int $proxyType, string $proxyHost, int $proxyPort)
     {
         curl_setopt($this->curl, CURLOPT_PROXYTYPE, $proxyType);
-        curl_setopt($this->curl, CURLOPT_PROXY, $proxyHost . ':' . $proxyPort);
-        $this->curlSetCookiePath($this->curl, sys_get_temp_dir() . '/' . sha1($proxyType . '://' . $proxyHost . ':' . $proxyPort));
+        curl_setopt($this->curl, CURLOPT_PROXY, $proxyHost.':'.$proxyPort);
+        $this->curlSetCookiePath($this->curl, sys_get_temp_dir().'/'.sha1($proxyType.'://'.$proxyHost.':'.$proxyPort));
     }
 
     private function curlSetCookiePath($path)
@@ -68,23 +65,23 @@ class Curl
         curl_setopt($this->curl, CURLOPT_COOKIEFILE, $path);
     }
 
-    private function setHeaders(array $headers = array())
+    private function setHeaders(array $headers = [])
     {
-        $h = array();
+        $h = [];
         foreach ($headers as $name => $values) {
             if (is_array($values)) {
                 foreach ($values as $value) {
-                    $h[] = $name . ': ' . $value;
+                    $h[] = $name.': '.$value;
                 }
             } else {
-                $h[] = $name . ': ' . $values;
+                $h[] = $name.': '.$values;
             }
         }
 
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, $h);
     }
 
-    public function basicRequest(string $url, string $method = 'GET', array $headers = array(), string $payload = null)
+    public function basicRequest(string $url, string $method = 'GET', array $headers = [], string $payload = null)
     {
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($this->curl, CURLOPT_URL, ltrim($url, '/'));

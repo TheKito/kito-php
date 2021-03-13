@@ -14,8 +14,6 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormSubmit extends HTMLElement
@@ -24,26 +22,27 @@ class FormSubmit extends HTMLElement
     public $name;
     public $value;
     public $base_name;
+
     public function __construct($title, $name, $value)
     {
-        $this->base_name=$name;
+        $this->base_name = $name;
 
-        $this->title=$title;
-        $this->setAttr("title", $this->title);
-        $this->setAttr("alt", $this->title);
+        $this->title = $title;
+        $this->setAttr('title', $this->title);
+        $this->setAttr('alt', $this->title);
 
-        $this->name="blk_form_".$this->base_name;
-        $this->setAttr("name", $this->name);
+        $this->name = 'blk_form_'.$this->base_name;
+        $this->setAttr('name', $this->name);
 
-        $this->value=$value;
-        $this->setAttr("value", $this->value);
+        $this->value = $value;
+        $this->setAttr('value', $this->value);
     }
-    
+
     public function getHTML()
     {
-        $id=HTMLElement::getId("blk_submit");
+        $id = HTMLElement::getId('blk_submit');
 
-        if (getSessionValue("Javascript", "N")=="N") {
+        if (getSessionValue('Javascript', 'N') == 'N') {
             return "<input type=submit value='".$this->title."'/>";
         } else {
             return "<input value='".$this->title."' type=button onclick='blk_submit_form(blk_get_form(this));' id='".$id."' />".'<script language=javascript>document.getElementById("'.$id.'").style.display="none";</script>';

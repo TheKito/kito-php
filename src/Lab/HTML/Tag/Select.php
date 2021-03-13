@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  */
 
 namespace Kito\HTML\Tag;
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Select extends Element
@@ -33,21 +29,21 @@ class Select extends Element
         $sl = new HTMLselect();
         foreach ($elements as $key => $value) {
             if ($use_index === false) {
-                if ($value . "-" == $element . "-") {
+                if ($value.'-' == $element.'-') {
                     $op = new HTMLoption(true);
                 } else {
                     $op = new HTMLoption(false);
                 }
 
-                $op->setAttr("value", $value);
+                $op->setAttr('value', $value);
             } else {
-                if ($key . "-" == $element . "-") {
+                if ($key.'-' == $element.'-') {
                     $op = new HTMLoption(true);
                 } else {
                     $op = new HTMLoption(false);
                 }
 
-                $op->setAttr("value", $key);
+                $op->setAttr('value', $key);
                 //print_r($op);
             }
 
@@ -55,6 +51,7 @@ class Select extends Element
 
             $sl->addChild($op);
         }
+
         return $sl;
     }
 }

@@ -14,7 +14,7 @@
  */
 
 /**
- * main
+ * main.
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
@@ -24,34 +24,36 @@ class Zones extends Module
     public function getIDEHtml($item)
     {
         include_once 'class.form.php';
-        $form=new ZoneForm($item);
+        $form = new ZoneForm($item);
+
         return $form->getHTML();
     }
-    public function getIDEMenu($zone=false, $max_level=false)
+
+    public function getIDEMenu($zone = false, $max_level = false)
     {
-        $a=array();
+        $a = [];
 
         if (is_numeric($max_level)) {
             $max_level--;
         }
 
-        if (!is_numeric($max_level) || $max_level>0) {
-            if ($zone===false) {
+        if (!is_numeric($max_level) || $max_level > 0) {
+            if ($zone === false) {
                 foreach (getRootZones() as $zone_) {
                     array_push($a, $this->getIDEMenu($zone_, $max_level));
                 }
             } else {
                 if ($zone->system) {
-                    $a[$zone->id]="<i><b>".$zone->name."</b></i>";
+                    $a[$zone->id] = '<i><b>'.$zone->name.'</b></i>';
                 } else {
-                    $a[$zone->id]=$zone->name;
+                    $a[$zone->id] = $zone->name;
                 }
                 foreach ($zone->getChild() as $zone_) {
                     array_push($a, $this->getIDEMenu($zone_, $max_level));
                 }
             }
         }
-      
+
         return $a;
     }
 
@@ -63,43 +65,50 @@ class Zones extends Module
     public function __destruct()
     {
     }
+
     public function __construct()
     {
-        getModule("Form");
+        getModule('Form');
         //            $HTML=getModule("HTML5");
         //            if(getParam("Module")=="Zones")
         //            $this->zoneGui(getParam("Tag"));
     }
+
     public function Form_Check($name, $value)
     {
         return true;
-        return $name!="parent_id";
+
+        return $name != 'parent_id';
     }
+
     public function Form_Save($params)
     {
-        $zone=Zone::getZone($params["id"], getDBDriver("System"));
+        $zone = Zone::getZone($params['id'], getDBDriver('System'));
 
         foreach ($params as $key => $value) {
-            if ($key=="attttr") {
-                if ($zone->set($value, "")===false) {
+            if ($key == 'attttr') {
+                if ($zone->set($value, '') === false) {
                 }
+
                 return false;
-            } elseif ($key=="parent_id") {
+            } elseif ($key == 'parent_id') {
                 if (!$zone->setParent(Zone::getZone($value, $zone->driver))) {
                     return false;
                 }
-            } elseif ($key=="zzzzz") {
-                if (getZone($zone->driver, $value, $zone)===false) {
+            } elseif ($key == 'zzzzz') {
+                if (getZone($zone->driver, $value, $zone) === false) {
                     return false;
                 }
-            } elseif ($key!="id") {
+            } elseif ($key != 'id') {
                 if (!$zone->set($key, $value)) {
                     return false;
                 }
             }
         }
+
         return true;
     }
+
     //function zoneGui($mode)
     //{
     //    if ($mode=="Tree")
@@ -156,10 +165,10 @@ class Zones extends Module
 
     public function __load()
     {
-        $zone=getViewZone();
+        $zone = getViewZone();
 
-        $html=getModule("HTML");
-        $html->setStructure($zone->get("Structure", getSessionValue("Structure", getValue("Structure", "Default"))));
+        $html = getModule('HTML');
+        $html->setStructure($zone->get('Structure', getSessionValue('Structure', getValue('Structure', 'Default'))));
 
         //        $html->write("<br>");$html->write("<br>");
         //        $html->write($zone->getText());
@@ -170,47 +179,50 @@ class Zones extends Module
 
     public function getNav($container)
     {
-        $zone=getViewZone();
-        $a=array();
-        $sub=new Repeater("Navigation");
+        $zone = getViewZone();
+        $a = [];
+        $sub = new Repeater('Navigation');
         $this->doParents($a, $zone);
         $sub->doRepeat($a, $container);
     }
+
     private function doParents(&$parents, $zone)
     {
-        if ($zone===false) {
+        if ($zone === false) {
             return;
         }
-            
+
         $this->doParents($parents, $zone->getParent());
 
-        array_push($parents, new HTMLa("?Module=Zones&Zone=".$zone->id, $zone->getTitle()));
+        array_push($parents, new HTMLa('?Module=Zones&Zone='.$zone->id, $zone->getTitle()));
     }
+
     public function getChild($container)
     {
-        $zone=getViewZone();
-        $a=array();
-        $sub=new Repeater("Articles");
+        $zone = getViewZone();
+        $a = [];
+        $sub = new Repeater('Articles');
         $sub->setTableMode(0);
         foreach ($zone->getChild() as $s) {
-            $az=array();
-            $az["blktext"]=$s->getText();
-            $az["blktitle"]=new HTMLa("?Module=Zones&Zone=".$s->id, $s->name);
-            $az["blkimage"]=new HTMLimg("?Module=".getParam("Object")."&Tag=Image&Image=$key");
+            $az = [];
+            $az['blktext'] = $s->getText();
+            $az['blktitle'] = new HTMLa('?Module=Zones&Zone='.$s->id, $s->name);
+            $az['blkimage'] = new HTMLimg('?Module='.getParam('Object')."&Tag=Image&Image=$key");
             array_push($a, $az);
         }
         $container->addChild($sub->doRepeat($a));
     }
+
     public function __unload()
     {
     }
 
     public function setup()
     {
-        $nav=new Repeater("Navigation");
+        $nav = new Repeater('Navigation');
         $nav->setTableMode(0);
 
-        $nav=new Repeater("Articles");
+        $nav = new Repeater('Articles');
         $nav->setTableMode(0);
     }
 }

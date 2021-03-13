@@ -15,7 +15,6 @@
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class Link extends DataThree
@@ -47,15 +46,15 @@ class Link extends DataThree
 
     public function gets($idAorB)
     {
-        $t = array();
-        $rs = parent::getCnn()->select($this->tableName, array($this->tableValue0), array($this->tableValue1 => $idAorB), 0);
+        $t = [];
+        $rs = parent::getCnn()->select($this->tableName, [$this->tableValue0], [$this->tableValue1 => $idAorB], 0);
         foreach ($rs as $row) {
             if (!in_array($row[$this->tableValue0], $t)) {
                 array_push($t, $row[$this->tableValue0]);
             }
         }
 
-        $rs = parent::getCnn()->select($this->tableName, array($this->tableValue1), array($this->tableValue0 => $idAorB), 0);
+        $rs = parent::getCnn()->select($this->tableName, [$this->tableValue1], [$this->tableValue0 => $idAorB], 0);
         foreach ($rs as $row) {
             if (!in_array($row[$this->tableValue1], $t)) {
                 array_push($t, $row[$this->tableValue1]);
@@ -68,9 +67,9 @@ class Link extends DataThree
     public function delete($id_a, $id_b)
     {
         if ($id_a < $id_b) {
-            return parent::getCnn()->delete($this->tableName, array($this->tableValue0 => $id_a, $this->tableValue1 => $id_b));
+            return parent::getCnn()->delete($this->tableName, [$this->tableValue0 => $id_a, $this->tableValue1 => $id_b]);
         } elseif ($id_a > $id_b) {
-            return parent::getCnn()->delete($this->tableName, array($this->tableValue0 => $id_b, $this->tableValue1 => $id_a));
+            return parent::getCnn()->delete($this->tableName, [$this->tableValue0 => $id_b, $this->tableValue1 => $id_a]);
         } else {
             return false;
         }

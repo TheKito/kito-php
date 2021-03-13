@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,11 +10,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class Message
@@ -24,14 +21,14 @@ class Message
 
     private function __construct($container_zone, $message_id = null)
     {
-        $z = $container_zone->get("Messages");
+        $z = $container_zone->get('Messages');
 
         if ($message_id == null) {
-            $count = $z->getAttribute("Count")->get(0);
+            $count = $z->getAttribute('Count')->get(0);
             $count++;
 
-            if ($z->getAttribute("Count")->set($count) === false) {
-                throw new Exception("Can not create new message id");
+            if ($z->getAttribute('Count')->set($count) === false) {
+                throw new Exception('Can not create new message id');
             }
 
             $this->base_zone = $z->get($count);
@@ -39,27 +36,27 @@ class Message
             $this->base_zone = $z->get($message_id);
         }
 
-        $this->base_zone->getAttribute("Type")->set("Message");
+        $this->base_zone->getAttribute('Type')->set('Message');
     }
 
     public function getText()
     {
-        return $this->getData("Text");
+        return $this->getData('Text');
     }
 
     public function setText($text)
     {
-        return $this->setData("Text", $text);
+        return $this->setData('Text', $text);
     }
 
     public function getLink()
     {
-        return $this->getData("Link");
+        return $this->getData('Link');
     }
 
     public function setLink($link)
     {
-        return $this->setData("Link", $link);
+        return $this->setData('Link', $link);
     }
 
     protected function setData($key, $value)

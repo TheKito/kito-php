@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,19 +10,17 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class AttributeZone extends DataThree
 {
-    private static $tableName = "BLK_ZONE_ATTRIBUTE";
-    private static $tablePk = "ZONE_ATTRIBUTE_ID";
-    private static $tableValue0 = "ZONE_ATTRIBUTE_ZONE_ID";
-    private static $tableValue1 = "ZONE_ATTRIBUTE_ATTRIBUTE_ID";
+    private static $tableName = 'BLK_ZONE_ATTRIBUTE';
+    private static $tablePk = 'ZONE_ATTRIBUTE_ID';
+    private static $tableValue0 = 'ZONE_ATTRIBUTE_ZONE_ID';
+    private static $tableValue1 = 'ZONE_ATTRIBUTE_ATTRIBUTE_ID';
     private $a;
 
     public function __construct($cnn)
@@ -53,6 +50,7 @@ class AttributeZone extends DataThree
             if ($default != null) {
                 $this->getId($idz, $name, $value);
             }
+
             return $default;
         }
     }
@@ -64,20 +62,21 @@ class AttributeZone extends DataThree
 
     private function getIdMagic($idz, $name)
     {
-        $rs = $this->getCnn()->select(self::$tableName, array(self::$tablePk, self::$tableValue1), array(self::$tableValue0 => $idz), 0);
+        $rs = $this->getCnn()->select(self::$tableName, [self::$tablePk, self::$tableValue1], [self::$tableValue0 => $idz], 0);
 
         foreach ($rs as $row) {
             if ($this->a->getName($row[self::$tableValue1]) == strtoupper($name)) {
                 return $row[self::$tablePk];
             }
         }
+
         return null;
     }
 
     public function getAttributes($idz, $limit = null)
     {
-        $a = array();
-        $rs = $this->getCnn()->select(self::$tableName, array(self::$tableValue1), array(self::$tableValue0 => $idz), 0);
+        $a = [];
+        $rs = $this->getCnn()->select(self::$tableName, [self::$tableValue1], [self::$tableValue0 => $idz], 0);
 
         foreach ($rs as $row) {
             if ($limit != null) {
@@ -90,6 +89,7 @@ class AttributeZone extends DataThree
 
             array_push($a, $this->a->getName($row[self::$tableValue1]));
         }
+
         return $a;
     }
 

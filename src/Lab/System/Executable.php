@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\System;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Executable
@@ -29,7 +26,7 @@ class Executable
         $this->filename = $filename;
 
         if (!file_exists($this->filename)) {
-            $this->throwBinaryException("not exists");
+            $this->throwBinaryException('not exists');
         }
 
         if (!is_file($this->filename)) {
@@ -52,7 +49,7 @@ class Executable
 
     public function executeAndWait(array $args): string
     {
-        $command = $this->filename . ' ' . implode(' ', $args);
+        $command = $this->filename.' '.implode(' ', $args);
 
         return shell_exec($command);
     }

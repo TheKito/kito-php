@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class DataThree extends DataN
@@ -34,28 +31,30 @@ class DataThree extends DataN
 
     public function getId($value0, $value1, $create = true)
     {
-        return parent::getId(array($this->tableCol0 => $value0, $this->tableCol1 => $value1), $create);
+        return parent::getId([$this->tableCol0 => $value0, $this->tableCol1 => $value1], $create);
     }
 
     public function getValue0($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol0];
     }
 
     public function getValue1($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol1];
     }
 
     public function getIdsByValue0($value)
     {
-        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol0 => $value), 100);
+        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), [$this->tableCol0 => $value], 100);
     }
 
     public function getIdsByValue1($value)
     {
-        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), array($this->tableCol1 => $value), 100);
+        return parent::getDriver()->getList(parent::getTableName(), parent::getTablePK(), [$this->tableCol1 => $value], 100);
     }
 }

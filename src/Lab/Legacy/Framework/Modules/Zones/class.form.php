@@ -14,39 +14,38 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
-
 class ZoneForm extends HForm
 {
     public $zone;
+
     public function __construct($zone_id)
     {
-        $this->zone= Zone::getZone($zone_id, getDBDriver("System"));
+        $this->zone = Zone::getZone($zone_id, getDBDriver('System'));
     }
 
     protected function getElements()
     {
-        $a=array();
-        array_push($a, new FormHidden("", "id", $this->zone->id));
+        $a = [];
+        array_push($a, new FormHidden('', 'id', $this->zone->id));
 
-        $combo=new FormSelect("Parent", "parent_id", $this->zone->getParent()->id);
+        $combo = new FormSelect('Parent', 'parent_id', $this->zone->getParent()->id);
         $combo->setList($this->zone->getParents(), true);
         array_push($a, $combo);
 
         foreach ($this->zone->getAttributes() as $name) {
-            array_push($a, new FormText($name, $name, $this->zone->get($name, "")));
+            array_push($a, new FormText($name, $name, $this->zone->get($name, '')));
         }
-        
-        array_push($a, new FormText("Create Sub Zone", "zzzzz", ""));
-        array_push($a, new FormText("AddAtr", "attttr", ""));
+
+        array_push($a, new FormText('Create Sub Zone', 'zzzzz', ''));
+        array_push($a, new FormText('AddAtr', 'attttr', ''));
+
         return $a;
     }
 
     protected function getModule()
     {
-        return "Zones";
+        return 'Zones';
     }
 }

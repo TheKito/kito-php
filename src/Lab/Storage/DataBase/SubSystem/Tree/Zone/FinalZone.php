@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,11 +10,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class FinalZone
@@ -65,7 +62,6 @@ class FinalZone
             $t = $t->getMant();
         }
 
-
         return $last;
     }
 
@@ -77,7 +73,7 @@ class FinalZone
         $ltime = round(microtime(true), 0) + 10;
 
         foreach ($t as $zzz) {
-            $time = $zzz->getAttribute("TimeMant")->get(0);
+            $time = $zzz->getAttribute('TimeMant')->get(0);
 
             if ($time < $ltime) {
                 $ltime = $time;
@@ -86,7 +82,7 @@ class FinalZone
         }
 
         if ($lzone !== false) {
-            $lzone->getAttribute("TimeMant")->set(round(microtime(true), 0));
+            $lzone->getAttribute('TimeMant')->set(round(microtime(true), 0));
         }
 
         return $lzone;
@@ -112,7 +108,7 @@ class FinalZone
 
     public function getZones($limit = null)
     {
-        $t = array();
+        $t = [];
 
         foreach ($this->z->getZoneIds($this->id) as $sid) {
             if ($limit != null) {
@@ -123,6 +119,7 @@ class FinalZone
                 $t[$sid] = new FinalZone($this->z, $sid);
             }
         }
+
         return $t;
     }
 
@@ -147,7 +144,7 @@ class FinalZone
     public function getAttributes($limit = null)
     {
         if ($this->id == null) {
-            return array();
+            return [];
         }
 
         return $this->z->getAZ()->getAttributes($this->id, $limit);
@@ -173,7 +170,7 @@ class FinalZone
 
     public function getLinks()
     {
-        $t = array();
+        $t = [];
 
         if ($this->id == null) {
             foreach ($this->z->getZL()->gets($this->id) as $idz) {

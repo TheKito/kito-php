@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,11 +10,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class AddressCountry extends Address
@@ -26,7 +23,7 @@ class AddressCountry extends Address
     {
         parent::__construct($root_zone);
         $this->zone1 = parent::getParentZone()->get($contry_code);
-        $this->zone1->getAttribute("Type")->set("Country");
+        $this->zone1->getAttribute('Type')->set('Country');
     }
 
     public function getCountryZone()
@@ -36,10 +33,10 @@ class AddressCountry extends Address
 
     public function getStates()
     {
-        $list = array();
+        $list = [];
 
         foreach (self::getCountryZone()->getZones() as $zone) {
-            if ($zone->getAttribute("Type")->get() == "State") {
+            if ($zone->getAttribute('Type')->get() == 'State') {
                 $list[$zone->getName()] = new CountryState(parent::getRootZone(), self::getCountryZone()->getName(), $zone->getName());
             }
         }

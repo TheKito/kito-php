@@ -14,13 +14,12 @@
  */
 
 /**
- * template
+ * template.
  *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Template
 {
-
     //
     //
     //    public static function getTemplate($name=false)

@@ -14,69 +14,67 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 abstract class Driver
 {
-    public $zone=false;
+    public $zone = false;
+
     public function getTablesZone()
     {
-        return getZone(getDBDriver("System"), "Tables", $this->zone, true);
+        return getZone(getDBDriver('System'), 'Tables', $this->zone, true);
     }
+
     public function getColZone($table, $col)
     {
-        return getZone(getDBDriver("System"), $col, getTableZone($table), true);
+        return getZone(getDBDriver('System'), $col, getTableZone($table), true);
     }
+
     public function getTableZone($table)
     {
         if (!$this->existTable($table)) {
             return false;
         }
 
-        return getZone(getDBDriver("System"), $table, $this->getTablesZone(), true);
+        return getZone(getDBDriver('System'), $table, $this->getTablesZone(), true);
     }
 
-
-
-    public function autoTable($table, $cols, $create=true)
+    public function autoTable($table, $cols, $create = true)
     {
-        $query="";
+        $query = '';
 
-        $insert="";
-        $insert2="";
+        $insert = '';
+        $insert2 = '';
         foreach ($cols as $name => $value) {
-            if ($insert!="") {
-                $insert.=",";
+            if ($insert != '') {
+                $insert .= ',';
             }
-            $insert.=$name;
+            $insert .= $name;
 
-            if ($insert2!="") {
-                $insert2.=",";
+            if ($insert2 != '') {
+                $insert2 .= ',';
             }
-            $insert2.="'".$value."'";
+            $insert2 .= "'".$value."'";
 
-            if ($query!="") {
-                $query.=" and ";
+            if ($query != '') {
+                $query .= ' and ';
             } else {
-                $query.=" ";
+                $query .= ' ';
             }
 
-            $query.=$name."='".$value."'";
+            $query .= $name."='".$value."'";
         }
-        $query="select * from $table where".$query.";";
-        $insert="insert into $table (".$insert.") values (".$insert2.");";
+        $query = "select * from $table where".$query.';';
+        $insert = "insert into $table (".$insert.') values ('.$insert2.');';
 
-        $rs=$this->query($query);
-        if ($rs===false) {
+        $rs = $this->query($query);
+        if ($rs === false) {
             return false;
         }
 
         if ($rs->first()) {
             return $rs->get();
         }
-
 
         if ($create) {
             if ($this->command($insert)) {
@@ -88,52 +86,54 @@ abstract class Driver
             return false;
         }
     }
+
     //Data
 
     /**
-     * execute query without any resultset
+     * execute query without any resultset.
      *
-     * @return boolean
+     * @return bool
      */
     abstract public function command($query);
 
     /**
-     * execute quer
+     * execute quer.
      *
      * @return IResultSet
      */
     abstract public function query($query);
 
-
     //Structure
 
     /**
-     * List database tables
+     * List database tables.
      *
      * @return Array<String> tables name
      */
     abstract public function getTables();
 
     /**
-     * List table cols
+     * List table cols.
      *
      * @return Array<String,Array<String,String>> col name, {Attribute,Value}
      */
     abstract public function getTableCols($table);
 
     /**
-     * Create/Update/Remove table
+     * Create/Update/Remove table.
      *
      * @param  tablename, array<String,array<Attribute,Value>> Cols
-     * @return boolean
+     *
+     * @return bool
      */
     abstract public function alterTable($table, $cols);
 
     /**
-     * check if exist table
+     * check if exist table.
      *
      * @param  tablename
-     * @return boolean
+     *
+     * @return bool
      */
     abstract public function existTable($table);
 

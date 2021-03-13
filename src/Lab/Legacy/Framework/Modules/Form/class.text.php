@@ -14,8 +14,6 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormText extends HTMLElement
@@ -23,26 +21,26 @@ class FormText extends HTMLElement
     public $title;
     public $value;
     public $base_name;
+
     public function __construct($title, $name, $value)
     {
-        $this->base_name=$name;
+        $this->base_name = $name;
 
-        $this->title=$title;
-        $this->setAttr("title", $this->title);
-        $this->setAttr("alt", $this->title);
+        $this->title = $title;
+        $this->setAttr('title', $this->title);
+        $this->setAttr('alt', $this->title);
 
-        $this->setAttr("name", "blk_form_".$this->base_name);
+        $this->setAttr('name', 'blk_form_'.$this->base_name);
 
-        $this->value=$value;
-        $this->setAttr("value", $this->value);
-        
-        $this->tag="input";
-        $this->closeMode=0;
-        $this->setAttr("type", "text");
+        $this->value = $value;
+        $this->setAttr('value', $this->value);
 
+        $this->tag = 'input';
+        $this->closeMode = 0;
+        $this->setAttr('type', 'text');
 
-        $this->setAttr("onblur", "return blk_form_change(this);");
-        $this->setAttr("onchange", "return blk_element_change(this);");
+        $this->setAttr('onblur', 'return blk_form_change(this);');
+        $this->setAttr('onchange', 'return blk_element_change(this);');
     }
 
     public function getHTML()

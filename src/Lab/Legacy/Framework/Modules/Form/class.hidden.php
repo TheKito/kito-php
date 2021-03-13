@@ -14,8 +14,6 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormHidden extends HTMLElement
@@ -24,23 +22,24 @@ class FormHidden extends HTMLElement
     public $name;
     public $value;
     public $base_name;
+
     public function __construct($title, $name, $value)
     {
-        $this->base_name=$name;
+        $this->base_name = $name;
 
-        $this->title=$title;
-  
+        $this->title = $title;
 
-        $this->name="blk_form_".$this->base_name;
-        $this->setAttr("name", $this->name);
+        $this->name = 'blk_form_'.$this->base_name;
+        $this->setAttr('name', $this->name);
 
-        $this->value=$value;
-        $this->setAttr("value", $this->value);
+        $this->value = $value;
+        $this->setAttr('value', $this->value);
 
-        $this->tag="input";
-        $this->closeMode=0;
-        $this->setAttr("type", "hidden");
+        $this->tag = 'input';
+        $this->closeMode = 0;
+        $this->setAttr('type', 'hidden');
     }
+
     public function getHTML()
     {
         return $this->toHtml();

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,16 +10,15 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\DataBase\NoSQL\Queue;
 
-use \Kito\DataBase\NoSQL\QueueInterface;
-use \Kito\DataBase\NoSQL\KeyValueInterface;
+use Kito\DataBase\NoSQL\KeyValueInterface;
+use Kito\DataBase\NoSQL\QueueInterface;
 
 /**
- * Proxy class for access Memcache or Memcached common functions
+ * Proxy class for access Memcache or Memcached common functions.
  *
  * @author TheKito
  */
@@ -33,12 +31,12 @@ abstract class KeyValue implements QueueInterface
 
     protected function getKey(string $suffix): string
     {
-        return 'Kito/DataBase/NoSQL/Queue/KeyValueQueue/' . $this->queueName . '/' . $suffix;
+        return 'Kito/DataBase/NoSQL/Queue/KeyValueQueue/'.$this->queueName.'/'.$suffix;
     }
 
     protected function getKeyItem(int $itemPos): string
     {
-        return $this->getKey('Item/' . $itemPos);
+        return $this->getKey('Item/'.$itemPos);
     }
 
     protected function getMainCounterName(): string

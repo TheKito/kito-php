@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,18 +10,16 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Exception extends \Exception
 {
-    public function __construct($message = "", $code = 0, $previous = null)
+    public function __construct($message = '', $code = 0, $previous = null)
     {
         if ($code === 0) {
             $code = crc32(get_called_class());
@@ -31,9 +28,10 @@ class Exception extends \Exception
         parent::__construct($message, $code, $previous);
     }
 
-    public static function throwException($message = "", $code = 0, $previous = null)
+    public static function throwException($message = '', $code = 0, $previous = null)
     {
         $class = get_called_class();
+
         throw new $class($message, $code, $previous);
     }
 }

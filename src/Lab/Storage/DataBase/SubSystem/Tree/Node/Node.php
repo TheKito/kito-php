@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of class
+ * Description of class.
  *
  * @author andresrg
  */

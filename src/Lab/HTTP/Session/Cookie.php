@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,7 +10,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\HTTP\Session;
@@ -20,7 +18,6 @@ use Kito\Cryptography\Hash;
 use Kito\Cryptography\SecureID;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Cookie
@@ -44,12 +41,13 @@ class Cookie
     private function getNameCookieA(bool $secure)
     {
         $chr = $secure ? '_' : '-';
-        return strtoupper($this->hash->calc($this->key . $chr . $this->name));
+
+        return strtoupper($this->hash->calc($this->key.$chr.$this->name));
     }
 
     private function getNameCookieB(bool $secure)
     {
-        return strtoupper($this->hash->calc($this->getNameCookieA($secure) . '+' . $this->key));
+        return strtoupper($this->hash->calc($this->getNameCookieA($secure).'+'.$this->key));
     }
 
     public function renew()
@@ -61,7 +59,7 @@ class Cookie
     private function sendCookies()
     {
         setcookie($cA, $SID, time() + 365 * 24 * 60 * 60, '', '', $secure, true);
-        setcookie($cB, strtoupper(sha1($hashKey . $SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
+        setcookie($cB, strtoupper(sha1($hashKey.$SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
     }
 
     public function getSessio_nID($hashKey, $secure = false, $name = 'GSI')
@@ -70,34 +68,34 @@ class Cookie
         $hashKey = strtoupper($hashKey);
 
         if ($secure) {
-            $cA = strtoupper(sha1($hashKey . '_' . $name));
+            $cA = strtoupper(sha1($hashKey.'_'.$name));
         } else {
-            $cA = strtoupper(sha1($hashKey . '-' . $name));
+            $cA = strtoupper(sha1($hashKey.'-'.$name));
         }
 
-        $cB = strtoupper(sha1($cA . '+' . $hashKey));
+        $cB = strtoupper(sha1($cA.'+'.$hashKey));
 
         static $cache = null;
 
         if (!is_array($cache)) {
-            $cache = array();
+            $cache = [];
         }
 
         if (isset($cache[$cA])) {
             return $cache[$cA];
         }
 
-
-        if (isset($_COOKIE[$cA]) && isset($_COOKIE[$cB]) && strtoupper(sha1($hashKey . $_COOKIE[$cA])) == strtoupper($_COOKIE[$cB])) {
+        if (isset($_COOKIE[$cA]) && isset($_COOKIE[$cB]) && strtoupper(sha1($hashKey.$_COOKIE[$cA])) == strtoupper($_COOKIE[$cB])) {
             $SID = $_COOKIE[$cA];
         } else {
             $SID = strtoupper(bin2hex(openssl_random_pseudo_bytes(20, $cstrong)));
         }
 
         setcookie($cA, $SID, time() + 365 * 24 * 60 * 60, '', '', $secure, true);
-        setcookie($cB, strtoupper(sha1($hashKey . $SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
+        setcookie($cB, strtoupper(sha1($hashKey.$SID)), time() + 365 * 24 * 60 * 60, '', '', $secure, true);
 
         $cache[$cA] = $SID;
+
         return $SID;
     }
 }

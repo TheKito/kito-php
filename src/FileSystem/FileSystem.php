@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,15 +10,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\FileSystem;
 
-use \Kito\Type\Path;
+use Kito\Type\Path;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class FileSystem extends Path
@@ -74,42 +71,49 @@ class FileSystem extends Path
     public static function pathIsFile(Path $path)
     {
         self::pathValidateExistence($path);
+
         return is_file($path->__toString());
     }
 
     public static function pathIsLink(Path $path)
     {
         self::pathValidateExistence($path);
+
         return is_link($path->__toString());
     }
 
     public static function pathIsDirectory(Path $path)
     {
         self::pathValidateExistence($path);
+
         return is_dir($path->__toString());
     }
 
     public static function pathIsReadable(Path $path)
     {
         self::pathValidateExistence($path);
+
         return is_readable($path->__toString());
     }
 
     public static function pathGetModificationTime(Path $path)
     {
         self::pathValidateExistence($path);
+
         return filemtime($path->__toString());
     }
 
     public static function pathGetFreeSpace(Path $path)
     {
         self::pathValidateExistence($path);
+
         return disk_free_space($path->__toString());
     }
 
     public static function pathGetTotalSpace(Path $path)
     {
         self::pathValidateExistence($path);
+
         return disk_total_space($path->__toString());
     }
 
@@ -125,6 +129,7 @@ class FileSystem extends Path
     public static function pathFreeSpace(Path $path)
     {
         self::pathValidateExistence($path);
+
         return disk_free_space($path->__toString());
     }
 
@@ -134,6 +139,7 @@ class FileSystem extends Path
             return is_writable($path->__toString());
         } else {
             self::pathValidateExistence($path->getParent());
+
             return is_writable($path->getParent()->__toString());
         }
     }
@@ -142,7 +148,7 @@ class FileSystem extends Path
     {
         self::pathValidateIsDirectory($path);
 
-        $tmp = array();
+        $tmp = [];
         foreach (scandir($path->__toString()) as $_) {
             if ($_ == '.') {
                 continue;
@@ -154,6 +160,7 @@ class FileSystem extends Path
 
             $tmp[] = $path->getChild($_);
         }
+
         return $tmp;
     }
 

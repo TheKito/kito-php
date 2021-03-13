@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class DataPair extends DataN
@@ -32,25 +29,26 @@ class DataPair extends DataN
 
     public function getId($value, $create = true)
     {
-        return parent::getId(array($this->tableCol => trim($value)), $create);
+        return parent::getId([$this->tableCol => trim($value)], $create);
     }
 
     public function exists($value)
     {
-        return parent::exists(array($this->tableCol => trim($value)));
+        return parent::exists([$this->tableCol => trim($value)]);
     }
 
     public function getValue($id)
     {
         $rs = parent::getValue($id);
+
         return $rs[$this->tableCol];
     }
 
     public function getItems()
     {
-        $RS = parent::getDriver()->select(parent::getTableName(), array(parent::getTablePK(), $this->tableCol));
+        $RS = parent::getDriver()->select(parent::getTableName(), [parent::getTablePK(), $this->tableCol]);
 
-        $RESULT = array();
+        $RESULT = [];
 
         foreach ($RS as $ROW) {
             $RESULT[$ROW[parent::getTablePK()]] = $ROW[$this->tableCol];

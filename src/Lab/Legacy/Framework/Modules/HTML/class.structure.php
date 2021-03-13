@@ -14,103 +14,106 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Structure
 {
-    public $path=false;
-    public $zone=false;
-    public $elements=array();
+    public $path = false;
+    public $zone = false;
+    public $elements = [];
+
     public function getName()
     {
         return $this->zone->name;
     }
+
     public static function getStructure($name)
     {
-        static $cache=array();
+        static $cache = [];
         if (isset($cache[$name])) {
             return $cache[$name];
         }
 
-        $cache[$name]=new Structure($name);
+        $cache[$name] = new Structure($name);
+
         return $cache[$name];
     }
+
     private function __construct($name)
     {
-        $this->path=BASE."/Structures/";
+        $this->path = BASE.'/Structures/';
         if (!file_exists($this->path)) {
             if (!mkdir($this->path, 0777, true)) {
                 trigger_error("Can not create $this->path", E_USER_ERROR);
             }
         }
 
-
-        $this->zone=Zone::getZoneByName("Structures", getDesignZone(), true);
-        $this->zone=Zone::getZoneByName($name, $this->zone, false);
+        $this->zone = Zone::getZoneByName('Structures', getDesignZone(), true);
+        $this->zone = Zone::getZoneByName($name, $this->zone, false);
 
         $this->getFile(DEBUG);
     }
+
     public function loadHTMLFile($str_html)
     {
-        $hash=crc32($str_html);
-        if ($this->zone->get("Hash", "")==$hash) {
+        $hash = crc32($str_html);
+        if ($this->zone->get('Hash', '') == $hash) {
             return true;
         }
 
-        $d=new DOMDocument();
-        if ($d->loadXML('<?xml version="1.0" encoding="UTF-8"?>'.'<!DOCTYPE root [<!ENTITY copy "&#160;">]>'.HTML::removeDocType($str_html))===false) {
+        $d = new DOMDocument();
+        if ($d->loadXML('<?xml version="1.0" encoding="UTF-8"?>'.'<!DOCTYPE root [<!ENTITY copy "&#160;">]>'.HTML::removeDocType($str_html)) === false) {
             return false;
         }
 
-        $node= new DOMNode();
+        $node = new DOMNode();
 
         foreach ($this->zone->getChild() as $tags) {
             $tags->delete(true);
         }
 
-        foreach ($d->getElementsByTagName("body") as $node) {
+        foreach ($d->getElementsByTagName('body') as $node) {
             Structure::loadHTMLFileloop($node, $this->zone, true);
         }
 
-        $this->zone->set("Hash", $hash);
+        $this->zone->set('Hash', $hash);
     }
+
     private static function loadHTMLFileloop($node, $zone, $is_first)
     {
-        if ($node->nodeName=="#comment") {
+        if ($node->nodeName == '#comment') {
             return;
         }
 
-        if ($is_first===false) {
-            $zn=$node->nodeName;
-            if ($zn=="#text") {
-                $zn="##TEXT##";
-                $tc=$node->textContent;
-                $tc=str_replace("\n", "", $tc);
-                $tc=str_replace("\r", "", $tc);
-                $tc=trim($tc);
-                if ($tc=="") {
+        if ($is_first === false) {
+            $zn = $node->nodeName;
+            if ($zn == '#text') {
+                $zn = '##TEXT##';
+                $tc = $node->textContent;
+                $tc = str_replace("\n", '', $tc);
+                $tc = str_replace("\r", '', $tc);
+                $tc = trim($tc);
+                if ($tc == '') {
                     return;
                 }
             } else {
-                $class_name=HTML::getClassNameFromZone($zone);
+                $class_name = HTML::getClassNameFromZone($zone);
                 if (!class_exists($class_name)) {
-                    trigger_error("Class not found:".$class_name, E_USER_ERROR);
+                    trigger_error('Class not found:'.$class_name, E_USER_ERROR);
                 }
             }
 
-            $zn=HTML::getZoneNameFromTag($zn);
+            $zn = HTML::getZoneNameFromTag($zn);
 
-            $sub_zone=getZone($zone->driver, $zn, $zone);
+            $sub_zone = getZone($zone->driver, $zn, $zone);
 
-            if (strStartsWith($zn, "##TEXT##")) {
+            if (strStartsWith($zn, '##TEXT##')) {
                 $sub_zone->setText($tc);
             } else {
-                $sub_zone->set("Tag", $node->nodeName);
+                $sub_zone->set('Tag', $node->nodeName);
             }
         } else {
-            $sub_zone=$zone;
+            $sub_zone = $zone;
         }
 
         if ($node->hasAttributes()) {
@@ -125,118 +128,124 @@ class Structure
             }
         }
     }
-    public function doStructure($params=false)
+
+    public function doStructure($params = false)
     {
-        if ($params===false) {
-            $params=$this->elements;
+        if ($params === false) {
+            $params = $this->elements;
         }
-            
+
         include_once $this->getFile(DEBUG);
-        return eval("return doStructure_".$this->zone->name."(\$params);");
+
+        return eval('return doStructure_'.$this->zone->name.'($params);');
     }
-    public function getFile($force=false)
+
+    public function getFile($force = false)
     {
-        $r=$this->path.$this->zone->name.".php";
+        $r = $this->path.$this->zone->name.'.php';
 
         if (!file_exists($r) || $force) {
-            $tr="";
-            $tr.="<?php\n";
-            $tr.="//DO NOT EDIT THIS FILE,\n";
-            $tr.="//USE TEMPLATE EDITOR\n";
+            $tr = '';
+            $tr .= "<?php\n";
+            $tr .= "//DO NOT EDIT THIS FILE,\n";
+            $tr .= "//USE TEMPLATE EDITOR\n";
 
-            $tr.="function doStructure_".$this->zone->name."(\$elements)\n";
-            $tr.="{\n";
-            $tr.="\$output=new HTMLSpan();\n";
-            $tr.="\$output->setAttr('name','Structure".$this->zone->name."');\n";
-            $tr.=Structure::writeStructureZoneloop($this->zone, true, "\$output");
+            $tr .= 'function doStructure_'.$this->zone->name."(\$elements)\n";
+            $tr .= "{\n";
+            $tr .= "\$output=new HTMLSpan();\n";
+            $tr .= "\$output->setAttr('name','Structure".$this->zone->name."');\n";
+            $tr .= Structure::writeStructureZoneloop($this->zone, true, '$output');
 
-            $tr.="if(count(\$output->getChilds())==1)\n";
-            $tr.="{\n";
-            $tr.="\$output=\$output->getChilds();\n";
-            $tr.="\$output=\$output[0];\n";
-            $tr.="}\n";
-                        
-            $tr.="return \$output;\n";
-            $tr.="}\n";
-            $tr.="?>";
+            $tr .= "if(count(\$output->getChilds())==1)\n";
+            $tr .= "{\n";
+            $tr .= "\$output=\$output->getChilds();\n";
+            $tr .= "\$output=\$output[0];\n";
+            $tr .= "}\n";
+
+            $tr .= "return \$output;\n";
+            $tr .= "}\n";
+            $tr .= '?>';
             file_put_contents($r, $tr);
         }
 
         return $r;
     }
+
     private static function writeStructureZoneloop($zone, $is_first, $parent_var_name)
     {
-        if ($zone->name=="Style") {
-            return "";
+        if ($zone->name == 'Style') {
+            return '';
         }
-            
-        $out="";
-        if ($is_first===false) {
-            $var_name=HTML::getVarFromZone($zone);
-            $class_name=HTML::getClassNameFromZone($zone);
-            $var_define=$var_name."=";
-            $var_use="";
+
+        $out = '';
+        if ($is_first === false) {
+            $var_name = HTML::getVarFromZone($zone);
+            $class_name = HTML::getClassNameFromZone($zone);
+            $var_define = $var_name.'=';
+            $var_use = '';
 
             if (class_exists($class_name)) {
-                $var_define.="new ".$class_name."();".(DEBUG?"\n":"");
+                $var_define .= 'new '.$class_name.'();'.(DEBUG ? "\n" : '');
                 foreach ($zone->getAttributes(false, true) as $name => $value) {
-                    if (strtolower($name)!="tag") {
-                        $var_use.=$var_name."->setAttr('".$name."','".$value."');".(DEBUG?"\n":"");
+                    if (strtolower($name) != 'tag') {
+                        $var_use .= $var_name."->setAttr('".$name."','".$value."');".(DEBUG ? "\n" : '');
                     }
                 }
 
-                $z_style=getZone($zone->driver, "Style", $zone, true);
+                $z_style = getZone($zone->driver, 'Style', $zone, true);
                 foreach ($z_style->getAttributes(false, true) as $name => $value) {
-                    $var_use.=$var_name."->setStyleAttr('".$name."','".$value."');".(DEBUG?"\n":"");
+                    $var_use .= $var_name."->setStyleAttr('".$name."','".$value."');".(DEBUG ? "\n" : '');
                 }
-            } elseif (strStartsWith($zone->name, "##TEXT##")) {
-                $var_define.="Zone::getZone('".$zone->id."',getDBDriver('System'));".(DEBUG?"\n":"");
-            } elseif (strStartsWith($zone->name, "blkinclude")) {
-                $var_define.="Structure::getStructure('".$zone->get("name", "")."');".(DEBUG?"\n":"");
-                $var_use.=$var_name."=".$var_name."->doStructure(\$elements);".(DEBUG?"\n":"");
-            } elseif (strStartsWith($zone->name, "blk")) {
-                $var_define.="\$elements['".$zone->get("Tag", $zone->name)."'];".(DEBUG?"\n":"");
-                $var_use.="if(!".$var_name." instanceof HTMLElement)".(DEBUG?"\n":"");
-                $var_use.="{".(DEBUG?"\n":"");
-                $var_use.=$var_name."=new SPANContainer('".$zone->get("Tag", $zone->name)."');".(DEBUG?"\n":"");
-                $var_use.=$var_name."->addChild(\$elements['".$zone->get("Tag", $zone->name)."']);".(DEBUG?"\n":"");
-                $var_use.="}".(DEBUG?"\n":"");
+            } elseif (strStartsWith($zone->name, '##TEXT##')) {
+                $var_define .= "Zone::getZone('".$zone->id."',getDBDriver('System'));".(DEBUG ? "\n" : '');
+            } elseif (strStartsWith($zone->name, 'blkinclude')) {
+                $var_define .= "Structure::getStructure('".$zone->get('name', '')."');".(DEBUG ? "\n" : '');
+                $var_use .= $var_name.'='.$var_name.'->doStructure($elements);'.(DEBUG ? "\n" : '');
+            } elseif (strStartsWith($zone->name, 'blk')) {
+                $var_define .= "\$elements['".$zone->get('Tag', $zone->name)."'];".(DEBUG ? "\n" : '');
+                $var_use .= 'if(!'.$var_name.' instanceof HTMLElement)'.(DEBUG ? "\n" : '');
+                $var_use .= '{'.(DEBUG ? "\n" : '');
+                $var_use .= $var_name."=new SPANContainer('".$zone->get('Tag', $zone->name)."');".(DEBUG ? "\n" : '');
+                $var_use .= $var_name."->addChild(\$elements['".$zone->get('Tag', $zone->name)."']);".(DEBUG ? "\n" : '');
+                $var_use .= '}'.(DEBUG ? "\n" : '');
 
                 foreach ($zone->getAttributes(false, true) as $name => $value) {
-                    if (strtolower($name)!="tag") {
-                        $var_use.=$var_name."->setAttr('".$name."','".$value."');".(DEBUG?"\n":"");
+                    if (strtolower($name) != 'tag') {
+                        $var_use .= $var_name."->setAttr('".$name."','".$value."');".(DEBUG ? "\n" : '');
                     }
                 }
 
-                $z_style=getZone($zone->driver, "Style", $zone, true);
+                $z_style = getZone($zone->driver, 'Style', $zone, true);
                 foreach ($z_style->getAttributes(false, true) as $name => $value) {
-                    $var_use.=$var_name."->setStyleAttr('".$name."','".$value."');".(DEBUG?"\n":"");
+                    $var_use .= $var_name."->setStyleAttr('".$name."','".$value."');".(DEBUG ? "\n" : '');
                 }
             } else {
-                $var_define.="'".$zone->name."';".(DEBUG?"\n":"");
+                $var_define .= "'".$zone->name."';".(DEBUG ? "\n" : '');
             }
 
-            $var_use.=$parent_var_name."->addChild(".$var_name.");".(DEBUG?"\n":"");
-            $out.=$var_define;
-            $out.=$var_use;
+            $var_use .= $parent_var_name.'->addChild('.$var_name.');'.(DEBUG ? "\n" : '');
+            $out .= $var_define;
+            $out .= $var_use;
 
             if (class_exists($class_name)) {
                 foreach ($zone->getChild()  as $sub) {
-                    $out.=Structure::writeStructureZoneloop($sub, false, $var_name);
+                    $out .= Structure::writeStructureZoneloop($sub, false, $var_name);
                 }
             }
         } else {
             foreach ($zone->getChild() as $sbuz) {
-                $out.=Structure::writeStructureZoneloop($sbuz, false, $parent_var_name);
+                $out .= Structure::writeStructureZoneloop($sbuz, false, $parent_var_name);
             }
         }
-                
+
         return $out;
     }
+
     public function setElement($name, &$element)
     {
-        $this->elements[$name]=$element;
+        $this->elements[$name] = $element;
     }
+
     public function __toString()
     {
         return $this->doStructure();

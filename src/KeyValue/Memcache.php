@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,17 +10,16 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 declare(strict_types=1);
 
 namespace Kito\KeyValue;
 
-use \Kito\LibraryNotFoundException;
-use \Psr\Container\ContainerInterface;
+use Kito\LibraryNotFoundException;
+use Psr\Container\ContainerInterface;
 
 /**
- * Proxy class for access Memcache or Memcached common functions
+ * Proxy class for access Memcache or Memcached common functions.
  *
  * @author TheKito
  */
@@ -46,7 +44,7 @@ class Memcache implements KeyValueInterface, ContainerInterface
     private function parseKey(string $key): string
     {
         if (isset($this->keyPrefix)) {
-            return $this->keyPrefix . $key;
+            return $this->keyPrefix.$key;
         }
 
         return $key;
@@ -66,6 +64,7 @@ class Memcache implements KeyValueInterface, ContainerInterface
     {
         $_ = $this->parseKey($key);
         $this->proxy->add($_, $initial_value);
+
         return $this->proxy->decrement($_);
     }
 
@@ -73,6 +72,7 @@ class Memcache implements KeyValueInterface, ContainerInterface
     {
         $_ = $this->parseKey($key);
         $this->proxy->add($_, $initial_value);
+
         return $this->proxy->increment($_);
     }
 
