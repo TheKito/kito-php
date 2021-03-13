@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,15 +10,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\FileSystem;
 
-use \Kito\Type\Path;
+use Kito\Type\Path;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Directory extends FileSystem
@@ -54,10 +51,11 @@ class Directory extends FileSystem
 
     public function getChildren()
     {
-        $_ = array();
+        $_ = [];
         foreach (self::getSubPaths($this) as $subPath) {
             $_ = $this->getChild($subPath->getName());
         }
+
         return $_;
     }
 

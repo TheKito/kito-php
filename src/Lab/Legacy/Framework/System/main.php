@@ -14,11 +14,8 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
-
 function getValue($key, $default)
 {
     return getSystemZone()->get($key, $default);
@@ -27,92 +24,90 @@ function setValue($key, $value)
 {
     return getSystemZone()->set($key, $value);
 }
-function timeGetTime($micro=true)
+function timeGetTime($micro = true)
 {
-    list($useg, $seg) = explode(" ", microtime());
-    return ((float)($micro?$useg:0) + (float)$seg);
+    list($useg, $seg) = explode(' ', microtime());
+
+    return (float) ($micro ? $useg : 0) + (float) $seg;
 }
 
 function ErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    if (!callFunction("Logger", "Log", array(($errno!=8 && $errno!=2048 && $errno!=2)?"ALERT":"ERROR","$errno $errstr $errfile:$errline"))) {
+    if (!callFunction('Logger', 'Log', [($errno != 8 && $errno != 2048 && $errno != 2) ? 'ALERT' : 'ERROR', "$errno $errstr $errfile:$errline"])) {
         write("$errno $errstr $errfile:$errline<br>");
     }
 }
-function ArrayToTags($params, $equal="=", $sep=" ", $sep_ini=true, $non_com=true)
+function ArrayToTags($params, $equal = '=', $sep = ' ', $sep_ini = true, $non_com = true)
 {
     if (!is_array($params)) {
-        return ($sep_ini?$sep:"").$params;
+        return ($sep_ini ? $sep : '').$params;
     }
 
-    $out="";
+    $out = '';
     foreach ($params as $key => $value) {
-        $key=strtolower($key);
+        $key = strtolower($key);
 
         if ($sep_ini) {
-            $out.=$sep;
+            $out .= $sep;
         }
 
-        if ($value!="" && !is_numeric($key)) {
-            if (strpos($value, " ") === false || $non_com===false) {
-                $out.="$key$equal".$value;
+        if ($value != '' && !is_numeric($key)) {
+            if (strpos($value, ' ') === false || $non_com === false) {
+                $out .= "$key$equal".$value;
             } else {
-                $out.=$key.$equal."'".$value."'";
+                $out .= $key.$equal."'".$value."'";
             }
         } else {
-            $out.=is_numeric($key)?$value:$key;
+            $out .= is_numeric($key) ? $value : $key;
         }
 
         if (!$sep_ini) {
-            $out.=$sep;
+            $out .= $sep;
         }
     }
+
     return $out;
 }
 function init()
 {
     error_reporting(E_ALL);
-    set_error_handler("ErrorHandler");
+    set_error_handler('ErrorHandler');
 
     global $FORM_PARAMS;
-    $FORM_PARAMS=array();
+    $FORM_PARAMS = [];
     foreach ($_GET as $key => $value) {
-        $FORM_PARAMS[$key]=$value;
+        $FORM_PARAMS[$key] = $value;
     }
     foreach ($_POST as $key => $value) {
-        $FORM_PARAMS[$key]=$value;
+        $FORM_PARAMS[$key] = $value;
     }
 
-    include_once "module.php";
-    include_once "zone.php";
-    include_once "database.php";
-    include_once "client.php";
-    include_once "session.php";
-    include_once "authentication.php";
+    include_once 'module.php';
+    include_once 'zone.php';
+    include_once 'database.php';
+    include_once 'client.php';
+    include_once 'session.php';
+    include_once 'authentication.php';
 
-    if (getParam("Tag")=="Script" && getParam("Module")!==false) {
-        proxyScript(getParam("Module"));
+    if (getParam('Tag') == 'Script' && getParam('Module') !== false) {
+        proxyScript(getParam('Module'));
         exit;
-    } elseif (getParam("Tag")=="Image" && getParam("Module")!==false && getParam("Image")!==false) {
-        proxyImage(getParam("Module"), getParam("Image"));
+    } elseif (getParam('Tag') == 'Image' && getParam('Module') !== false && getParam('Image') !== false) {
+        proxyImage(getParam('Module'), getParam('Image'));
         exit;
     }
 
-    
-    if (getSessionValue("Setup", "N")=="N") {
+    if (getSessionValue('Setup', 'N') == 'N') {
         include_once 'compatibility.php';
     } else {
         getOutputModule();
     }
-
-
 
     //unload all modules
     foreach (getModule(null) as $key => $value) {
         unloadModule($value);
     }
 
-    
     write(null);
 }
 function strEndsWith($FullStr, $EndStr)
@@ -128,13 +123,14 @@ function strStartsWith($FullStr, $StartStr)
 {
     $StrLen = strlen($StartStr);
     $FullStrStart = substr($FullStr, 0, $StrLen);
+
     return $FullStrStart == $StartStr;
 }
 function autoLoadClasses($path)
 {
     if ($handle = opendir($path)) {
         while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != ".." && strEndsWith($file, ".php") && strStartsWith($file, "class.")) {
+            if ($file != '.' && $file != '..' && strEndsWith($file, '.php') && strStartsWith($file, 'class.')) {
                 include $path.$file;
             }
         }

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 abstract class DataN
@@ -25,7 +22,7 @@ abstract class DataN
     private $driver;
     private $tableName;
     private $tablePK;
-    private $cache = array();
+    private $cache = [];
 
     private static function compareArray($data0, $data1)
     {
@@ -57,8 +54,7 @@ abstract class DataN
             }
         }
 
-
-        $rows = array();
+        $rows = [];
         array_push($rows, $this->tablePK);
         foreach ($data as $key => $tmp) {
             array_push($rows, $key);
@@ -86,7 +82,7 @@ abstract class DataN
             }
         }
 
-        $rows = array();
+        $rows = [];
         array_push($rows, $this->tablePK);
         foreach ($data as $key => $tmp) {
             array_push($rows, $key);
@@ -122,7 +118,7 @@ abstract class DataN
             return $this->cache[$id];
         }
 
-        $rs = $this->driver->select($this->tableName, array(), array($this->tablePK => $id), 1);
+        $rs = $this->driver->select($this->tableName, [], [$this->tablePK => $id], 1);
 
         if (count($rs) == 0) {
             SqlToolException::throwPkNotFoundException($this->tableName, $this->tablePK, $id);
@@ -138,8 +134,9 @@ abstract class DataN
 
     public function delete($id)
     {
-        $this->driver->delete($this->tableName, array($this->tablePK => $id), 0);
+        $this->driver->delete($this->tableName, [$this->tablePK => $id], 0);
         unset($this->cache[$id]);
+
         return true;
     }
 
@@ -158,12 +155,12 @@ abstract class DataN
         return $this->tablePK;
     }
 
-    public function select($col = array(), $where = array(), $limit = 100)
+    public function select($col = [], $where = [], $limit = 100)
     {
         return $this->driver->select($this->tableName, $col, $where, $limit);
     }
 
-    public function count($where = array())
+    public function count($where = [])
     {
         return $this->driver->count($this->tableName, $where);
     }

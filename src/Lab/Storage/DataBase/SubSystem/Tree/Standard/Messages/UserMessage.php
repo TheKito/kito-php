@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of UserMessage
+ * Description of UserMessage.
  *
  * @author andresrg
  */
@@ -20,7 +20,8 @@ class UserMessage extends Message
     public function newResponse($user_context)
     {
         $m = parent::newResponse();
-        $m->base_zone->link($user_context->get("Messages"));
+        $m->base_zone->link($user_context->get('Messages'));
+
         return $m;
     }
 }

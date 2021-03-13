@@ -14,73 +14,69 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 interface IResultSet
 {
-
     //NAV
 
     /**
-     * next element in resultset
+     * next element in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function next();
 
     /**
-     * last element in resultset
+     * last element in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function last();
 
     /**
-     * previous element in resultset
+     * previous element in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function prev();
 
     /**
-     * first element in resultset
+     * first element in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function first();
 
     /**
-     * move to $pos eleent in resultset
+     * move to $pos eleent in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function move($pos);
-
 
     //Read
 
     /**
-     * get row in resultset as array with index colname
+     * get row in resultset as array with index colname.
      *
      * @return Array<String,mixed>
      */
     public function get();
 
     /**
-     * get total elements in resultset
+     * get total elements in resultset.
      *
-     * @return Integer
+     * @return int
      */
     public function count();
 
     //Other
 
     /**
-     * freememory in resultset
+     * freememory in resultset.
      *
-     * @return boolean
+     * @return bool
      */
     public function flush();
 }

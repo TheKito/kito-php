@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,28 +10,26 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\SQL;
 
-use \mysqli;
+use mysqli;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class MySQL extends SQL implements SQLInterface
 {
-    public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
+    public static function getMySqlConnection($server = '127.0.0.1', $database = 'test', $user = 'test', $password = null)
     {
         static $CNNs = null;
 
         if ($CNNs === null) {
-            $CNNs = array();
+            $CNNs = [];
         }
 
-        $KEY = implode(',', array($server, $database, $user, $password));
+        $KEY = implode(',', [$server, $database, $user, $password]);
 
         if (!isset($CNNs[$KEY])) {
             $CNNs[$KEY] = new self($server, $database, $user, $password);
@@ -51,19 +48,19 @@ class MySQL extends SQL implements SQLInterface
         return self::getMySqlConnection('127.0.0.1', $database, $user, $password);
     }
 
-    private $server = "127.0.0.1";
-    private $database = "test";
-    private $user = "test";
+    private $server = '127.0.0.1';
+    private $database = 'test';
+    private $user = 'test';
     private $password = null;
     private $cnn = null;
     public $__DEBUG = false;
 
     public function getId()
     {
-        return md5($this->server . $this->user . $this->password . $this->database);
+        return md5($this->server.$this->user.$this->password.$this->database);
     }
 
-    private function __construct($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
+    private function __construct($server = '127.0.0.1', $database = 'test', $user = 'test', $password = null)
     {
         $this->server = $server;
         $this->database = $database;
@@ -93,10 +90,10 @@ class MySQL extends SQL implements SQLInterface
             @$this->cnn = new mysqli($this->server, $this->user, $this->password, $this->database);
 
             if ($this->cnn->connect_errno > 0) {
-                throw new ConnectException($this->cnn->connect_error . ':' . $this->cnn->connect_errno);
+                throw new ConnectException($this->cnn->connect_error.':'.$this->cnn->connect_errno);
             }
 
-            $this->cnn->set_charset("utf8");
+            $this->cnn->set_charset('utf8');
         }
 
         return true;
@@ -116,9 +113,8 @@ class MySQL extends SQL implements SQLInterface
         $this->connect();
 
         if ($this->__DEBUG) {
-            echo "CALL: " . $sql . PHP_EOL;
+            echo 'CALL: '.$sql.PHP_EOL;
         }
-
 
         //echo "$sql\n";
 
@@ -131,7 +127,7 @@ class MySQL extends SQL implements SQLInterface
         if ($rs === true) {
             return true;
         } else {
-            $data = array();
+            $data = [];
 
             while ($row = $rs->fetch_assoc()) {
                 array_push($data, $row);
@@ -152,7 +148,7 @@ class MySQL extends SQL implements SQLInterface
 
             $t = round(microtime(true) - $t, 3);
 
-            error_log("QUERY ($t): " . $query);
+            error_log("QUERY ($t): ".$query);
 
             return $rs;
         } catch (Exception $e) {
@@ -169,7 +165,7 @@ class MySQL extends SQL implements SQLInterface
 
             $t = round(microtime(true) - $t, 3);
 
-            error_log("COMMAND ($t): " . $command);
+            error_log("COMMAND ($t): ".$command);
 
             return true;
         } catch (Exception $e) {
@@ -177,74 +173,77 @@ class MySQL extends SQL implements SQLInterface
         }
     }
 
-    public function delete($table, $where = array(), $limit = 100): bool
+    public function delete($table, $where = [], $limit = 100): bool
     {
         try {
-            return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
+            return $this->command('DELETE FROM '.$table.$this->arrayToWhere($where).self::getLimit($limit));
         } catch (Exception $ex) {
             throw new DeleteException($ex);
         }
     }
 
-    public function insert($table, $data = array()): bool
+    public function insert($table, $data = []): bool
     {
         try {
-            return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
+            return $this->command('INSERT INTO '.$table.' '.$this->arrayToInsert($data));
         } catch (Exception $ex) {
             throw new InsertException($ex);
         }
     }
 
-    public function update($table, $data, $where = array(), $limit = 0): bool
+    public function update($table, $data, $where = [], $limit = 0): bool
     {
         try {
-            return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where) . self::getLimit($limit));
+            return $this->command('UPDATE '.$table.' SET '.$this->arrayToEqual($data, ',', '= null').$this->arrayToWhere($where).self::getLimit($limit));
         } catch (Exception $ex) {
             throw new UpdateException($ex);
         }
     }
 
-    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false): array
+    public function select($table, $column = [], $where = [], $limit = 100, $rand = false): array
     {
         try {
             if ($rand) {
-                return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . ' ORDER BY RAND() ' . self::getLimit($limit));
+                return $this->query('SELECT '.self::arrayToSelect($column).' FROM '.$table.$this->arrayToWhere($where).' ORDER BY RAND() '.self::getLimit($limit));
             } else {
-                return $this->query("SELECT " . self::arrayToSelect($column) . " FROM " . $table . $this->arrayToWhere($where) . self::getLimit($limit));
+                return $this->query('SELECT '.self::arrayToSelect($column).' FROM '.$table.$this->arrayToWhere($where).self::getLimit($limit));
             }
         } catch (Exception $ex) {
             throw new SelectException($ex);
         }
     }
 
-    public function count($table, $where = array()): int
+    public function count($table, $where = []): int
     {
         try {
-            $rs = $this->query("SELECT COUNT(*) as TOTAL FROM " . $table . $this->arrayToWhere($where));
+            $rs = $this->query('SELECT COUNT(*) as TOTAL FROM '.$table.$this->arrayToWhere($where));
             $rs = $rs[0];
-            return $rs["TOTAL"];
+
+            return $rs['TOTAL'];
         } catch (Exception $ex) {
             throw new CountException($ex);
         }
     }
 
-    public function max($table, $column, $where = array()): int
+    public function max($table, $column, $where = []): int
     {
         try {
-            $rs = $this->query("SELECT MAX(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
+            $rs = $this->query('SELECT MAX('.$column.') as TOTAL FROM '.$table.$this->arrayToWhere($where));
             $rs = $rs[0];
-            return $rs["TOTAL"];
+
+            return $rs['TOTAL'];
         } catch (Exception $ex) {
             throw new MaxException($ex);
         }
     }
 
-    public function min($table, $column, $where = array()): int
+    public function min($table, $column, $where = []): int
     {
         try {
-            $rs = $this->query("SELECT MIN(" . $column . ") as TOTAL FROM " . $table . $this->arrayToWhere($where));
+            $rs = $this->query('SELECT MIN('.$column.') as TOTAL FROM '.$table.$this->arrayToWhere($where));
             $rs = $rs[0];
-            return $rs["TOTAL"];
+
+            return $rs['TOTAL'];
         } catch (Exception $ex) {
             throw new MinException($ex);
         }
@@ -253,17 +252,17 @@ class MySQL extends SQL implements SQLInterface
     protected static function getLimit($limit)
     {
         if (is_numeric($limit) && $limit > 0) {
-            return " LIMIT " . $limit . ";";
+            return ' LIMIT '.$limit.';';
         } else {
-            return ";";
+            return ';';
         }
     }
 
     public function getTables(): array
     {
-        $tables = array();
+        $tables = [];
 
-        foreach ($this->query("SHOW TABLES;") as $ROW) {
+        foreach ($this->query('SHOW TABLES;') as $ROW) {
             foreach ($ROW as $COL) {
                 array_push($tables, $COL);
                 break;
@@ -283,7 +282,7 @@ class MySQL extends SQL implements SQLInterface
         static $pos = null;
 
         if ($pos === null) {
-            $pos = array();
+            $pos = [];
         }
 
         $hash = $table;
@@ -295,7 +294,6 @@ class MySQL extends SQL implements SQLInterface
         }
 
         $pos[$hash] = $start + $count;
-
 
         $rs = $this->query("SELECT * FROM $table LIMIT $start,$count");
 
@@ -313,18 +311,18 @@ class MySQL extends SQL implements SQLInterface
     protected function arrayToWhere($data)
     {
         $t = $this->arrayToEqual($data);
-        if ($t != "") {
-            return " where " . $t;
+        if ($t != '') {
+            return ' where '.$t;
         } else {
-            return "";
+            return '';
         }
     }
 
-    protected function arrayToEqual($data, $and = "and", $null_case = "is null")
+    protected function arrayToEqual($data, $and = 'and', $null_case = 'is null')
     {
-        $t = "";
+        $t = '';
         foreach ($data as $key => $value) {
-            if ($t != "") {
+            if ($t != '') {
                 $t .= " $and ";
             }
 
@@ -334,54 +332,55 @@ class MySQL extends SQL implements SQLInterface
             }
 
             if ($value === null) {
-                $t .= "`" . $key . "` " . $null_case;
+                $t .= '`'.$key.'` '.$null_case;
             } else {
-                $t .= "`" . $key . "`='" . mysqli_real_escape_string($this->cnn, $value) . "'";
+                $t .= '`'.$key."`='".mysqli_real_escape_string($this->cnn, $value)."'";
             }
         }
+
         return $t;
     }
 
     protected static function arrayToSelect($data)
     {
-        $t = "";
+        $t = '';
         foreach ($data as $value) {
-            if ($t != "") {
-                $t .= ",";
+            if ($t != '') {
+                $t .= ',';
             }
 
-            $t .= "`" . $value . "`";
+            $t .= '`'.$value.'`';
         }
-        if ($t != "") {
+        if ($t != '') {
             return $t;
         } else {
-            return "*";
+            return '*';
         }
     }
 
     protected function arrayToInsert($data)
     {
-        $t0 = "";
-        $t1 = "";
+        $t0 = '';
+        $t1 = '';
         foreach ($data as $key => $value) {
-            if ($t0 != "") {
-                $t0 .= ",";
+            if ($t0 != '') {
+                $t0 .= ',';
             }
 
-            if ($t1 != "") {
-                $t1 .= ",";
+            if ($t1 != '') {
+                $t1 .= ',';
             }
 
-            $t0 .= "`" . $key . "`";
+            $t0 .= '`'.$key.'`';
 
             if ($value === null) {
-                $t1 .= "null";
+                $t1 .= 'null';
             } else {
-                $t1 .= "'" . mysqli_real_escape_string($this->cnn, $value) . "'";
+                $t1 .= "'".mysqli_real_escape_string($this->cnn, $value)."'";
             }
         }
 
-        return "(" . $t0 . ") VALUES (" . $t1 . ")";
+        return '('.$t0.') VALUES ('.$t1.')';
     }
 
     public function insertUnique($table, $data)
@@ -394,19 +393,19 @@ class MySQL extends SQL implements SQLInterface
         return $this->autoUpdate($table, $data, $index);
     }
 
-    public function existsRow($table, $where = array())
+    public function existsRow($table, $where = [])
     {
         return $this->exists($table, $where);
     }
 
-    public function exists($table, $where = array())
+    public function exists($table, $where = [])
     {
         return $this->count($table, $where) > 0;
     }
 
     public function copyTable($sourceTable, $destinationTable): bool
     {
-        return $this->command('CREATE TABLE IF NOT EXISTS ' . $destinationTable . ' LIKE ' . $sourceTable . ';');
+        return $this->command('CREATE TABLE IF NOT EXISTS '.$destinationTable.' LIKE '.$sourceTable.';');
     }
 
     public function getDatabases(): array

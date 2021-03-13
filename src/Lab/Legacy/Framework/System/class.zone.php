@@ -14,8 +14,6 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Zone
@@ -31,69 +29,69 @@ class Zone
 
     public $path = false;
 
-    public static function getZoneByName($name, $parent_zone, $create_as_system=false, $driver=false, $create=true)
+    public static function getZoneByName($name, $parent_zone, $create_as_system = false, $driver = false, $create = true)
     {
-        if ($parent_zone!=null && !($parent_zone instanceof zone)) {
+        if ($parent_zone != null && !($parent_zone instanceof zone)) {
             return false;
         }
 
-        if ($driver===false) {
-            if ($parent_zone!=null) {
-                $driver=$parent_zone->driver;
+        if ($driver === false) {
+            if ($parent_zone != null) {
+                $driver = $parent_zone->driver;
             } else {
-                $driver=getDBDriver("System");
+                $driver = getDBDriver('System');
             }
         }
 
-        if ($driver===false) {
+        if ($driver === false) {
             return false;
         }
 
-        $name=substr($name, 0, 50);
+        $name = substr($name, 0, 50);
 
-        if ($parent_zone!=null) {
-            $row=$driver->autoTable("BLK_ZONE", array("ZONE_PARENT_ID" => $parent_zone->id,"ZONE_NAME" => $name,"ZONE_SYSTEM" => ($create_as_system?"Y":"N")), $create);
+        if ($parent_zone != null) {
+            $row = $driver->autoTable('BLK_ZONE', ['ZONE_PARENT_ID' => $parent_zone->id, 'ZONE_NAME' => $name, 'ZONE_SYSTEM' => ($create_as_system ? 'Y' : 'N')], $create);
         } else {
-            $row=$driver->autoTable("BLK_ZONE", array("ZONE_PARENT_ID" => "0","ZONE_NAME" => $name,"ZONE_SYSTEM" => "Y"), $create);
+            $row = $driver->autoTable('BLK_ZONE', ['ZONE_PARENT_ID' => '0', 'ZONE_NAME' => $name, 'ZONE_SYSTEM' => 'Y'], $create);
         }
 
-        if ($row===false) {
+        if ($row === false) {
             return false;
         }
 
-        return Zone::getZone($row["ZONE_ID"], $driver, $row);
+        return Zone::getZone($row['ZONE_ID'], $driver, $row);
     }
 
-    public static function getZone($id, $driver=false, $rs_row=false)
+    public static function getZone($id, $driver = false, $rs_row = false)
     {
-        static $cache=array();
+        static $cache = [];
         if (isset($cache[$id])) {
             return $cache[$id];
         }
 
-        if ($driver===false) {
-            $driver=getDBDriver("System");
+        if ($driver === false) {
+            $driver = getDBDriver('System');
         }
 
-        $cache[$id]=new Zone($id, $driver, $rs_row);
+        $cache[$id] = new Zone($id, $driver, $rs_row);
+
         return $cache[$id];
     }
 
-    private function __construct($id, $driver, $rs_row=false)
+    private function __construct($id, $driver, $rs_row = false)
     {
-        $path=BASE."/Zones/";
+        $path = BASE.'/Zones/';
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
 
+        $this->path = $path.'z'.$id.'.';
 
-        $this->path=$path."z".$id.".";
+        $this->driver = $driver;
+        if ($rs_row === false) {
+            $rs = $this->driver->query("select * from BLK_ZONE where ZONE_ID='".$id."';");
 
-        $this->driver=$driver;
-        if ($rs_row===false) {
-            $rs=$this->driver->query("select * from BLK_ZONE where ZONE_ID='".$id."';");
-
-            if ($rs===false) {
+            if ($rs === false) {
                 return false;
             }
 
@@ -101,30 +99,27 @@ class Zone
                 return false;
             }
 
-            $rs_row=$rs->get();
+            $rs_row = $rs->get();
         }
 
+        $this->id = $rs_row['ZONE_ID'];
+        $this->id_parent = $rs_row['ZONE_PARENT_ID'];
+        $this->name = $rs_row['ZONE_NAME'];
+        $this->system = $rs_row['ZONE_SYSTEM'] == 'Y';
 
+        $rs = $this->driver->query("select ZONE_ATTR_VALUE,ZONE_ATTR_ID_ATTR from BLK_ZONE_ATTR where ZONE_ATTR_ID_ZONE='".$this->id."';");
 
-        $this->id=$rs_row["ZONE_ID"];
-        $this->id_parent=$rs_row["ZONE_PARENT_ID"];
-        $this->name=$rs_row["ZONE_NAME"];
-        $this->system=$rs_row["ZONE_SYSTEM"]=="Y";
-
-
-        $rs=$this->driver->query("select ZONE_ATTR_VALUE,ZONE_ATTR_ID_ATTR from BLK_ZONE_ATTR where ZONE_ATTR_ID_ZONE='".$this->id."';");
-
-        if ($rs===false) {
+        if ($rs === false) {
             return false;
         }
 
         if ($rs->first()) {
             while (true) {
-                $row=$rs->get();
+                $row = $rs->get();
                 //                if(strStartsWith($row["ZONE_ATTR_ID_ATTR"], "S_"))
                 //                    $this->attr_zone[$row["ZONE_ATTR_ID_ATTR"]]=unserialize($row["ZONE_ATTR_VALUE"]);
                 //                else
-                $this->attr_zone[$row["ZONE_ATTR_ID_ATTR"]]=$row["ZONE_ATTR_VALUE"];
+                $this->attr_zone[$row['ZONE_ATTR_ID_ATTR']] = $row['ZONE_ATTR_VALUE'];
                 if (!$rs->next()) {
                     break;
                 }
@@ -136,41 +131,48 @@ class Zone
     {
         return $this->path.$type;
     }
+
     public function getText()
     {
-        if (!file_exists($this->getFile("txt"))) {
+        if (!file_exists($this->getFile('txt'))) {
             return false;
         }
-            
-        return file_get_contents($this->getFile("txt"));
+
+        return file_get_contents($this->getFile('txt'));
     }
+
     public function setText($text)
     {
-        return file_put_contents($this->getFile("txt"), $text);
+        return file_put_contents($this->getFile('txt'), $text);
     }
+
     public function getParent()
     {
-        if ($this->id_parent==0) {
+        if ($this->id_parent == 0) {
             return false;
         }
+
         return Zone::getZone($this->id_parent, $this->driver);
     }
+
     public function getParents()
     {
-        $list=array();
-        $list[0]="[NO PARENT]";
+        $list = [];
+        $list[0] = '[NO PARENT]';
         foreach (getRootZones() as $zone) {
             $this->parentloop($zone, $list);
         }
+
         return $list;
     }
+
     private function parentloop($zone, &$list)
     {
-        if ($zone->id==$this->id) {
+        if ($zone->id == $this->id) {
             return;
         }
 
-        $list[$zone->id]=$zone;
+        $list[$zone->id] = $zone;
 
         foreach ($zone->getChild() as $ch_zone) {
             $this->parentloop($ch_zone, $list);
@@ -179,18 +181,18 @@ class Zone
 
     public function getChild()
     {
-        $rs=$this->driver->query("select * from BLK_ZONE where ZONE_PARENT_ID='".$this->id."';");
+        $rs = $this->driver->query("select * from BLK_ZONE where ZONE_PARENT_ID='".$this->id."';");
 
-        if ($rs===false) {
+        if ($rs === false) {
             return false;
         }
 
-        $ch=array();
+        $ch = [];
 
         if ($rs->first()) {
             while (true) {
-                $row=$rs->get();
-                $ch[$row["ZONE_ID"]]=Zone::getZone($row["ZONE_ID"], $this->driver);
+                $row = $rs->get();
+                $ch[$row['ZONE_ID']] = Zone::getZone($row['ZONE_ID'], $this->driver);
 
                 if (!$rs->next()) {
                     break;
@@ -201,29 +203,29 @@ class Zone
         return $ch;
     }
 
-    public function getAttributes($all=false, $pair=false)
+    public function getAttributes($all = false, $pair = false)
     {
         if ($all) {
             if ($this->system) {
-                $rs=$this->driver->query("select ATTR_ID,ATTR_NAME from BLK_ATTR where ATTR_SYSTEM='Y';");
+                $rs = $this->driver->query("select ATTR_ID,ATTR_NAME from BLK_ATTR where ATTR_SYSTEM='Y';");
             } else {
-                $rs=$this->driver->query("select ATTR_ID,ATTR_NAME from BLK_ATTR;");
+                $rs = $this->driver->query('select ATTR_ID,ATTR_NAME from BLK_ATTR;');
             }
         } else {
-            $query="";
-            $rs=$this->driver->query("select ZONE_ATTR_ID_ATTR from BLK_ZONE_ATTR where ZONE_ATTR_ID_ZONE='".$this->id."';");
-            if ($rs===false) {
+            $query = '';
+            $rs = $this->driver->query("select ZONE_ATTR_ID_ATTR from BLK_ZONE_ATTR where ZONE_ATTR_ID_ZONE='".$this->id."';");
+            if ($rs === false) {
                 return false;
             }
 
             if ($rs->first()) {
                 while (true) {
-                    if ($query!="") {
-                        $query.=" or";
+                    if ($query != '') {
+                        $query .= ' or';
                     }
 
-                    $row=$rs->get();
-                    $query.=" ATTR_ID='".$row["ZONE_ATTR_ID_ATTR"]."'";
+                    $row = $rs->get();
+                    $query .= " ATTR_ID='".$row['ZONE_ATTR_ID_ATTR']."'";
 
                     if (!$rs->next()) {
                         break;
@@ -231,25 +233,25 @@ class Zone
                 }
             }
 
-            if ($query=="") {
-                return array();
+            if ($query == '') {
+                return [];
             }
-            $rs=$this->driver->query("select ATTR_ID,ATTR_NAME from BLK_ATTR where $query;");
+            $rs = $this->driver->query("select ATTR_ID,ATTR_NAME from BLK_ATTR where $query;");
         }
 
-        if ($rs===false) {
+        if ($rs === false) {
             return false;
         }
 
-        $attr=array();
+        $attr = [];
 
         if ($rs->first()) {
             while (true) {
-                $row=$rs->get();
+                $row = $rs->get();
                 if ($pair) {
-                    $attr[$row["ATTR_NAME"]]=$this->get($row["ATTR_NAME"], null);
+                    $attr[$row['ATTR_NAME']] = $this->get($row['ATTR_NAME'], null);
                 } else {
-                    $attr[$row["ATTR_ID"]]=$row["ATTR_NAME"];
+                    $attr[$row['ATTR_ID']] = $row['ATTR_NAME'];
                 }
 
                 if (!$rs->next()) {
@@ -260,19 +262,21 @@ class Zone
 
         return $attr;
     }
+
     public function get($Attribute, $default)
     {
-        $attr=getAttr($this->driver, $Attribute, true);
-        $attr_id=$attr->id;
-
+        $attr = getAttr($this->driver, $Attribute, true);
+        $attr_id = $attr->id;
 
         if (isset($this->attr_zone[$attr_id])) {
             return $this->attr_zone[$attr_id];
         } else {
             $this->set($Attribute, $default);
+
             return $default;
         }
     }
+
     public function set($Attribute, $value)
     {
         //     if(!is_string($value))
@@ -281,21 +285,22 @@ class Zone
         //         $value=serialize($value);
         //     }
 
-        $attr=getAttr($this->driver, $Attribute, true);
-        $attr_id=$attr->id;
+        $attr = getAttr($this->driver, $Attribute, true);
+        $attr_id = $attr->id;
 
-        if (isset($this->attr_zone[$attr_id]) && $this->attr_zone[$attr_id]==$value) {
+        if (isset($this->attr_zone[$attr_id]) && $this->attr_zone[$attr_id] == $value) {
             return true;
         }
 
         if (isset($this->attr_zone[$attr_id])) {
-            $cmd="update BLK_ZONE_ATTR set ZONE_ATTR_VALUE='".$value."' where ZONE_ATTR_ID_ATTR='".$attr_id."' and ZONE_ATTR_ID_ZONE='".$this->id."';";
+            $cmd = "update BLK_ZONE_ATTR set ZONE_ATTR_VALUE='".$value."' where ZONE_ATTR_ID_ATTR='".$attr_id."' and ZONE_ATTR_ID_ZONE='".$this->id."';";
         } else {
-            $cmd="insert into BLK_ZONE_ATTR (ZONE_ATTR_ID_ATTR,ZONE_ATTR_ID_ZONE,ZONE_ATTR_VALUE) values ('".$attr_id."','".$this->id."','".$value."');";
+            $cmd = "insert into BLK_ZONE_ATTR (ZONE_ATTR_ID_ATTR,ZONE_ATTR_ID_ZONE,ZONE_ATTR_VALUE) values ('".$attr_id."','".$this->id."','".$value."');";
         }
 
         if ($this->driver->command($cmd)) {
-            $this->attr_zone[$attr_id]=$value;
+            $this->attr_zone[$attr_id] = $value;
+
             return true;
         }
 
@@ -308,7 +313,7 @@ class Zone
         return false;
     }
 
-    public function delete($recursive=false)
+    public function delete($recursive = false)
     {
         if (!$recursive) {
             if (!$this->driver->command("update BLK_ZONE set ZONE_PARENT_ID='".$this->id_parent."' where ZONE_PARENT_ID='".$this->id."';")) {
@@ -322,7 +327,6 @@ class Zone
             }
         }
 
-
         if (!$this->driver->command("delete from BLK_ZONE_ATTR where ZONE_ATTR_ID_ZONE='".$this->id."';")) {
             return false;
         }
@@ -334,43 +338,49 @@ class Zone
         return true;
     }
 
-
     public function getLink()
     {
-        $title=$this->getTitle();
-        return "<a class='zone' href='./?Zone=".$this->id."&Session=".getSessionId()."' rel='$title'>".$title."</a>";
+        $title = $this->getTitle();
+
+        return "<a class='zone' href='./?Zone=".$this->id.'&Session='.getSessionId()."' rel='$title'>".$title.'</a>';
     }
+
     public function __toString()
     {
-        if (file_exists($this->getFile("txt"))) {
+        if (file_exists($this->getFile('txt'))) {
             return $this->getText();
         } else {
             return $this->name;
         }
     }
+
     public function setParent($parent_zone)
     {
         if (!$this->driver->command("update BLK_ZONE set ZONE_PARENT_ID='".$parent_zone->id."' where ZONE_ID='".$this->id."'")) {
             return false;
         }
 
-        $this->id_parent=$parent_zone->id;
+        $this->id_parent = $parent_zone->id;
+
         return true;
     }
+
     public function getList($name)
     {
         return ElementsList::getList($name, $this);
     }
+
     public function getTitle()
     {
-        return $this->get("Title", $this->name);
+        return $this->get('Title', $this->name);
     }
+
     public function equals($object)
     {
         if (!($object instanceof zone)) {
             return false;
         }
 
-        return $object->id=$this->id;
+        return $object->id = $this->id;
     }
 }

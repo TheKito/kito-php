@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Storage\DataBase\SQL\SubSystem\DataN;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class DataPair64 extends DataPair
@@ -40,7 +37,7 @@ class DataPair64 extends DataPair
                 $srchstr = $value;
                 $srchstr = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $srchstr);
                 $srchstr = addslashes($srchstr);
-                if (parent::getDriver()->update(parent::getTableName(), array($this->tableSrchCol => $srchstr), array(parent::getTablePK() => $id, $this->tableSrchCol => null), 1)) {
+                if (parent::getDriver()->update(parent::getTableName(), [$this->tableSrchCol => $srchstr], [parent::getTablePK() => $id, $this->tableSrchCol => null], 1)) {
                     $this->maxId = $id;
                 }
             } catch (SqlException $e) {

@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Loader;
 
 /**
- * OnRun download and loader use PSR-0 scheme for cache storage and PSR-4 for respository references
+ * OnRun download and loader use PSR-0 scheme for cache storage and PSR-4 for respository references.
  *
  * @author TheKito
  */
@@ -25,9 +23,9 @@ class Loader
 {
     private static function pathFromString(string $stringPath): array
     {
-        $_ = array();
+        $_ = [];
 
-        foreach (explode('/', str_replace("\\", '/', $stringPath)) as $name) {
+        foreach (explode('/', str_replace('\\', '/', $stringPath)) as $name) {
             if (empty($name)) {
                 continue;
             }
@@ -57,13 +55,13 @@ class Loader
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             return implode('/', $path);
         } else {
-            return '/' . implode('/', $path);
+            return '/'.implode('/', $path);
         }
     }
 
     private static function createDirectories(array $path): void
     {
-        $_ = array();
+        $_ = [];
 
         foreach ($path as $name) {
             $_[] = array_shift($path);
@@ -76,7 +74,7 @@ class Loader
         }
     }
 
-    private $cachePath = array();
+    private $cachePath = [];
 
     public function getCachePath(): string
     {
@@ -86,17 +84,18 @@ class Loader
     public function setCachePath(string $path): self
     {
         $this->cachePath = self::pathFromString($path);
+
         return $this;
     }
 
-    private $repositories = array();
+    private $repositories = [];
 
     public function addRepository(string $nameSpace, string $url): self
     {
         $index = self::pathToHash(self::pathFromString($nameSpace));
 
         if (!isset($this->repositories[$index])) {
-            $this->repositories[$index] = array();
+            $this->repositories[$index] = [];
         }
 
         array_push($this->repositories[$index], $url);
@@ -108,7 +107,7 @@ class Loader
     {
         $this->setCachePath($cachePath);
         $this->addRepository('/Kito', 'https://raw.githubusercontent.com/TheKito/kito-php/master/src/');
-        spl_autoload_register(array($this, 'loadClass'));
+        spl_autoload_register([$this, 'loadClass']);
 
         Sources::attach($this);
     }
@@ -116,7 +115,7 @@ class Loader
     public function loadClass(string $classNameSpace): void
     {
         $classPath = self::pathFromString($classNameSpace);
-        $classFile = self::pathToString(array_merge($this->cachePath, $classPath)) . '.php';
+        $classFile = self::pathToString(array_merge($this->cachePath, $classPath)).'.php';
 
         if (!file_exists($classFile)) {
             $this->downloadClass($classPath, $classFile);
@@ -131,12 +130,12 @@ class Loader
     {
         $className = array_pop($classPath);
 
-        $middlePath = array();
+        $middlePath = [];
         while (count($classPath) > 0) {
             $key = self::pathToHash($classPath);
             if (isset($this->repositories[$key])) {
                 foreach ($this->repositories[$key] as $repository) {
-                    $repositoryFile = $repository . '/' . implode('/', array_reverse($middlePath)) . '/' . $className . '.php';
+                    $repositoryFile = $repository.'/'.implode('/', array_reverse($middlePath)).'/'.$className.'.php';
                     $data = file_get_contents($repositoryFile);
 
                     if ($data !== false) {

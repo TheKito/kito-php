@@ -13,9 +13,7 @@
  *
  */
 
-
 /**
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Logger extends Module
@@ -23,19 +21,19 @@ class Logger extends Module
     //$TotalTTL=0;
     public function Log($Name, $Value)
     {
-        static $handle=false;
-        static $handle2=false;
+        static $handle = false;
+        static $handle2 = false;
         if (!$handle) {
-            $handle = fopen("myfile.txt", 'a');
+            $handle = fopen('myfile.txt', 'a');
         }
 
         if (!$handle2) {
-            $handle2 = fopen("longlog.txt", 'a');
+            $handle2 = fopen('longlog.txt', 'a');
             fwrite($handle2, "=========================================================================\n");
         }
 
-        static $LastTTL=0;
-        $type=$Name;
+        static $LastTTL = 0;
+        $type = $Name;
         //        if ($Name=="ERROR")
         //            $Name="<font color=red>".$Name."</font>";
         //        elseif ($Name=="ALERT")
@@ -45,28 +43,27 @@ class Logger extends Module
 
         //        if ($this->DebugMode==true && $_GET["Frame"]!="Sitemap" && $_GET["Frame"]!="JavaScript")
         //        {
-        if ($LastTTL==0) {
-            $LastTTL=timeGetTime();
+        if ($LastTTL == 0) {
+            $LastTTL = timeGetTime();
         }
 
-        if ((number_format((timeGetTime())-$LastTTL, 5))>0.09) {
+        if ((number_format((timeGetTime()) - $LastTTL, 5)) > 0.09) {
             if ($handle2) {
-                if (!fwrite($handle2, "Logger(".(number_format((timeGetTime())-$LastTTL, 5))."): ".$type.": ".$Value."\n")) {
-                    die("couldn't write to file.");
+                if (!fwrite($handle2, 'Logger('.(number_format((timeGetTime()) - $LastTTL, 5)).'): '.$type.': '.$Value."\n")) {
+                    exit("couldn't write to file.");
                 }
             }
         } else {
             if ($handle) {
-                if (!fwrite($handle, "Logger(".(number_format((timeGetTime())-$LastTTL, 5))."): ".$type.": ".$Value."\n")) {
-                    die("couldn't write to file.");
+                if (!fwrite($handle, 'Logger('.(number_format((timeGetTime()) - $LastTTL, 5)).'): '.$type.': '.$Value."\n")) {
+                    exit("couldn't write to file.");
                 }
             }
         }
 
-
         // if($type!="DEBUG")
-        
-        $LastTTL=timeGetTime();
+
+        $LastTTL = timeGetTime();
         //        }
         //        else
         //            if ($Name=="ERROR")
@@ -78,25 +75,25 @@ class Logger extends Module
 
     public function __destruct()
     {
-        $this->Log("DEBUG", "SQL: ".getDBDriver("System")->getStats());
+        $this->Log('DEBUG', 'SQL: '.getDBDriver('System')->getStats());
         global $TotalTTL;
-        return $this->Log("DEBUG", "Generation time: ".(timeGetTime()-$TotalTTL));
+
+        return $this->Log('DEBUG', 'Generation time: '.(timeGetTime() - $TotalTTL));
     }
+
     public function Logger_ErrorHandler($errno, $errstr, $errfile, $errline)
     {
-        if ($errno!=8 && $errno!=2048 && $errno!=2) {
-            Logger_Log("ERROR", $errstr."($errno) File:".$errfile." Line:".$errline);
+        if ($errno != 8 && $errno != 2048 && $errno != 2) {
+            Logger_Log('ERROR', $errstr."($errno) File:".$errfile.' Line:'.$errline);
         } else {
-            Logger_Log("ALERT", $errstr."($errno) File:".$errfile." Line:".$errline);
+            Logger_Log('ALERT', $errstr."($errno) File:".$errfile.' Line:'.$errline);
         }
     }
 
-
-    
     public function __construct()
     {
         global $TotalTTL;
-        $TotalTTL=timeGetTime();
+        $TotalTTL = timeGetTime();
     }
 
     public function __load()

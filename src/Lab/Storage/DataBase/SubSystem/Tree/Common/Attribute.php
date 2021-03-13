@@ -15,15 +15,14 @@
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class Attribute extends DataThree
 {
-    private static $tableName = "BLK_ATTRIBUTE";
-    private static $tablePk = "ATTRIBUTE_ID";
-    private static $tableValue0 = "ATTRIBUTE_NAME_ID";
-    private static $tableValue1 = "ATTRIBUTE_VALUE_ID";
+    private static $tableName = 'BLK_ATTRIBUTE';
+    private static $tablePk = 'ATTRIBUTE_ID';
+    private static $tableValue0 = 'ATTRIBUTE_NAME_ID';
+    private static $tableValue1 = 'ATTRIBUTE_VALUE_ID';
     private $an;
     private $av;
 

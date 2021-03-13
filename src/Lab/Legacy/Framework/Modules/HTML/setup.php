@@ -13,16 +13,12 @@
  *
  */
 
-/**
- *
- *
- * @author TheKito <blankitoracing@gmail.com>
- */
- HTML::loadTemplate(dirname(__FILE__)."/DefaultTemplate/");
+ /**
+  * @author TheKito <blankitoracing@gmail.com>
+  */
+ HTML::loadTemplate(dirname(__FILE__).'/DefaultTemplate/');
 //Structure::getStructure("Default")->loadHTMLFile(file_get_contents(dirname(__FILE__)."/Default.html"));
 //Style::getStyle("Default")->loadFromCSS(file_get_contents(dirname(__FILE__)."/Default.css"));
 
-
-
-$r=Repeater::getRepeater("Articles");
-$r->setContainer(Structure::getStructure("Article"));
+$r = Repeater::getRepeater('Articles');
+$r->setContainer(Structure::getStructure('Article'));

@@ -14,37 +14,37 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Group
 {
-    public $id=false;
-    private $zone=false;
+    public $id = false;
+    private $zone = false;
 
     public static function getGroup($name)
     {
-        /*static*/ $cache=array(); /* $cache disable because zone and users list have one*/
+        /*static*/ $cache = []; /* $cache disable because zone and users list have one*/
         if (isset($cache[$name])) {
             return $cache[$name];
         }
 
-        $cache[$name]=new Group($name);
+        $cache[$name] = new Group($name);
+
         return $cache[$name];
     }
 
     private function __construct($name)
     {
-        if ($name=="Root" || $name=="Admin" || $name=="Designer" || $name=="Developer") {
-            $system=true;
+        if ($name == 'Root' || $name == 'Admin' || $name == 'Designer' || $name == 'Developer') {
+            $system = true;
         } else {
-            $system=false;
+            $system = false;
         }
 
-        $this->zone=Zone::getZoneByName($name, getGroupsZone(), $system);
-        $this->id=$this->zone->id;
+        $this->zone = Zone::getZoneByName($name, getGroupsZone(), $system);
+        $this->id = $this->zone->id;
     }
+
     public function getName()
     {
         return $this->zone->name;

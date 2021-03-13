@@ -15,14 +15,13 @@
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class Name extends DataPair64
 {
-    private static $tableName = "BLK_NAME";
-    private static $tablePk = "NAME_ID";
-    private static $tableValue = "NAME_VALUE";
+    private static $tableName = 'BLK_NAME';
+    private static $tablePk = 'NAME_ID';
+    private static $tableValue = 'NAME_VALUE';
 
     public function __construct($cnn)
     {

@@ -14,59 +14,65 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class MySql extends Module
 {
     public function getDriver($params)
     {
-        include_once "class.driver.php";
+        include_once 'class.driver.php';
+
         return new MySqlDriver($params);
     }
+
     public function __construct()
     {
     }
+
     public function __destruct()
     {
     }
+
     public function __load()
     {
     }
+
     public function __unload()
     {
     }
-    
+
     public function authUser($name, $domain, $password)
     {
-        $cnn=mysql_connect($domain, $name, $password);
+        $cnn = mysql_connect($domain, $name, $password);
 
-        if ($cnn===false) {
+        if ($cnn === false) {
             return false;
         }
 
         if (mysql_ping($cnn)) {
             mysql_close($cnn);
+
             return true;
         } else {
             return false;
         }
     }
+
     public function changeUserPassword($name, $domain, $password, $newpassword)
     {
-        $cnn=mysql_connect($domain, $name, $password);
+        $cnn = mysql_connect($domain, $name, $password);
 
-        if ($cnn===false) {
+        if ($cnn === false) {
             return false;
         }
 
         if (mysql_ping($cnn)) {
-            if (mysql_unbuffered_query("SET PASSWORD = PASSWORD('".$newpassword."')", $cnn)===false) {
+            if (mysql_unbuffered_query("SET PASSWORD = PASSWORD('".$newpassword."')", $cnn) === false) {
                 return false;
             }
-            
+
             mysql_close($cnn);
+
             return true;
         } else {
             return false;

@@ -14,7 +14,7 @@
  */
 
 /**
- * main
+ * main.
  *
  * @author sebastian
  */
@@ -34,17 +34,20 @@ class Map extends Module
 
     public function __construct()
     {
-        getModule("HTML");
-        if (getParam("Module")=="Map") {
+        getModule('HTML');
+        if (getParam('Module') == 'Map') {
             $this->loadMapWithMarker(-34.916534, -56.155822);
         }
     }
+
     public function __destruct()
     {
     }
+
     public function __load()
     {
     }
+
     public function __unload()
     {
     }

@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 class LoaderTest extends TestCase
@@ -7,6 +8,7 @@ class LoaderTest extends TestCase
     {
         $this->assertTrue(class_exists('Kito\Loader\Loader'));
     }
+
     public function testLoaderSources()
     {
         $this->assertTrue(class_exists('Kito\Loader\Sources'));

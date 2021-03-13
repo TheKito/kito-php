@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,11 +10,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class StreetNumber extends CityStreet
@@ -26,7 +23,7 @@ class StreetNumber extends CityStreet
     {
         parent::__construct($root_zone, $contry_code, $state_code, $city_code, $street_code);
         $this->zone5 = parent::getParentZone()->get($number);
-        $this->zone5->getAttribute("Type")->set("Number");
+        $this->zone5->getAttribute('Type')->set('Number');
     }
 
     protected function getParentZone()

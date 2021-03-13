@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,7 +10,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\SQL;
@@ -19,7 +17,6 @@ namespace Kito\SQL;
 use Kito\NotImplementedException;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class MsSQL extends SQL implements SQLInterface
@@ -50,13 +47,14 @@ class MsSQL extends SQL implements SQLInterface
 
         if ($this->cnn === false) {
             $this->cnn = null;
+
             throw new ConnectException($this->server, $this->user, mssql_get_last_message(), -1);
         }
-
 
         if (!@mssql_select_db($this->scheme, $this->cnn)) {
             @mssql_close($this->cnn);
             $this->cnn = null;
+
             throw new SelectDBException($this->scheme, mssql_get_last_message(), -1);
         }
     }
@@ -106,10 +104,9 @@ class MsSQL extends SQL implements SQLInterface
             throw new GetResultSetException($sql, 'No ResultSet found', -1);
         }
 
-
-        $RS2 = array();
+        $RS2 = [];
         while ($ROW = @mssql_fetch_assoc($RS)) {
-            $ROW2 = array();
+            $ROW2 = [];
 
             foreach ($ROW as $KEY => $VALUE) {
                 $ROW2[strtoupper($KEY)] = utf8_encode(trim($VALUE));
@@ -133,11 +130,11 @@ class MsSQL extends SQL implements SQLInterface
         return true;
     }
 
-    private function arrayToEqual($data, $and = "and", $null_case = "is null")
+    private function arrayToEqual($data, $and = 'and', $null_case = 'is null')
     {
-        $t = "";
+        $t = '';
         foreach ($data as $key => $value) {
-            if ($t != "") {
+            if ($t != '') {
                 $t .= " $and ";
             }
 
@@ -147,21 +144,22 @@ class MsSQL extends SQL implements SQLInterface
             }
 
             if ($value === null) {
-                $t .= "" . $key . " " . $null_case;
+                $t .= ''.$key.' '.$null_case;
             } else {
-                $t .= "" . $key . "=" . self::mssql_escape($value) . "";
+                $t .= ''.$key.'='.self::mssql_escape($value).'';
             }
         }
+
         return $t;
     }
 
     private function arrayToWhere($data)
     {
         $t = $this->arrayToEqual($data);
-        if ($t != "") {
-            return " where " . $t;
+        if ($t != '') {
+            return ' where '.$t;
         } else {
-            return "";
+            return '';
         }
     }
 
@@ -170,17 +168,18 @@ class MsSQL extends SQL implements SQLInterface
         if (is_numeric($data)) {
             return $data;
         } else {
-            return "'" . $data . "'";
+            return "'".$data."'";
         }
 
         $unpacked = unpack('H*hex', $data);
-        return '0x' . $unpacked['hex'];
+
+        return '0x'.$unpacked['hex'];
     }
 
     private static function arrayToSelect($data)
     {
         if (is_array($data) && count($data) > 0) {
-            return '' . implode(',', $data) . '';
+            return ''.implode(',', $data).'';
         } else {
             return '*';
         }
@@ -188,66 +187,66 @@ class MsSQL extends SQL implements SQLInterface
 
     private function arrayToInsert($data)
     {
-        $t0 = "";
-        $t1 = "";
+        $t0 = '';
+        $t1 = '';
         foreach ($data as $key => $value) {
-            if ($t0 != "") {
-                $t0 .= ",";
+            if ($t0 != '') {
+                $t0 .= ',';
             }
 
-            if ($t1 != "") {
-                $t1 .= ",";
+            if ($t1 != '') {
+                $t1 .= ',';
             }
 
-            $t0 .= "" . $key . "";
+            $t0 .= ''.$key.'';
 
             if ($value === null) {
-                $t1 .= "null";
+                $t1 .= 'null';
             } else {
-                $t1 .= "" . self::mssql_escape($value) . "";
+                $t1 .= ''.self::mssql_escape($value).'';
             }
         }
 
-        return "(" . $t0 . ") VALUES (" . $t1 . ")";
+        return '('.$t0.') VALUES ('.$t1.')';
     }
 
-    public function select($table, $col = array(), $where = array())
+    public function select($table, $col = [], $where = [])
     {
         try {
-            return $this->query("SELECT " . self::arrayToSelect($col) . " FROM " . $table . $this->arrayToWhere($where));
+            return $this->query('SELECT '.self::arrayToSelect($col).' FROM '.$table.$this->arrayToWhere($where));
         } catch (Exception $ex) {
             throw new SelectException($ex);
         }
     }
 
-    public function delete($table, $where = array())
+    public function delete($table, $where = [])
     {
         try {
-            return $this->command("DELETE FROM " . $table . $this->arrayToWhere($where));
+            return $this->command('DELETE FROM '.$table.$this->arrayToWhere($where));
         } catch (Exception $ex) {
             throw new DeleteException($ex);
         }
     }
 
-    public function insert($table, $data = array())
+    public function insert($table, $data = [])
     {
         try {
-            return $this->command("INSERT INTO " . $table . " " . $this->arrayToInsert($data));
+            return $this->command('INSERT INTO '.$table.' '.$this->arrayToInsert($data));
         } catch (Exception $ex) {
             throw new InsertException($ex);
         }
     }
 
-    public function update($table, $data, $where = array())
+    public function update($table, $data, $where = [])
     {
         try {
-            return $this->command("UPDATE " . $table . " SET " . $this->arrayToEqual($data, ",", "= null") . $this->arrayToWhere($where));
+            return $this->command('UPDATE '.$table.' SET '.$this->arrayToEqual($data, ',', '= null').$this->arrayToWhere($where));
         } catch (Exception $ex) {
             throw new UpdateException($ex);
         }
     }
 
-    public function selectRow($table, $col = array(), $where = array())
+    public function selectRow($table, $col = [], $where = [])
     {
         $RS = $this->select($table, $col, $where);
 
@@ -282,10 +281,11 @@ class MsSQL extends SQL implements SQLInterface
         $timezone = new \DateTimeZone('America/Montevideo');
         $date = new \DateTime('now', $timezone);
         $date->setTimestamp($time);
+
         return $date->format("Y-m-d\TH:i:s");
     }
 
-    public function count($table, $where = array())
+    public function count($table, $where = [])
     {
     }
 
@@ -304,18 +304,18 @@ class MsSQL extends SQL implements SQLInterface
         throw new NotImplementedException();
     }
 
-    public function max($table, $column, $where = array())
+    public function max($table, $column, $where = [])
     {
         throw new NotImplementedException();
     }
 
-    public function min($table, $column, $where = array())
+    public function min($table, $column, $where = [])
     {
         throw new NotImplementedException();
     }
 
     public function copyTable($sourceTable, $destinationTable)
     {
-        return $this->command('SELECT * INTO ' . $destinationTable . ' FROM ' . $sourceTable . ' WHERE 1=0;');
+        return $this->command('SELECT * INTO '.$destinationTable.' FROM '.$sourceTable.' WHERE 1=0;');
     }
 }

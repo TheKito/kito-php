@@ -14,13 +14,10 @@
  */
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class FormSelect extends HTMLElement
 {
-
     //    var $array=array();
     //    var $use_index=false;
 
@@ -28,46 +25,47 @@ class FormSelect extends HTMLElement
     public $name;
     public $value;
     public $base_name;
+
     public function __construct($title, $name, $value)
     {
-        $this->base_name=$name;
+        $this->base_name = $name;
 
-        $this->title=$title;
-        $this->setAttr("title", $this->title);
-        $this->setAttr("alt", $this->title);
+        $this->title = $title;
+        $this->setAttr('title', $this->title);
+        $this->setAttr('alt', $this->title);
 
-        $this->name="blk_form_".$this->base_name;
-        $this->setAttr("name", $this->name);
+        $this->name = 'blk_form_'.$this->base_name;
+        $this->setAttr('name', $this->name);
 
-        $this->value=$value;
-        $this->setAttr("value", $this->value);
+        $this->value = $value;
+        $this->setAttr('value', $this->value);
 
-        $this->tag="select";
-        $this->closeMode=0;
+        $this->tag = 'select';
+        $this->closeMode = 0;
 
-        $this->setAttr("onchange", "blk_form_change(this); return blk_element_change(this);");
+        $this->setAttr('onchange', 'blk_form_change(this); return blk_element_change(this);');
     }
-    public function setList($array, $use_index=false)
+
+    public function setList($array, $use_index = false)
     {
         //$this->array=$array;
         //$this->use_index=$use_index;
 
         foreach ($array as $key => $value) {
-            if ($use_index===false) {
-                $html="<option value='".$value."' ".($value==$this->value?"selected":"").">$value</option>";
+            if ($use_index === false) {
+                $html = "<option value='".$value."' ".($value == $this->value ? 'selected' : '').">$value</option>";
             } else {
-                $html="<option value='".$key."' ".($key==$this->value?"selected":"").">$value</option>";
+                $html = "<option value='".$key."' ".($key == $this->value ? 'selected' : '').">$value</option>";
             }
 
             $this->addChild($html);
         }
     }
+
     public function getHTML()
     {
         //$html="";
         //$html.="<select name='$this->name' id='".$this->id."' onchange='blk_form_change(this); return blk_element_change(this);'>";
-
-
 
         //$html.="</select>";
         //return $html;

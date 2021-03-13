@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  */
 
 namespace Kito\HTML\Tag;
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Link extends Element
@@ -26,8 +22,8 @@ class Link extends Element
     public function __construct($rel, $type, $href)
     {
         $this->closeMode = 2;
-        $this->setAttr("rel", $rel);
-        $this->setAttr("type", $type);
-        $this->setAttr("href", $href);
+        $this->setAttr('rel', $rel);
+        $this->setAttr('type', $type);
+        $this->setAttr('href', $href);
     }
 }

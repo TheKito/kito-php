@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 declare(strict_types=1);
 
 namespace Kito\Math;
 
 /**
- *
  * @author TheKito < blankitoracing@gmail.com >
  */
 class Integer
@@ -34,6 +31,7 @@ class Integer
         $t = ($w * $w + $w) / 2;
         $y = $z - $t;
         $x = $w - $y;
-        return array($x, $y);
+
+        return [$x, $y];
     }
 }

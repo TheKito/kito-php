@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,13 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  */
 
 namespace Kito\Network;
 
 /**
- *
  * @author The TheKito < blankitoracing@gmail.com >
  */
 class Tor
@@ -27,7 +24,7 @@ class Tor
         while (true) {
             try {
                 $port = self::getFreePort();
-                echo "Creating TOR on port #" . $port . "\n";
+                echo 'Creating TOR on port #'.$port."\n";
                 $TOR = self($port);
 
                 sleep(1);
@@ -41,7 +38,7 @@ class Tor
                 }
                 unset($TOR);
             } catch (Exception $ex) {
-                echo "TOR ERROR " . $ex->getMessage() . "\n";
+                echo 'TOR ERROR '.$ex->getMessage()."\n";
             }
         }
     }
@@ -60,8 +57,8 @@ class Tor
     {
         while (!$this->isConnectionReady()) {
             try {
-                echo "ReStarting TOR on port #" . $this->port . "\n";
-                exec('/bin/fuser -k ' . $this->port . '/tcp');
+                echo 'ReStarting TOR on port #'.$this->port."\n";
+                exec('/bin/fuser -k '.$this->port.'/tcp');
 
                 sleep(5);
 
@@ -70,7 +67,7 @@ class Tor
                 $this->waitConnectionReady();
                 echo "TOR OK\n";
             } catch (Exception $ex) {
-                echo "TOR ERROR " . $ex->getMessage() . "\n";
+                echo 'TOR ERROR '.$ex->getMessage()."\n";
             }
         }
     }
@@ -94,15 +91,13 @@ class Tor
     {
         $this->port = $port;
 
-        $this->torPath = "/tmp/tor/";
-        $this->basePath = $this->torPath . "$port/";
-        $this->dataPath = $this->basePath . "data/";
+        $this->torPath = '/tmp/tor/';
+        $this->basePath = $this->torPath."$port/";
+        $this->dataPath = $this->basePath.'data/';
 
-        $this->logPath = $this->basePath . "log";
-        $this->configPath = $this->basePath . "config";
-        $this->lockPath = $this->basePath . "lock";
-
-
+        $this->logPath = $this->basePath.'log';
+        $this->configPath = $this->basePath.'config';
+        $this->lockPath = $this->basePath.'lock';
 
         self::makeDir($this->torPath);
         self::makeDir($this->basePath);
@@ -111,7 +106,6 @@ class Tor
         self::makeFile($this->logPath);
         self::makeFile($this->configPath);
         self::makeFile($this->lockPath);
-
 
         file_put_contents($this->configPath, "SocksPort $this->port\nLog notice file $this->logPath\nRunAsDaemon 1\nDataDirectory $this->dataPath\nNickname relay$this->port\nExitPolicy reject *:*");
 
@@ -122,15 +116,14 @@ class Tor
         //                self::makeFile($this->dataPath.$fname);
         //            }
 
-        passthru("cp -rv /var/lib/tor/cached-microdescs " . $this->dataPath);
-        passthru("cp -rv /var/lib/tor/cached-certs " . $this->dataPath);
-        $this->command = '/bin/su -c "/usr/sbin/tor -f ' . $this->configPath . '" -s /bin/sh debian-tor';
+        passthru('cp -rv /var/lib/tor/cached-microdescs '.$this->dataPath);
+        passthru('cp -rv /var/lib/tor/cached-certs '.$this->dataPath);
+        $this->command = '/bin/su -c "/usr/sbin/tor -f '.$this->configPath.'" -s /bin/sh debian-tor';
 
         $this->r_lock = fopen($this->lockPath, 'r+');
         if (!flock($this->r_lock, LOCK_EX | LOCK_NB)) {
             throw new Exception('can not lock tor kill signal');
         }
-
 
         exec($this->command);
 
@@ -156,6 +149,7 @@ class Tor
 
         if (is_resource($connection)) {
             fclose($connection);
+
             return true;
         }
 
@@ -195,10 +189,12 @@ class Tor
 
         if (curl_errno($curlHandler) == 0) {
             curl_close($curlHandler);
+
             return true;
         }
 
         curl_close($curlHandler);
+
         return false;
     }
 
@@ -210,11 +206,10 @@ class Tor
                 return;
             }
 
-            passthru('/usr/bin/tail ' . $this->logPath);
+            passthru('/usr/bin/tail '.$this->logPath);
 
             sleep(1);
         }
-
 
         throw new Exception('Connection not ready');
     }
@@ -226,17 +221,17 @@ class Tor
 
     public function attachTor($curlHandler)
     {
-        curl_setopt($curlHandler, CURLOPT_PROXY, '127.0.0.1:' . $this->port);
+        curl_setopt($curlHandler, CURLOPT_PROXY, '127.0.0.1:'.$this->port);
         curl_setopt($curlHandler, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
     }
 
     private function gcGetPortsLocked()
     {
-        $output = array();
+        $output = [];
 
         exec('/usr/bin/lslocks', $output);
 
-        $tmp = array();
+        $tmp = [];
         foreach ($output as $line) {
             $line = explode($this->torPath, $line);
 
@@ -259,7 +254,6 @@ class Tor
             $tmp[] = (int) $line[0];
         }
 
-
         return $tmp;
     }
 
@@ -268,11 +262,11 @@ class Tor
         $portsLocked = $this->gcGetPortsLocked();
 
         foreach (scandir($this->torPath) as $port) {
-            if (!in_array($port, array(".", "..")) && is_numeric($port) && !in_array((int) $port, $portsLocked)) {
+            if (!in_array($port, ['.', '..']) && is_numeric($port) && !in_array((int) $port, $portsLocked)) {
                 if (self::isPortInUse($port)) {
-                    exec('/bin/fuser -k ' . $port . '/tcp');
+                    exec('/bin/fuser -k '.$port.'/tcp');
                 } else {
-                    exec('/bin/rm -r ' . $this->torPath . $port);
+                    exec('/bin/rm -r '.$this->torPath.$port);
                 }
             }
         }

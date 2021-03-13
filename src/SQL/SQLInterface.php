@@ -9,7 +9,6 @@
 namespace Kito\SQL;
 
 /**
- *
  * @author Instalacion
  */
 interface SQLInterface
@@ -20,19 +19,19 @@ interface SQLInterface
 
     public function command($command): bool;
 
-    public function delete($table, $where = array(), $limit = 100): bool;
+    public function delete($table, $where = [], $limit = 100): bool;
 
-    public function insert($table, $data = array()): bool;
+    public function insert($table, $data = []): bool;
 
-    public function update($table, $data, $where = array(), $limit = 0): bool;
+    public function update($table, $data, $where = [], $limit = 0): bool;
 
-    public function select($table, $column = array(), $where = array(), $limit = 100, $rand = false): array;
+    public function select($table, $column = [], $where = [], $limit = 100, $rand = false): array;
 
-    public function count($table, $where = array()): int;
+    public function count($table, $where = []): int;
 
-    public function max($table, $column, $where = array()): int;
+    public function max($table, $column, $where = []): int;
 
-    public function min($table, $column, $where = array()): int;
+    public function min($table, $column, $where = []): int;
 
     public function getTables(): array;
 

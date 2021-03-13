@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -11,14 +10,11 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  */
 
 namespace Kito\HTML\Tag;
 
 /**
- *
- *
  * @author TheKito <blankitoracing@gmail.com>
  */
 class Table extends Element
@@ -26,8 +22,8 @@ class Table extends Element
     public function __construct()
     {
         $this->closeMode = 0;
-        $this->setStyleAttr("width", "100%");
-        $this->setStyleAttr("height", "100%");
+        $this->setStyleAttr('width', '100%');
+        $this->setStyleAttr('height', '100%');
     }
 
     public static function autoTable($elements, $col)
@@ -37,14 +33,13 @@ class Table extends Element
         if ($col > 0) {
             $tr = new HTMLtr();
         } else {
-            $tr = array();
+            $tr = [];
         }
 
         $count = abs($col);
         foreach ($elements as $element) {
             $td = new HTMLtd();
             $td->addChild($element);
-
 
             if ($col > 0) {
                 $tr->addChild($td);
